@@ -31,15 +31,5 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         startActivity(new Intent(this, AuthActivity.class));
         //startActivity(new Intent(this, PasswordResetActivity.class)); // test
-        initPublicObject();
-    }
-
-    private void initPublicObject() {
-        new AppConfig(getApplicationContext());
-    }
-
-    private void loginCheck(){
-        // KeepLogin 여부
-        // Jwt 여부, 유효성 여부
     }
 }
