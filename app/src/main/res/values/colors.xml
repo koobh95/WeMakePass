@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- https://chir.ag/projects/name-that-color/ -->
+    <color name="ship_cove">#7193BE</color> <!-- System Font Color-->
+    <color name="mine_shaft_approx">#222222</color> <!-- activity, fragment background -->
+    <color name="mine_shaft_solid">#323232</color> <!-- appbar background -->
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="baltic_sea">#1C1B20</color>
+    <color name="cod_gray_approx">#111111</color>
+    <color name="cod_gary">#1A1A1A</color>
+    <color name="dove_gray_approx">#616161</color>
+    <color name="red">#FF0000</color>
+    <color name="terracotta_approx">#e45e4f</color>
+    <color name="blue">#0000FF</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="nepal_approx">#93B7BE</color>
+    <color name="shark_approx">#2D3037</color>
+    <color name="turquoise_approx">#38DDB8</color>
+    <color name="silver_chalice_approx">#A6A6A6</color>
+    <color name="alpha_30">#30000000</color>
+</resources>

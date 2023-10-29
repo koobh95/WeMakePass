@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.auth.findAccount.id.FindUserIdViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="@color/baltic_sea"
+        android:padding="10dp"
+        tools:context=".view.auth.findAccount.id.FindUserIdFragment">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_find_user_id_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:text="가입 시 입력한 이메일로 아이디 찾기"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_find_user_id_tooltip_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:text="입력한 메일 주소로 등록된 아이디를 메일로 보내드립니다."
+            app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_title_text_view" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_find_user_id_email_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@={viewModel.emailLiveData}"
+            android:hint="이메일"
+            android:inputType="textEmailAddress"
+            app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_tooltip_text_view" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_find_user_id_request_button"
+            android:layout_width="match_parent"
+            android:onClick="@{viewModel.onSendMailButtonClick}"
+            android:layout_height="60dp"
+            android:text="이메일 전송하기"
+            app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_email_edit_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

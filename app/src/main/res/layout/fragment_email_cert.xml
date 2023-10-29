@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.auth.cert.EmailCertViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="@color/baltic_sea"
+        tools:context=".view.auth.cert.EmailCertFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/fragment_email_cert_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/baltic_sea"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="이메일 본인 인증" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/fragment_email_cert_code_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:hint="인증 번호"
+            android:inputType="numberDecimal"
+            android:maxLength="6"
+            android:text="@={viewModel.codeLiveData}"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_email_cert_timer_text_view"
+            app:layout_constraintEnd_toStartOf="@id/fragment_email_cert_request_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_email_cert_toolbar" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_email_cert_request_button"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="인증 요청"
+            app:layout_constraintBaseline_toBaselineOf="@+id/fragment_email_cert_code_edit_text"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_email_cert_timer_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_email_cert_code_edit_text"
+            app:layout_constraintTop_toBottomOf="@id/fragment_email_cert_toolbar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_email_cert_timer_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@{viewModel.timerLiveData}"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_email_cert_confirm_button"
+            app:layout_constraintTop_toBottomOf="@id/fragment_email_cert_code_edit_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_email_cert_confirm_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:enabled="false"
+            android:text="인증번호 확인"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_email_cert_tooltip_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_email_cert_timer_text_view" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fragment_email_cert_tooltip_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/email_cert_guidelines"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_email_cert_confirm_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

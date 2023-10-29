@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.auth.findAccount.FindAccountActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/activity_find_account_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/baltic_sea"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        app:title="아이디/비밀번호 찾기" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/activity_find_account_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_layout_large_height"
+        android:background="@drawable/all_border_top_bottom"
+        app:layout_constraintTop_toBottomOf="@id/activity_find_account_toolbar"
+        app:tabIndicatorColor="@color/ship_cove"
+        app:tabIndicatorFullWidth="true"
+        app:tabTextAppearance="@style/TabLayout.Tab.TextAppearance.Large"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/ship_cove" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/activity_find_account_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_find_account_tab_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

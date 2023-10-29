@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_item_find_account">
+        <item>아이디 찾기</item>
+        <item>비밀번호 찾기</item>
+    </string-array>
+
+</resources>
