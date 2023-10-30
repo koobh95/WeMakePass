@@ -123,7 +123,7 @@ public class LoginFragment extends Fragment {
                         });
                 return;
             }
-
+            Log.d(TAG, "★★★★★★★★★★★★★★★★★★★★★★★★ ErrorResponse=" + errorResponse);
             DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
 
