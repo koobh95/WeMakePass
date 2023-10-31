@@ -26,6 +26,7 @@ import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
 import com.example.wemakepass.view.auth.signUp.SignUpFragment;
+import com.example.wemakepass.view.main.MainActivity;
 
 /**
  * 로그인을 수행하는 Fragment.
@@ -51,28 +52,21 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.fragmentLoginStoredIdCheckBox.setChecked(!AppConfig.AuthPreference.getStoredId());
-        binding.fragmentLoginKeepLoginCheckBox.setChecked(AppConfig.AuthPreference.isKeepLogin());
-
         setupOnBackPressedListener();
         setupEventListener();
-        setObserver();
-
-        //test
-        // ((AuthActivity)requireActivity()).addFragment(new SignUpFragment(), R.anim.slide_from_bottom, R.anim.slide_to_bottom);
+        setupObserver();
+        setupViews();
     }
 
     /**
      * - Fragment 뒤로가기 처리를 담당하는 메서드.
-     * - 이 Fragment를 기준으로 Backstack top에는 AuthActivity가 있고 바로 아래에는 MainActivity가 있다.
-     *  이 화면에서 뒤로가기를 누른다는 것은 로그인을 완료하지 않은 채 어플을 종료한다는 것을 의미하므로
-     *  MainActivity로 돌아가서는 안되기 때문에 즉시 어플리케이션을 종료한다.
+     * - 이 화면에서 뒤로가기를 누른다는 것은 로그인을 완료하지 않은 채 어플을 종료한다는 것을 의미한다.
      */
     private void setupOnBackPressedListener(){
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                requireActivity().finishAffinity();
+                requireActivity().finish();
             }
         };
 
@@ -81,9 +75,15 @@ public class LoginFragment extends Fragment {
                 .addCallback(getViewLifecycleOwner(), onBackPressedCallback);
     }
 
+    /**
+     * Fragment가 시작할 때 View들에 기본적으로 세팅해줘야 하는 데이터를 탐색 후 세팅한다.
+     */
     private void setupViews(){
+        boolean isStoredId = AppConfig.AuthPreference.isStoredId();
         binding.fragmentLoginKeepLoginCheckBox.setChecked(AppConfig.AuthPreference.isKeepLogin());
-
+        binding.fragmentLoginStoredIdCheckBox.setChecked(isStoredId);
+        if(isStoredId)
+            viewModel.getIdLiveData().setValue(AppConfig.UserPreference.getUserId());
     }
 
     /**
@@ -94,16 +94,18 @@ public class LoginFragment extends Fragment {
                 startActivity(new Intent(requireContext(), FindAccountActivity.class)));
 
         binding.fragmentLoginSignUpButton.setOnClickListener(v -> {
-            ((AuthActivity)requireActivity()).addFragment(new SignUpFragment(), R.anim.slide_from_bottom,
-                    R.anim.slide_to_bottom);
+            ((AuthActivity)requireActivity()).addFragment(new SignUpFragment(),
+                    R.anim.slide_from_bottom, R.anim.slide_to_bottom);
         });
     }
 
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setObserver(){
-        // ViewModel이 비지니스 로직 처리 과정에서 발생하는 메시지가 발생할 경우 출력한다.
+    private void setupObserver(){
+        /**
+         * ViewModel이 비지니스 로직 처리 과정에서 발생하는 메시지가 발생할 경우 출력한다.
+         */
         viewModel.getSystemMessageLiveData().observe(this, systemMessage -> {
             DialogUtil.showAlertDialog(requireContext(), systemMessage);
         });
@@ -123,7 +125,6 @@ public class LoginFragment extends Fragment {
                         });
                 return;
             }
-            Log.d(TAG, "★★★★★★★★★★★★★★★★★★★★★★★★ ErrorResponse=" + errorResponse);
             DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
 
@@ -158,7 +159,7 @@ public class LoginFragment extends Fragment {
             AppConfig.AuthPreference.setKeepLogin(binding.fragmentLoginKeepLoginCheckBox.isChecked());
 
             MessageUtil.showToast(requireContext(), "로그인되었습니다.");
-            requireActivity().finish();
+            startActivity(new Intent(requireActivity(), MainActivity.class));
         });
     }
 }

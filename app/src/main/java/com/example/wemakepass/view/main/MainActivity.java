@@ -1,24 +1,22 @@
 package com.example.wemakepass.view.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.example.wemakepass.databinding.ActivityMainBinding;
-import com.example.wemakepass.view.auth.AuthActivity;
 
 /**
- * 이 화면이 실행되면서 수행하는 다음과 같다.
- * 1. 자동 로그인 여부 확인.
- * - 로그인이 되어 있으면서 자동 로그인이 되어 있는 경우, Refresh 토큰이 만료되지 않은 경우 AuthActivity 실행
- * - 로그인이 되어 있는 경우 HomeFragment 컨텐츠 로딩
- * 2.
  *
  * @author BH-Ku
  * @since 2023-10-25
  */
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private MainViewModel viewModel;
+
     private final String TAG = "TAG_MainActivity";
 
     @Override
@@ -26,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        startActivity(new Intent(this, AuthActivity.class));
-        //startActivity(new Intent(this, PasswordResetActivity.class));
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 }

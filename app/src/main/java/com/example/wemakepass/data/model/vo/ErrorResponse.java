@@ -15,6 +15,7 @@ public class ErrorResponse {
 
     private static final String CONNECTION_FAILED_MESSAGE = "서버로부터 응답이 없습니다. 다시 시도해주세요.";
     private static final String UNKNOWN_ERROR_MESSAGE = "네트워크 통신 중 알 수 없는 오류가 발생했습니다.";
+    public static final String AUTHENTICATION_FAILED_MESSAGE = "로그인 유효 기간이 만료되었습니다. 다시 로그인해주세요.";
 
     public ErrorResponse() {}
 
@@ -26,6 +27,16 @@ public class ErrorResponse {
     public String getCode() { return code; }
 
     public String getMessage() { return message; }
+
+    /**
+     *  토큰 재발급이 실패했을 경우 상세한 에러 내용을 사용자에게 보여주지 않기 위해 일관된 에러 메시지를 생성한다.
+     *
+     * @return
+     */
+    public static ErrorResponse ofAuthenticationFailed(){
+        return new ErrorResponse(ErrorCode.AUTHENTICATION_FAILED.name(), AUTHENTICATION_FAILED_MESSAGE);
+    }
+
 
     /**
      *  통신에 실패했을 경우 서버와 연결되지 않기 때문에 에러 코드를 받을 수 없다. 이러한 경우 직접 통신

@@ -7,9 +7,7 @@ import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 /**
  *  Jwt 관련 API를 모아놓은 인터페이스
@@ -19,5 +17,8 @@ import retrofit2.http.Query;
  */
 public interface JwtAPI {
     @POST("api/jwt/reissue")
-    Call<JwtDTO> reissueToken(@Body JwtReissueTokenRequest jwtReissueTokenRequest);
+    Call<JwtDTO> syncReissueToken(@Body JwtReissueTokenRequest jwtReissueTokenRequest);
+
+    @POST("api/jwt/reissue")
+    Observable<Response<JwtDTO>> asyncReissueToken(@Body JwtReissueTokenRequest jwtReissueTokenRequest);
 }

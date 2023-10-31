@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.JwtDTO;
+import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.repository.JwtRepository;
 
 import org.json.JSONObject;
@@ -87,17 +88,16 @@ public class WmpInterceptor implements Interceptor {
                             .addHeader("Authorization", TOKEN_TYPE + jwtDTO.getAccessToken())
                             .build()); // 새로 발급된 토큰을 사용하여 기존 요청 새로 요청
                 }
+
                 // 재발급 과정에서 인증 문제가 생겼음. RefreshToken은 이미 노출되었으므로 가진 인증 코드 삭제.
                 // 이미 서버에서도 인증 데이터가 삭제되었음.
                 AppConfig.AuthPreference.setAccessToken("");
                 AppConfig.AuthPreference.setRefreshToken("");
-
                 return newResponse
                         .body(ResponseBody.create(MediaType.parse(contentType),
                                 createAuthenticationFailedErrorBodyString()))
                         .build(); // 인증 실패 코드 세팅
             }
-
             return newResponse
                     .body(ResponseBody.create(MediaType.parse(contentType), responseBodyStr))
                     .build(); // 401 에러지만 AccessToken 검증 실패로 인한 오류는 아님. 기존 Response를 다시 조립.
@@ -115,7 +115,7 @@ public class WmpInterceptor implements Interceptor {
     private static retrofit2.Response<JwtDTO> requestTokenReissue() throws IOException {
         if(jwtRepository == null)
             jwtRepository = new JwtRepository();
-        return jwtRepository.reissueToken().execute();
+        return jwtRepository.syncReissueToken().execute();
     }
 
     /**
@@ -135,8 +135,12 @@ public class WmpInterceptor implements Interceptor {
     }
 
     /**
-     *  토큰 재발급에 실퍃한 경우 사용자가 그 상세한 내용에 대해서까지 알 필요는 없다. 따라서 일관된 하나의 메시지를
-     * 세팅하여 보여주도록 하고 있다.
+     *  유저가 토큰 재발급에 실패하는 사유는 RefreshToken이 만료되었거나 데이터가 변조되었다는 것을 의미하는데
+     * 후자의 일반 사용자한테 발생할 수 있는 오류가 아니기 때문에 사용자가 알 필요가 없다고 생각한다. 또한 상대가
+     * 일반 사용자가 아니라면 어떤 사유로 로그인에 실패했는지 알려줄 필요는 더더욱 없다.
+     *  서버에서는 재발급 실패에 관한 Code를 다양하게 다루고 있지만 여기서는 일관된 메시지를 보여주도록 할 것이다.
+     * 물론 공격자가 response body를 열어 보면 에러를 알 수 있겠지만 이 부분은 추후 서버 측의 코드를 수정하여
+     * 보완해 줄 예정이다.
      *
      * @return
      */
@@ -144,7 +148,7 @@ public class WmpInterceptor implements Interceptor {
         try {
             JSONObject json = new JSONObject();
             json.put("code", ErrorCode.AUTHENTICATION_FAILED.name());
-            json.put("message", "정상적인 접근이 아닙니다. 어플리케이션을 재시작하여 다시 로그인해주세요.");
+            json.put("message", ErrorResponse.AUTHENTICATION_FAILED_MESSAGE);
             return json.toString();
         } catch (Exception e) {
             return null;

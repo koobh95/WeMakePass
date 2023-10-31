@@ -40,7 +40,7 @@ public class AppConfig {
             pref.edit().putBoolean(KEY_KEEP_LOGIN, keepLogin).apply();
         }
 
-        public static boolean getStoredId(){
+        public static boolean isStoredId(){
             return pref.getBoolean(KEY_STORED_ID, false);
         }
 

@@ -1,5 +1,7 @@
 package com.example.wemakepass.view.main;
 
-public class MainViewModel {
+import com.example.wemakepass.base.BaseViewModel;
+
+public class MainViewModel extends BaseViewModel {
 
 }
