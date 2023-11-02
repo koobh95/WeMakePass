@@ -2,7 +2,7 @@
 <resources>
     <!-- https://chir.ag/projects/name-that-color/ -->
     <color name="ship_cove">#7193BE</color> <!-- System Font Color-->
-    <color name="mine_shaft_approx">#222222</color> <!-- activity, fragment background -->
+    <color name="mine_shaft_approx">#252323</color> <!-- activity, fragment background -->
     <color name="mine_shaft_solid">#323232</color> <!-- appbar background -->
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>

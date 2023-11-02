@@ -17,9 +17,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.myInfo.MyInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.splash.SplashActivity"
             android:exported="false"
-            android:theme="@style/Theme.Splash"/>
+            android:theme="@style/Theme.Splash" />
         <activity
             android:name=".view.auth.passwordReset.PasswordResetActivity"
             android:exported="false" />
@@ -32,7 +35,6 @@
         <activity
             android:name=".view.main.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

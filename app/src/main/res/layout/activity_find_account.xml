@@ -20,7 +20,7 @@
         android:id="@+id/activity_find_account_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_layout_large_height"
-        android:background="@drawable/all_border_top_bottom"
+        android:background="@drawable/border_top_bottom"
         app:layout_constraintTop_toBottomOf="@id/activity_find_account_toolbar"
         app:tabIndicatorColor="@color/ship_cove"
         app:tabIndicatorFullWidth="true"
