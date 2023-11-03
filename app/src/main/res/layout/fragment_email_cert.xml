@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:background="@color/baltic_sea"
+        android:clickable="true"
         tools:context=".view.auth.cert.EmailCertFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -31,6 +31,7 @@
             android:layout_height="60dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:enabled="false"
             android:hint="인증 번호"
             android:inputType="numberDecimal"
             android:maxLength="6"
@@ -57,11 +58,11 @@
             android:id="@+id/fragment_email_cert_timer_text_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="@{viewModel.timerLiveData}"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
+            android:text="@{viewModel.timerLiveData}"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/fragment_email_cert_confirm_button"
             app:layout_constraintTop_toBottomOf="@id/fragment_email_cert_code_edit_text" />

@@ -90,9 +90,7 @@ public class EmailCertFragment extends Fragment {
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                Log.d(TAG, "handleOnBackPressed");
                 if(viewModel.isRunningTimer()){
-                    Log.d(TAG, "Timer is running");
                     DialogUtil.showConfirmDialog(requireContext(),
                             "인증이 진행중입니다. 정말로 종료하시겠습니까?",
                             dialog -> {
@@ -103,7 +101,6 @@ public class EmailCertFragment extends Fragment {
                             });
                     return;
                 }
-                Log.d(TAG, "Timer is not running.");
 
                 requireActivity()
                         .getSupportFragmentManager()
@@ -160,6 +157,7 @@ public class EmailCertFragment extends Fragment {
             binding.fragmentEmailCertTimerTextView.setVisibility(View.VISIBLE);
             binding.fragmentEmailCertRequestButton.setEnabled(false);
             binding.fragmentEmailCertConfirmButton.setEnabled(true);
+            binding.fragmentEmailCertCodeEditText.setEnabled(true);
             viewModel.startTimer();
         });
 
@@ -167,11 +165,10 @@ public class EmailCertFragment extends Fragment {
          * 인증이 완료되지 않고 타이머의 시간이 종료될 경우 화면의 View들을 인증 이전 상태로 되돌린다.
          */
         viewModel.getIsTimeOver().observe(this, aBoolean -> {
-            Log.d(TAG, "BEFORE:" + binding.fragmentEmailCertTimerTextView.getText());
             viewModel.getTimerLiveData().setValue("인증 제한 시간이 초과되었습니다. 다시 시도해주세요.");
             binding.fragmentEmailCertRequestButton.setEnabled(true);
             binding.fragmentEmailCertConfirmButton.setEnabled(false);
-            Log.d(TAG, "AFTER:" + binding.fragmentEmailCertTimerTextView.getText());
+            binding.fragmentEmailCertCodeEditText.setEnabled(false);
         });
 
         /**

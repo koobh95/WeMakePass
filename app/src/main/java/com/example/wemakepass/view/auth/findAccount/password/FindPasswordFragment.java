@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindPasswordBinding;
 import com.example.wemakepass.util.DialogUtil;
+import com.example.wemakepass.util.KeyboardUtil;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.community.CommunityFragment;
 
@@ -91,12 +92,18 @@ public class FindPasswordFragment extends Fragment {
          *
          */
         viewModel.getIsSendMailLiveData().observe(this, aBoolean -> {
-            DialogUtil.showAlertDialog(requireContext(), "이메일을 전송했습니다.");
             binding.fragmentFindPasswordIdEditText.setEnabled(false);
             binding.fragmentFindPasswordRequestButton.setEnabled(false);
             binding.fragmentFindPasswordConfirmButton.setEnabled(true);
             binding.fragmentFindPasswordTimerTextView.setVisibility(View.VISIBLE);
+            binding.fragmentFindPasswordCodeEditText.setEnabled(true);
             viewModel.startTimer();
+            DialogUtil.showAlertDialog(requireContext(), "이메일을 전송했습니다.",
+                    dialog -> {
+                        KeyboardUtil.showKeyboard(
+                                requireActivity(), binding.fragmentFindPasswordCodeEditText);
+                        dialog.dismiss();
+                    });
         });
 
         /**
@@ -109,6 +116,7 @@ public class FindPasswordFragment extends Fragment {
             binding.fragmentFindPasswordIdEditText.setEnabled(true);
             binding.fragmentFindPasswordRequestButton.setEnabled(true);
             binding.fragmentFindPasswordConfirmButton.setEnabled(false);
+            binding.fragmentFindPasswordCodeEditText.setEnabled(false);
             viewModel.getTimerLiveData().setValue("인증 제한 시간이 초과되었습니다. 다시 시도해주세요.");
         });
 
