@@ -76,9 +76,9 @@ public class EmailCertFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupOnBackPressedListener();
-        setupEventListener();
-        setupObserver();
+        initOnBackPressedListener();
+        initEventListener();
+        initObserver();
     }
 
     /**
@@ -86,7 +86,7 @@ public class EmailCertFragment extends Fragment {
      * - 타이머 Observable이 동작 중인지 판단하여 동작 중이라면 정말로 종료할 것인지 여부를 묻는다.
      * - 이 화면은 LoginFragment 위에 있으므로 화면 종료가 아닌 Backstack에서 pop하여 화면을 제거한다.
      */
-    private void setupOnBackPressedListener(){
+    private void initOnBackPressedListener(){
         OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -121,7 +121,7 @@ public class EmailCertFragment extends Fragment {
      * - 두 버튼 모두 userId를 필요로 하지만 userId는 Fragment에서 가지고 있다. setter를 통해 ViewModel에
      *  데이터를 넘겨줘도 되지만
      */
-    private void setupEventListener(){
+    private void initEventListener(){
         binding.fragmentEmailCertRequestButton.setOnClickListener(v ->
                 viewModel.sendMailRequest(userId));
 
@@ -132,7 +132,7 @@ public class EmailCertFragment extends Fragment {
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver() {
+    private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
                 DialogUtil.showAlertDialog(requireContext(), systemMessage));
 

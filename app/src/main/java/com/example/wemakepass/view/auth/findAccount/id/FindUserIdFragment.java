@@ -42,13 +42,13 @@ public class FindUserIdFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupObserver();
+        initObserver();
     }
 
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    public void setupObserver() {
+    public void initObserver() {
         /**
          * 비지니스 로직을 처리하면서 발생하는 메시지 출력
          */

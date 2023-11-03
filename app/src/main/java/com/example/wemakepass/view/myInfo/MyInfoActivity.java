@@ -34,21 +34,21 @@ public class MyInfoActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(MyInfoViewModel.class);
         binding.setViewModel(viewModel);
-        setupToolbar();
-        setupSettingRecyclerView();
+        initToolbar();
+        initSettingRecyclerView();
     }
 
     /**
      * Toolbar의 NavigationButton에 대한 이벤트를 설정한다.
      */
-    public void setupToolbar(){
+    public void initToolbar(){
         binding.activityMyInfoToolbar.setNavigationOnClickListener(v -> finish());
     }
 
     /**
      * SettingRecyclerView 에 대한 초기 설정을 수행한다.
      */
-    private void setupSettingRecyclerView(){
+    private void initSettingRecyclerView(){
         List<SettingCategoryVO> categoryList = getSettingList();
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

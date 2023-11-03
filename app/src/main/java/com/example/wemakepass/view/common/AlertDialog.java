@@ -25,13 +25,13 @@ public class AlertDialog extends Dialog {
         super(context);
         binding = DialogAlertBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setupWindow();
+        initWindow();
     }
 
     /**
      * Dialog의 사이즈를 조정한다.
      */
-    private void setupWindow() {
+    private void initWindow() {
         WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;

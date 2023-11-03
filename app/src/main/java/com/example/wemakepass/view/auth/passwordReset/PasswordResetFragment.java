@@ -63,16 +63,16 @@ public class PasswordResetFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupOnBackPressedListener();
-        setupToolbar();
-        setupEventListener();
-        setupObserver();
+        initOnBackPressedListener();
+        initToolbar();
+        initEventListener();
+        initObserver();
     }
 
     /**
      * 뒤로 가기 버튼 선택 시 인증이 다시 이루어지지 않으면 이 화면에 들어올 수 없음을 경고한다.
      */
-    public void setupOnBackPressedListener() {
+    public void initOnBackPressedListener() {
         requireActivity()
                 .getOnBackPressedDispatcher()
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -90,7 +90,7 @@ public class PasswordResetFragment extends Fragment {
     /**
      * Toolbar의 Navigation 버튼(←) 선택 시 인증이 다시 이루어지지 않으면 이 화면에 들어올 수 없음을 경고한다.
      */
-    private void setupToolbar() {
+    private void initToolbar() {
         binding.fragmentPasswordResetToolbar.setNavigationOnClickListener(v -> {
             DialogUtil.showConfirmDialog(requireContext(),
                     "이 화면을 나가면 인증정보가 초기화됩니다. 나가시겠습니까?",
@@ -108,7 +108,7 @@ public class PasswordResetFragment extends Fragment {
      * 필요한 user id를 Fragment가 가지고 있기 때문이다. 데이터를 viewModel로 넘겨줘도 되지만 굳이 그렇게까지
      * 해서 바인딩을 활용해야 하는가 하면 아닌 것 같아서 Activity에 작성했다.
      */
-    private void setupEventListener() {
+    private void initEventListener() {
         binding.fragmentPasswordResetConfirmButton.setOnClickListener(v ->
                 viewModel.passwordReset(userId));
     }
@@ -116,7 +116,7 @@ public class PasswordResetFragment extends Fragment {
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver() {
+    private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
                 DialogUtil.showAlertDialog(requireContext(), systemMessage));
 

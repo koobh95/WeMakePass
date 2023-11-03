@@ -46,14 +46,14 @@ public class FindPasswordFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupOnBackPressedListener();
-        setupObserver();
+        initOnBackPressedListener();
+        initObserver();
     }
 
     /**
      * 실행 결과를 전달하지 않기 때문에 finish()로 Activity를 종료한다.
      */
-    private void setupOnBackPressedListener(){
+    private void initOnBackPressedListener(){
         requireActivity()
                 .getOnBackPressedDispatcher()
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -71,7 +71,7 @@ public class FindPasswordFragment extends Fragment {
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver() {
+    private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
                 DialogUtil.showAlertDialog(requireContext(), systemMessage));
 

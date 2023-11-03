@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setupBottomNavigation();
+        initBottomNavigationView();
 
         startActivity(new Intent(this, AuthActivity.class));
     }
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
      *  메모리 낭비를 최소화한다.
      * - 마지막 메뉴인 MyInfo를 선택하면 MyInfoActivity를 실행한다.
      */
-    private void setupBottomNavigation() {
+    private void initBottomNavigationView() {
         BottomNavigationView bottomNav = binding.activityMainBottomNavigationView;
         addFragment(homeFragment = new HomeFragment());
 

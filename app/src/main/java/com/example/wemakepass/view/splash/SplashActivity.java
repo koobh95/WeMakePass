@@ -33,13 +33,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         startHandler();
-        setupObserver();
+        initObserver();
     }
 
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver() {
+    private void initObserver() {
         /**
          * 토큰 재발급에 성공한 경우
          */

@@ -52,17 +52,17 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupOnBackPressedListener();
-        setupEventListener();
-        setupObserver();
-        setupViews();
+        initOnBackPressedListener();
+        initEventListener();
+        initObserver();
+        initViews();
     }
 
     /**
      * - Fragment 뒤로가기 처리를 담당하는 메서드.
      * - 이 화면에서 뒤로가기를 누른다는 것은 로그인을 완료하지 않은 채 어플을 종료한다는 것을 의미한다.
      */
-    private void setupOnBackPressedListener(){
+    private void initOnBackPressedListener(){
         requireActivity()
                 .getOnBackPressedDispatcher()
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
@@ -76,7 +76,7 @@ public class LoginFragment extends Fragment {
     /**
      * Fragment가 시작할 때 View에 세팅해줘야 하는 데이터를 탐색 후 세팅한다.
      */
-    private void setupViews(){
+    private void initViews(){
         boolean isStoredId = AppConfig.AuthPreference.isStoredId();
         binding.fragmentLoginKeepLoginCheckBox.setChecked(AppConfig.AuthPreference.isKeepLogin());
         binding.fragmentLoginStoredIdCheckBox.setChecked(isStoredId);
@@ -87,7 +87,7 @@ public class LoginFragment extends Fragment {
     /**
      * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드다.
      */
-    private void setupEventListener(){
+    private void initEventListener(){
         binding.fragmentLoginFindAccountButton.setOnClickListener(v ->
                         ((AuthActivity)requireActivity()).getActivityResultLauncher()
                                 .launch(new Intent(requireContext(), FindAccountActivity.class)));
@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment {
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver(){
+    private void initObserver(){
         /**
          * ViewModel이 비지니스 로직 처리 과정에서 발생하는 메시지가 발생할 경우 출력한다.
          */

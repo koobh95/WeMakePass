@@ -46,7 +46,7 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
         super.onCreate(savedInstanceState);
         binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setupActivityResultLauncher();
+        initActivityResultLauncher();
         replaceFragment(new LoginFragment());
     }
 
@@ -54,7 +54,7 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
      *  AuthActivity가 실행되고 FindPasswordFragment에서 인증이 완료될 경우 이 Activity에서
      * PasswordResetFragment를 실행해주기 위해 activityResultLauncher를 생성해둔다.
      */
-    private void setupActivityResultLauncher() {
+    private void initActivityResultLauncher() {
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

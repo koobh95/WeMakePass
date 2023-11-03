@@ -47,15 +47,15 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupOnBackPressedListener();
-        setupObserver();
+        initOnBackPressedListener();
+        initObserver();
     }
 
     /**
      * - Fragment 뒤로가기 처리를 담당하는 메서드.
      * - 뒤로가기를 눌렀을 때 EditText 중 하나라도 값이 존재한다면 Dialog를 출력하여 정말로 종료할 것인지 묻는다.
      */
-    private void setupOnBackPressedListener(){
+    private void initOnBackPressedListener(){
         OnBackPressedCallback backPressedCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
@@ -82,7 +82,7 @@ public class SignUpFragment extends Fragment {
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
-    private void setupObserver(){
+    private void initObserver(){
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
             DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
