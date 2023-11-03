@@ -58,20 +58,20 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initBottomNavigationView() {
         BottomNavigationView bottomNav = binding.activityMainBottomNavigationView;
-        addFragment(homeFragment = new HomeFragment());
+        addFragment(homeFragment = HomeFragment.newInstance());
 
         bottomNav.setOnItemSelectedListener(item -> {
             int selectedItemId = item.getItemId();
 
             if (selectedItemId == R.id.menu_main_bottom_exam_info) {
                 if (examInfoFragment == null)
-                    addFragment(examInfoFragment = new ExamInfoFragment());
+                    addFragment(examInfoFragment = ExamInfoFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_community) {
                 if (communityFragment == null)
-                    addFragment(communityFragment = new CommunityFragment());
+                    addFragment(communityFragment = CommunityFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_workbook) {
                 if (workbookFragment == null)
-                    addFragment(workbookFragment = new WorkbookFragment());
+                    addFragment(workbookFragment = WorkbookFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_my_info) {
                 startActivity(new Intent(this, MyInfoActivity.class));
                 return false;

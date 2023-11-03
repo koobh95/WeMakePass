@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
+import com.example.wemakepass.view.workbook.WorkbookFragment;
 
 /**
  *
@@ -16,6 +17,10 @@ import com.example.wemakepass.R;
  * @since 2023-11-02
  */
 public class HomeFragment extends Fragment {
+
+    public static HomeFragment newInstance() {
+        return new HomeFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -20,6 +20,7 @@ import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindPasswordBinding;
 import com.example.wemakepass.util.DialogUtil;
 import com.example.wemakepass.view.auth.AuthActivity;
+import com.example.wemakepass.view.community.CommunityFragment;
 
 /**
  * 비밀번호 변경을 위한 인증 수행을 담당하는 Fragment
@@ -32,6 +33,10 @@ public class FindPasswordFragment extends Fragment {
     private FindPasswordViewModel viewModel;
 
     private final String TAG = "TAG_FindPasswordFragment";
+
+    public static FindPasswordFragment newInstance() {
+        return new FindPasswordFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -9,8 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
+import com.example.wemakepass.view.home.HomeFragment;
 
 public class ExamInfoFragment extends Fragment {
+
+    public static ExamInfoFragment newInstance() {
+        return new ExamInfoFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

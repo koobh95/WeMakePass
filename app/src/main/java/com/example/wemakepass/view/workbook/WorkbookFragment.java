@@ -12,6 +12,10 @@ import com.example.wemakepass.R;
 
 public class WorkbookFragment extends Fragment {
 
+    public static WorkbookFragment newInstance() {
+        return new WorkbookFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -124,14 +124,14 @@ public class FindAccountActivity extends AppCompatActivity {
                 .beginTransaction();
 
         if(selectedTab == TAB_FIND_ID) {
-            fragmentTransaction.replace(containerViewId, new FindUserIdFragment());
+            fragmentTransaction.replace(containerViewId, FindUserIdFragment.newInstance());
             findPasswordFragment = null; // 메모리 낭비 방지
         } else {
             if(findPasswordFragment != null &&
                     binding.activityFindAccountContainerView.getChildAt(0) == findPasswordFragment.getView()) {
                 return;
             }
-            findPasswordFragment = new FindPasswordFragment();
+            findPasswordFragment = FindPasswordFragment.newInstance();
             fragmentTransaction.replace(containerViewId, findPasswordFragment);
         }
 

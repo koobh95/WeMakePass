@@ -47,7 +47,7 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
         binding = ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initActivityResultLauncher();
-        replaceFragment(new LoginFragment());
+        replaceFragment(LoginFragment.newInstance());
     }
 
     /**

@@ -26,6 +26,7 @@ import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
 import com.example.wemakepass.view.auth.signUp.SignUpFragment;
+import com.example.wemakepass.view.community.CommunityFragment;
 import com.example.wemakepass.view.main.MainActivity;
 
 /**
@@ -38,6 +39,12 @@ public class LoginFragment extends Fragment {
 
     public final String ARG_IS_LOGIN = "isLogin";
     private final String TAG = "TAG_LoginFragment";
+
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
+    }
+
+    private LoginFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,7 +100,7 @@ public class LoginFragment extends Fragment {
                                 .launch(new Intent(requireContext(), FindAccountActivity.class)));
 
         binding.fragmentLoginSignUpButton.setOnClickListener(v -> {
-            ((AuthActivity)requireActivity()).addFragment(new SignUpFragment(),
+            ((AuthActivity)requireActivity()).addFragment(SignUpFragment.newInstance(),
                     R.anim.slide_from_bottom, R.anim.slide_to_bottom);
         });
     }

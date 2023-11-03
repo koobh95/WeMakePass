@@ -20,6 +20,7 @@ import com.example.wemakepass.util.DialogUtil;
 import com.example.wemakepass.util.MessageUtil;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
+import com.example.wemakepass.view.examInfo.ExamInfoFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -33,6 +34,10 @@ public class SignUpFragment extends Fragment {
     private SignUpViewModel viewModel;
 
     private final String TAG = "TAG_SignUpFragment";
+
+    public static SignUpFragment newInstance() {
+        return new SignUpFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

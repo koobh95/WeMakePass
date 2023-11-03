@@ -17,6 +17,7 @@ import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindUserIdBinding;
 import com.example.wemakepass.util.DateUtil;
 import com.example.wemakepass.util.DialogUtil;
+import com.example.wemakepass.view.community.CommunityFragment;
 
 /**
  *
@@ -28,6 +29,10 @@ public class FindUserIdFragment extends Fragment {
     private FindUserIdViewModel viewModel;
 
     private final String TAG = "TAG_FindUserIdFragment";
+
+    public static FindUserIdFragment newInstance() {
+        return new FindUserIdFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
