@@ -24,9 +24,6 @@
             android:exported="false"
             android:theme="@style/Theme.Splash" />
         <activity
-            android:name=".view.auth.passwordReset.PasswordResetActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.auth.findAccount.FindAccountActivity"
             android:exported="false" />
         <activity

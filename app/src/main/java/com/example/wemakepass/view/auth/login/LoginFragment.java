@@ -63,20 +63,18 @@ public class LoginFragment extends Fragment {
      * - 이 화면에서 뒤로가기를 누른다는 것은 로그인을 완료하지 않은 채 어플을 종료한다는 것을 의미한다.
      */
     private void setupOnBackPressedListener(){
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                requireActivity().finish();
-            }
-        };
-
         requireActivity()
                 .getOnBackPressedDispatcher()
-                .addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+                .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        requireActivity().finish();
+                    }
+                });
     }
 
     /**
-     * Fragment가 시작할 때 View들에 기본적으로 세팅해줘야 하는 데이터를 탐색 후 세팅한다.
+     * Fragment가 시작할 때 View에 세팅해줘야 하는 데이터를 탐색 후 세팅한다.
      */
     private void setupViews(){
         boolean isStoredId = AppConfig.AuthPreference.isStoredId();
@@ -91,7 +89,8 @@ public class LoginFragment extends Fragment {
      */
     private void setupEventListener(){
         binding.fragmentLoginFindAccountButton.setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), FindAccountActivity.class)));
+                        ((AuthActivity)requireActivity()).getActivityResultLauncher()
+                                .launch(new Intent(requireContext(), FindAccountActivity.class)));
 
         binding.fragmentLoginSignUpButton.setOnClickListener(v -> {
             ((AuthActivity)requireActivity()).addFragment(new SignUpFragment(),
@@ -106,9 +105,8 @@ public class LoginFragment extends Fragment {
         /**
          * ViewModel이 비지니스 로직 처리 과정에서 발생하는 메시지가 발생할 경우 출력한다.
          */
-        viewModel.getSystemMessageLiveData().observe(this, systemMessage -> {
-            DialogUtil.showAlertDialog(requireContext(), systemMessage);
-        });
+        viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
+            DialogUtil.showAlertDialog(requireContext(), systemMessage));
 
         /**
          * ViewModel-Repository 에서 네트워크 작업을 수행하다가 에러가 발생하는 것을 감지한다.

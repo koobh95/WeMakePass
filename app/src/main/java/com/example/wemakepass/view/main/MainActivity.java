@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityMainBinding;
+import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.community.CommunityFragment;
 import com.example.wemakepass.view.examInfo.ExamInfoFragment;
 import com.example.wemakepass.view.home.HomeFragment;
@@ -42,14 +43,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setupBottomNavigation();
+
+        startActivity(new Intent(this, AuthActivity.class));
     }
 
     /**
      * - BottomNavigationView에 대한 설정을 수행한다.
      * - 메뉴 첫 번째에 위치한 HomeFragment가 Activity에 진입한 후 가장 먼저 표시되므로 HomeFragment를
      *  객체화하여 Container에 추가한다.
-     * - HomeFragment를 제외한 나머지는 사용자에 의해 선택되지 않을 가능성이 있다. 따라서 사용자가 해당 메뉴를
-     *  선택할 경우애만 객체화를 수행하도록 하여 쓸데없는 메모리 낭비를 최소화하고자 했다.
+     * - HomeFragment를 제외한 나머지 3개(ExamInfo, Community, Workbook)는 사용자에 의해 선택될 수도 있고
+     *  선택되지 않을 수도 있다. 따라서 사용자가 해당 메뉴를 선택할 경우애만 객체화를 수행하도록 하여 쓸데없는
+     *  메모리 낭비를 최소화한다.
+     * - 마지막 메뉴인 MyInfo를 선택하면 MyInfoActivity를 실행한다.
      */
     private void setupBottomNavigation() {
         BottomNavigationView bottomNav = binding.activityMainBottomNavigationView;
@@ -79,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * - ContainerView에 Parameter로 들어온 Fragment를 부착한다.
-     * - 이 메서드는 최소 1번, 최대 5번 호출된다. Fragment들은 관련 Menu가 선택되지 않는 이상 객체화되지 않고
+     * - 이 메서드는 최소 1번, 최대 4번 호출된다. Fragment들은 관련 Menu가 선택되지 않는 이상 객체화되지 않고
      *  Container에 add 될 일도 없기 때문이다. 또한 한 번 add되면 show, hide되는 일은 있어도 replace, remove
      *  되는 일은 없다.
      *

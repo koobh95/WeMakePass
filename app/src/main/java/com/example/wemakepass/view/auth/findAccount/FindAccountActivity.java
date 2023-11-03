@@ -1,5 +1,6 @@
 package com.example.wemakepass.view.auth.findAccount;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.metrics.Event;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -43,7 +45,6 @@ public class FindAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFindAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setupToolbar();
         setupTabLayout();
     }
@@ -60,13 +61,13 @@ public class FindAccountActivity extends AppCompatActivity {
     }
 
     /**
-     * - TabLayout에 대한 전반적인 설정을 수행하는 메서드다.
+     * - TabLayout에 대한 초기 설정을 수행한다.
      * - strings.xml에 작성해놓은 Tab 이름들을 불러와 세팅한 뒤 탭이 선택되었을 때 호출되는 콜백 리스너를 작성한다.
      * - 아이디 찾기 상태에서 비밀번호 찾기로의 전환에는 제약은 없다. 반대로 비밀번호 찾기를 수행할 때 인증이
      *  진행 중이라면 인증이 초기화됨을 경고하는 Dialog를 출력하여 정말로 종료할 것인지 여부를 묻는다.
      *
      * - 특이점으로 TabIndicator를 제어하는데 실패했다. 비밀번호 찾기가 수행되고 있을 때 아이디 찾기를 누르면
-     *  탭을 가리키는 Indicator가 이동되기 전에 탭 전환 여부를 먼저 따지고 싶었는데 탭을 선택하는 순간 무조건
+     *  탭을 가리키는 Indicator가 이동되기 전에 탭 전환 여부를 먼저 확인하고 싶었는데 탭을 선택하는 순간 무조건
      *  indicator가 이동했다. 각 Tab에 직접 OnClick, OnTouchListener를 부착하는 등의 여러 시도를 해봤지만
      *  실패했다. 다만 기능상 문제가 있는 것은 아니다.
      */
@@ -93,7 +94,6 @@ public class FindAccountActivity extends AppCompatActivity {
                             });
                     return;
                 }
-
                 replaceFragment();
             }
 
@@ -137,5 +137,4 @@ public class FindAccountActivity extends AppCompatActivity {
 
         fragmentTransaction.commit();
     }
-
 }

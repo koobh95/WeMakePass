@@ -1,11 +1,13 @@
 package com.example.wemakepass.view.auth.findAccount.password;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.ViewUtils;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,14 +19,18 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindPasswordBinding;
 import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
-import com.example.wemakepass.view.auth.passwordReset.PasswordResetActivity;
+import com.example.wemakepass.view.auth.AuthActivity;
 
+/**
+ * 비밀번호 변경을 위한 인증 수행을 담당하는 Fragment
+ *
+ * @author BH-Ku
+ * @since 2023-10-27
+ */
 public class FindPasswordFragment extends Fragment {
     private FragmentFindPasswordBinding binding;
     private FindPasswordViewModel viewModel;
 
-    public static final String ARG_USER_ID = "userId";
     private final String TAG = "TAG_FindPasswordFragment";
 
     @Override
@@ -44,22 +50,24 @@ public class FindPasswordFragment extends Fragment {
         setupObserver();
     }
 
+    /**
+     * 실행 결과를 전달하지 않기 때문에 finish()로 Activity를 종료한다.
+     */
     private void setupOnBackPressedListener(){
-        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if(isRunningTimer()){
-                    showShutdownConfirmDialog();
-                    return;
-                }
-
-                requireActivity().finish();
-            }
-        };
-
         requireActivity()
                 .getOnBackPressedDispatcher()
-                .addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+                .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if(isRunningTimer()){
+                            DialogUtil.showConfirmDialog(requireContext(),
+                                    "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
+                                    dialog -> requireActivity().finish());
+                            return;
+                        }
+                        requireActivity().finish();
+                    }
+                });
     }
 
     /**
@@ -102,29 +110,29 @@ public class FindPasswordFragment extends Fragment {
         });
 
         /**
-         * - 인증이 완료된 경우, 현재 Fragment를 가진 Activity를 종료하고 PasswordResetActivity를 실행한다.
-         * - 비밀번호를 변경할 때 사용할 식별자인 userId를 전달.
+         * - 인증이 완료된 경우, 현재 Fragment가 부착된 FindAccountActivity를 종료하면서 이전 Activity인
+         *  AuthActivity로 PasswordResetFragment 실행 여부(boolean), 변경할 계정의 아이디를 전달한다.
          */
         viewModel.getIsConfirmLiveData().observe(this, aBoolean -> {
             DialogUtil.showAlertDialog(requireContext(),
                     "인증되었습니다. 비밀번호 변경 화면으로 이동합니다.",
                     dialog -> {
                         dialog.dismiss();
-                        Intent intent = new Intent(requireContext(), PasswordResetActivity.class);
-                        intent.putExtra(ARG_USER_ID, viewModel.getIdLiveData().getValue());
-                        requireActivity().startActivity(intent);
+                        Intent intent = new Intent();
+                        intent.putExtra(AuthActivity.ARG_PASSWORD_RESET, true);
+                        intent.putExtra(AuthActivity.ARG_USER_ID, viewModel.getIdLiveData().getValue());
+                        requireActivity().setResult(AuthActivity.CODE_PASSWORD_RESET, intent);
                         requireActivity().finish();
                     });
         });
     }
 
+    /**
+     * 인증이 진행 중인지 확인한다.
+     *
+     * @return
+     */
     public boolean isRunningTimer(){
         return viewModel.isRunningTimer();
-    }
-
-    public void showShutdownConfirmDialog(){
-        DialogUtil.showConfirmDialog(requireContext(),
-                "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
-                dialog -> requireActivity().finish());
     }
 }
