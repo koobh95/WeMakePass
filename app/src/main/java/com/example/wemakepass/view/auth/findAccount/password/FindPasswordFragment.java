@@ -60,9 +60,7 @@ public class FindPasswordFragment extends Fragment {
                     @Override
                     public void handleOnBackPressed() {
                         if(isRunningTimer()){
-                            DialogUtil.showConfirmDialog(requireContext(),
-                                    "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
-                                    dialog -> requireActivity().finish());
+                            showShutdownConfirmDialog();
                             return;
                         }
                         requireActivity().finish();
@@ -134,5 +132,11 @@ public class FindPasswordFragment extends Fragment {
      */
     public boolean isRunningTimer(){
         return viewModel.isRunningTimer();
+    }
+
+    public void showShutdownConfirmDialog(){
+        DialogUtil.showConfirmDialog(requireContext(),
+                "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
+                dialog -> requireActivity().finish());
     }
 }
