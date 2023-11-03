@@ -52,7 +52,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_find_user_id_request_button"
             android:layout_width="match_parent"
-            android:onClick="@{viewModel.onSendMailButtonClick}"
+            android:onClick="@{viewModel::onSendMailButtonClick}"
             android:layout_height="60dp"
             android:text="이메일 전송하기"
             app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_email_edit_text" />
