@@ -203,8 +203,9 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_sign_up_button"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_large_height"
+            android:layout_height="@dimen/button_height"
             android:onClick="@{viewModel::onSignUpButtonClick}"
+            android:background="@drawable/bg_btn_r15_c_ship_cove"
             android:text="회원가입"
             android:textSize="@dimen/font_size_large"
             app:layout_constraintBottom_toBottomOf="parent"

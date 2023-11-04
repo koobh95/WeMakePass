@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
         android:background="@color/baltic_sea"
+        android:clickable="true"
         android:padding="10dp"
         tools:context=".view.auth.findAccount.id.FindUserIdFragment">
 
@@ -42,18 +42,20 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
+            android:hint="이메일"
+            android:inputType="textEmailAddress"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text="@={viewModel.emailLiveData}"
-            android:hint="이메일"
-            android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_tooltip_text_view" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/fragment_find_user_id_request_button"
             android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_r15_c_mine_shaft_approx"
             android:onClick="@{viewModel::onSendMailButtonClick}"
-            android:layout_height="60dp"
             android:text="이메일 전송하기"
             app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_email_edit_text" />
 
