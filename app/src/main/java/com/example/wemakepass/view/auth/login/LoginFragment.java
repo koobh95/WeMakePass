@@ -32,6 +32,8 @@ import com.example.wemakepass.view.main.MainActivity;
 /**
  * 로그인을 수행하는 Fragment.
  *
+ * @author BH-Ku
+ * @since 2023-07-10
  */
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;

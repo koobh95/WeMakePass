@@ -20,6 +20,7 @@ import com.example.wemakepass.util.DialogUtil;
 import com.example.wemakepass.view.community.CommunityFragment;
 
 /**
+ * 아이디 찾기를 수행하는 Fragment.
  *
  * @author BH-Ku
  * @since 2023-10-27

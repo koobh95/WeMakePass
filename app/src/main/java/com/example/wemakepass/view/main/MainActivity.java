@@ -9,11 +9,10 @@ import android.os.Bundle;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityMainBinding;
-import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.community.CommunityFragment;
 import com.example.wemakepass.view.examInfo.ExamInfoFragment;
 import com.example.wemakepass.view.home.HomeFragment;
-import com.example.wemakepass.view.myInfo.MyInfoActivity;
+import com.example.wemakepass.view.accountSetting.AccountSettingActivity;
 import com.example.wemakepass.view.workbook.WorkbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         initBottomNavigationView();
-
-        startActivity(new Intent(this, AuthActivity.class));
     }
 
     /**
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 if (workbookFragment == null)
                     addFragment(workbookFragment = WorkbookFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_my_info) {
-                startActivity(new Intent(this, MyInfoActivity.class));
+                startActivity(new Intent(this, AccountSettingActivity.class));
                 return false;
             }
 

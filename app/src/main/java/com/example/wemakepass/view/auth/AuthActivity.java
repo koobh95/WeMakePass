@@ -1,7 +1,5 @@
 package com.example.wemakepass.view.auth;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
@@ -10,13 +8,12 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityAuthBinding;
 import com.example.wemakepass.listener.AttachFragmentListener;
 import com.example.wemakepass.view.auth.login.LoginFragment;
-import com.example.wemakepass.view.auth.passwordReset.PasswordResetFragment;
+import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFragment;
 
 /**
  * - 인증 관련 작업을 처리하는 Activity로서 Container View 역할을 한다.

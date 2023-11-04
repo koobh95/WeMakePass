@@ -14,6 +14,12 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
+/**
+ * EmailCertActivity의 ViewModel 클래스.
+ *
+ * @author BH-Ku
+ * @since 2023-10-24
+ */
 public class EmailCertViewModel extends BaseViewModel {
     private SingleLiveEvent<String> codeLiveData, timerLiveData;
     private SingleLiveEvent<Boolean> isTimeOver;

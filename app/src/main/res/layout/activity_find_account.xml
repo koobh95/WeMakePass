@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_find_account_toolbar"
         app:tabIndicatorColor="@color/ship_cove"
         app:tabIndicatorFullWidth="true"
-        app:tabTextAppearance="@style/TabLayout.Tab.TextAppearance.Large"
+        app:tabTextAppearance="@style/Theme.TabLayout.Tab.TextAppearance.Large"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/ship_cove" />
 

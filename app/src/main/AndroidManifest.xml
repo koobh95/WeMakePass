@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.myInfo.MyInfoActivity"
+            android:name=".view.accountSetting.AccountSettingActivity"
             android:exported="false" />
         <activity
             android:name=".view.splash.SplashActivity"

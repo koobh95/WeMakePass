@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.auth.passwordReset;
+package com.example.wemakepass.view.accountSetting.passwordReset;
 
 import android.text.TextUtils;
 
@@ -12,7 +12,7 @@ import com.example.wemakepass.util.UserInfoUtil;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
- * PasswordReset의 ViewModel 클래스.
+ * PasswordResetFragment의 ViewModel 클래스.
  *
  * @author BH-Ku
  * @since 2023-11-02

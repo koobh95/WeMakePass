@@ -1,39 +1,52 @@
-package com.example.wemakepass.view.myInfo;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+package com.example.wemakepass.view.accountSetting;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.SettingCategoryListAdapter;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.data.SettingOptionModel;
 import com.example.wemakepass.data.model.vo.SettingCategoryVO;
-import com.example.wemakepass.databinding.ActivityMyInfoBinding;
+import com.example.wemakepass.databinding.FragmentAccountSettingBinding;
+import com.example.wemakepass.view.accountSetting.nicknameChange.NicknameChangeFragment;
+import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * - 회원 정보 확인, 정보 변경 등을 수행하는 설정 화면에 해당하는 Activity다.
+ * - 사용자 계정 정보를 보여주거나 일부를 변경할 수 있는 환경을 제공하는 Fragment.
+ * - AccountSettingActivity가 실행되었을 때 가장 먼저 실행된다.
  *
  * @author BH-Ku
- * @since 2023-11-02
+ * @since 2023-11-05
  */
-public class MyInfoActivity extends AppCompatActivity {
-    private ActivityMyInfoBinding binding;
-    private MyInfoViewModel viewModel;
+public class AccountSettingFragment extends Fragment {
+    private FragmentAccountSettingBinding binding;
+
+    public static AccountSettingFragment newInstance() {
+        return new AccountSettingFragment();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_info);
-        binding.setLifecycleOwner(this);
-        viewModel = new ViewModelProvider(this).get(MyInfoViewModel.class);
-        binding.setViewModel(viewModel);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentAccountSettingBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initToolbar();
         initSettingRecyclerView();
     }
@@ -42,7 +55,8 @@ public class MyInfoActivity extends AppCompatActivity {
      * Toolbar의 NavigationButton에 대한 이벤트를 설정한다.
      */
     public void initToolbar(){
-        binding.activityMyInfoToolbar.setNavigationOnClickListener(v -> finish());
+        binding.fragmentAccountSettingToolbar.setNavigationOnClickListener(v ->
+                requireActivity().finish());
     }
 
     /**
@@ -51,11 +65,11 @@ public class MyInfoActivity extends AppCompatActivity {
     private void initSettingRecyclerView(){
         List<SettingCategoryVO> categoryList = getSettingList();
         LinearLayoutManager layoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(categoryList.size());
         SettingCategoryListAdapter adapter = new SettingCategoryListAdapter(categoryList);
-        binding.activityMyInfoSettingRecyclerView.setLayoutManager(layoutManager);
-        binding.activityMyInfoSettingRecyclerView.setAdapter(adapter);
+        binding.fragmentAccountSettingSettingRecyclerView.setLayoutManager(layoutManager);
+        binding.fragmentAccountSettingSettingRecyclerView.setAdapter(adapter);
     }
 
     /**
@@ -77,9 +91,10 @@ public class MyInfoActivity extends AppCompatActivity {
         myInfoOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setSummary("닉네임")
                 .setContent(AppConfig.UserPreference.getNickname())
-                .setOnClickListener(v -> {
-
-                })
+                .setOnClickListener(v ->
+                    ((AccountSettingActivity)requireActivity())
+                            .addFragment(NicknameChangeFragment.newInstance(),
+                                    R.anim.slide_from_bottom, R.anim.slide_to_bottom))
                 .build());
         myInfoOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setSummary("이메일")
@@ -100,13 +115,13 @@ public class MyInfoActivity extends AppCompatActivity {
         accountManageOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setContent("로그아웃")
                 .setOnClickListener(v -> {
-
+                    //
                 })
                 .build());
         accountManageOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setContent("서비스 탈퇴")
                 .setOnClickListener(v -> {
-
+                    //
                 })
                 .build());
         categoryList.add(new SettingCategoryVO(accountManageOptionList));

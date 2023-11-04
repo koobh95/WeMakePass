@@ -11,11 +11,6 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.view.workbook.WorkbookFragment;
 
-/**
- *
- * @author BH-Ku
- * @since 2023-11-02
- */
 public class HomeFragment extends Fragment {
 
     public static HomeFragment newInstance() {

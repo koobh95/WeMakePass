@@ -8,6 +8,12 @@ import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.repository.MailRepository;
 import com.example.wemakepass.util.UserInfoUtil;
 
+/**
+ * FindUserIdFragment의 ViewModel 클래스
+ *
+ * @author BH-Ku
+ * @since 2023
+ */
 public class FindUserIdViewModel extends BaseViewModel {
     private SingleLiveEvent<String> emailLiveData;
     private MailRepository mailRepository;

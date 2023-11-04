@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.accountSetting.nicknameChange.NicknameChangeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/baltic_sea"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        tools:context=".view.accountSetting.nicknameChange.NicknameChangeFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/fragment_nickname_change_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="닉네임 수정" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_nickname_change_nickname_text_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            android:theme="@style/Theme.TextInputLayout.Round10"
+            app:endIconDrawable="@drawable/baseline_close_24"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/fragment_nickname_change_toolbar">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_nickname_change_nickname_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="10"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/nickname_guidelines"
+            android:id="@+id/fragment_nickname_change_guide_text_view"
+            app:layout_constraintTop_toBottomOf="@id/fragment_nickname_change_nickname_text_layout" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

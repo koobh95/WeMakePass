@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.auth.passwordReset;
+package com.example.wemakepass.view.accountSetting.passwordReset;
 
 import android.os.Bundle;
 
