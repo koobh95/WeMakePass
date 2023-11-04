@@ -1,5 +1,7 @@
 package com.example.wemakepass.view.auth.passwordReset;
 
+import android.text.TextUtils;
+
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.PasswordResetRequest;
@@ -9,19 +11,25 @@ import com.example.wemakepass.util.UserInfoUtil;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
+/**
+ * PasswordReset의 ViewModel 클래스.
+ *
+ * @author BH-Ku
+ * @since 2023-11-02
+ */
 public class PasswordResetViewModel extends BaseViewModel {
     private SingleLiveEvent<String> passwordLiveData, passwordReLiveData;
     private SingleLiveEvent<String> passwordErrMsgLiveData, passwordReErrMsgLiveData;
 
     private Disposable passwordResetDisposable;
     private UserRepository userRepository;
-    private UserInfoUtil userUtil;
+    private UserInfoUtil userInfoUtil;
 
     private final AES256Util aes256Util = AES256Util.getInstance();
 
     public PasswordResetViewModel(){
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtil();
     }
 
     /**
@@ -35,17 +43,56 @@ public class PasswordResetViewModel extends BaseViewModel {
         if(passwordResetDisposable != null && !passwordResetDisposable.isDisposed())
             return;
 
-        if(userUtil.isValidPassword(passwordLiveData.getValue(), passwordErrMsgLiveData)
-                && userUtil.isValidPassword(passwordReLiveData.getValue(), passwordReErrMsgLiveData)
-                && userUtil.passwordEquals(passwordLiveData.getValue(),
-                passwordReLiveData.getValue(), passwordReErrMsgLiveData)){
-
+        if(isValidPassword(passwordLiveData.getValue(), passwordErrMsgLiveData)
+                && isValidPassword(passwordReLiveData.getValue(), getPasswordReErrMsgLiveData())
+                && passwordEquals()){
             PasswordResetRequest passwordResetRequestDTO = new PasswordResetRequest(
                     aes256Util.encrypt(userId),
                     aes256Util.encrypt(passwordLiveData.getValue()));
             addDisposable(passwordResetDisposable =
                     userRepository.requestPasswordReset(passwordResetRequestDTO));
         }
+    }
+
+    /**
+     * Password에 대한 검증을 수행한다.
+     *
+     * @return
+     */
+    private boolean isValidPassword(String password, SingleLiveEvent<String> errMsgLiveData) {
+        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
+
+        errMsgLiveData.setValue("");
+
+        if(TextUtils.isEmpty(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_EMPTY);
+        else if(!validator.isValidFormat(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_FORMAT);
+        else if(!validator.isValidConditions(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_CONDITIONS);
+        else if(!validator.inRange(password.length()))
+            errMsgLiveData.setValue(validator.ERR_MSG_RANGE);
+
+        return TextUtils.isEmpty(errMsgLiveData.getValue());
+    }
+
+    /**
+     *  Password 일치 여부를 검증한다. 이 메서드는 두 Password에 대한 검증을 마친 상태에서 호출되기 때문에
+     * null 여부는 검증하지 않는다.
+     *
+     * @return
+     */
+    private boolean passwordEquals() {
+        final String password = passwordLiveData.getValue();
+        final String passwordRe = passwordReLiveData.getValue();
+
+        passwordReErrMsgLiveData.setValue("");
+
+        if(!password.equals(passwordRe)){
+            passwordReErrMsgLiveData.setValue(UserInfoUtil.PasswordValidator.ERR_MSG_MISMATCH);
+            return false;
+        }
+        return true;
     }
 
     public SingleLiveEvent<String> getPasswordLiveData() {

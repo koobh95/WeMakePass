@@ -9,6 +9,9 @@ import com.example.wemakepass.data.model.dto.UserSignUpDTO;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
 import com.example.wemakepass.util.UserInfoUtil;
+import com.example.wemakepass.view.main.MainViewModel;
+
+import org.w3c.dom.Text;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -26,19 +29,19 @@ public class SignUpViewModel extends BaseViewModel {
     private Disposable signUpDisposable;
 
     private UserRepository userRepository;
-    private UserInfoUtil userUtil;
+    private UserInfoUtil userInfoUtil;
     private final AES256Util aes256Util = AES256Util.getInstance();
 
     private final String TAG = "TAG_SignUpViewModel";
 
     public SignUpViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtil();
     }
 
     /**
      * - 회원가입 버튼을 눌렀을 때 호출되는 콜백 메서드로 xml에서 바인딩되어 있다.
-     * - Disposable 객체를 통해 회원가입 요청이 진행 중인이 확인한 후 진행 중이라면 메서드를 종료한다.
+     * - Disposable 객체를 통해 회원가입 요청이 진행 중인이 확인한 후 진행 중이라면 요청을 수행하지 않는다.
      * - EditText에 있는 값들의 유효성을 체크하여 유효할 경우 데이터를 암호화하여 Repository에 전달한다.
      *
      * @param view
@@ -47,15 +50,118 @@ public class SignUpViewModel extends BaseViewModel {
         if(signUpDisposable != null && !signUpDisposable.isDisposed())
             return;
 
-        if(userUtil.isValidId(idLiveData.getValue(), idErrMsgLiveData)
-                && userUtil.isValidNickname(nicknameLiveData.getValue(), nicknameErrMsgLiveData)
-                && userUtil.isValidPassword(passwordLiveData.getValue(), passwordErrMsgLiveData)
-                && userUtil.isValidPassword(passwordReLiveData.getValue(), passwordReErrMsgLiveData)
-                && userUtil.passwordEquals(passwordLiveData.getValue(),
-                    passwordReLiveData.getValue(), passwordReErrMsgLiveData)
-                && userUtil.isValidEmail(emailLiveData.getValue(), emailErrMsgLiveData)){
+        if(isValidId()
+                && isValidPassword(passwordLiveData.getValue(), passwordErrMsgLiveData)
+                && isValidPassword(passwordReLiveData.getValue(), passwordReErrMsgLiveData)
+                && passwordEquals()
+                && isValidNickname()
+                && isValidEmail()) {
             addDisposable(signUpDisposable = userRepository.requestSignUp(createUserSignUpDTO()));
         }
+    }
+
+    /**
+     * - id에 대한 검증을 수행한다.
+     * - id, password, nickname, email 모두 각 제어문마다 boolean을 리턴하기 보단 에러 메시지 라이브
+     *  데이터의 유무를 따져서 boolean으로 반환하였다. 코드를 줄이기 위함이다.
+     *
+     * @return
+     */
+    private boolean isValidId() {
+        final String id = idLiveData.getValue();
+        final UserInfoUtil.IdValidator validator = userInfoUtil.idValidator();
+
+        idErrMsgLiveData.setValue(""); // 에러 메시지 초기화
+
+        if(TextUtils.isEmpty(id))
+            idErrMsgLiveData.setValue(validator.ERR_MSG_EMPTY);
+        else if(!validator.isValidFormat(id))
+            idErrMsgLiveData.setValue(validator.ERR_MSG_FORMAT);
+        else if(!validator.inRange(id.length()))
+            idErrMsgLiveData.setValue(validator.ERR_MSG_RANGE);
+
+        return TextUtils.isEmpty(idErrMsgLiveData.getValue());
+    }
+
+    /**
+     * Password에 대한 검증을 수행한다.
+     *
+     * @return
+     */
+    private boolean isValidPassword(final String password, SingleLiveEvent<String> errMsgLiveData) {
+        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
+
+        errMsgLiveData.setValue("");
+
+        if(TextUtils.isEmpty(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_EMPTY);
+        else if(!validator.isValidFormat(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_FORMAT);
+        else if(!validator.isValidConditions(password))
+            errMsgLiveData.setValue(validator.ERR_MSG_CONDITIONS);
+        else if(!validator.inRange(password.length()))
+            errMsgLiveData.setValue(validator.ERR_MSG_RANGE);
+
+        return TextUtils.isEmpty(errMsgLiveData.getValue());
+    }
+
+    /**
+     *  Password 일치 여부를 검증한다. 이 메서드는 두 Password에 대한 검증을 마친 상태에서 호출되기 때문에
+     * null 여부는 검증하지 않는다.
+     *
+     * @return
+     */
+    private boolean passwordEquals() {
+        final String password = passwordLiveData.getValue();
+        final String passwordRe = passwordReLiveData.getValue();
+
+        passwordReErrMsgLiveData.setValue("");
+
+        if(!password.equals(passwordRe)){
+            passwordReErrMsgLiveData.setValue(UserInfoUtil.PasswordValidator.ERR_MSG_MISMATCH);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Nickname에 대한 검증을 수행한다.
+     *
+     * @return
+     */
+    private boolean isValidNickname() {
+        final String nickname = nicknameLiveData.getValue();
+        final UserInfoUtil.NicknameValidator validator = userInfoUtil.nicknameValidator();
+
+        nicknameErrMsgLiveData.setValue("");
+
+        if(TextUtils.isEmpty(nickname))
+            nicknameErrMsgLiveData.setValue(validator.ERR_MSG_EMPTY);
+        else if(!validator.isValidFormat(nickname))
+            nicknameErrMsgLiveData.setValue(validator.ERR_MSG_FORMAT);
+        else if(!validator.inRange(nickname.length()))
+            nicknameErrMsgLiveData.setValue(validator.ERR_MSG_RANGE);
+
+        return TextUtils.isEmpty(nicknameErrMsgLiveData.getValue());
+    }
+
+    /**
+     * Email에 대한 검증을 수행한다.
+     *
+     * @return
+     */
+    private boolean isValidEmail(){
+        final String email = emailLiveData.getValue();
+        final UserInfoUtil.EmailValidator validator = userInfoUtil.emailValidator();
+
+        emailErrMsgLiveData.setValue("");
+
+        if(TextUtils.isEmpty(email))
+            emailErrMsgLiveData.setValue(validator.ERR_MSG_EMPTY);
+        else if(!validator.isValidFormat(email))
+            emailErrMsgLiveData.setValue(validator.ERR_MSG_FORMAT);
+
+        return TextUtils.isEmpty(emailErrMsgLiveData.getValue());
     }
 
     /**

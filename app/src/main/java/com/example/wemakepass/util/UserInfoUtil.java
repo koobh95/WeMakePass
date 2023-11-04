@@ -1,147 +1,152 @@
 package com.example.wemakepass.util;
 
-import android.text.TextUtils;
-
-import com.example.wemakepass.common.SingleLiveEvent;
+import java.util.Locale;
 
 /**
- * - User 데이터 관련 검증, 비교 등의 작업을 수행하는 유틸리티 클래스다.
- * - 아이디 형식, 비밀번호 형식, 닉네임 형식, 메일 형식 등을 검증한다.
- * - ErrorMessage를 즉시 라이브 데이터에 세팅할 수 있도록 파라미터로 받고 있기 때문에 사용할 수 있는 곳이
- *  한정적이다. SignUpFragment, PasswordResetActivity 등에서 사용된다.
+ * - User 데이터 관련 검증을 수행하는 유틸리티 클래스다.
+ * - 아이디, 비밀번호, 닉네임, 메일 등을 검증한다.
  *
  * @author BH-Ku
- * @since 2023-06-05
+ * @since 2023-11-04
  */
 public class UserInfoUtil {
+    private IdValidator idValidator;
+    private PasswordValidator passwordValidator;
+    private NicknameValidator nicknameValidator;
+    private EmailValidator emailValidator;
+
+    private final String FORMAT_RANGE_ERROR = "%d자 이상 %d자 이하여야 합니다.";
+
     /**
-     * ID 형식을 검증한다.
+     * - Id를 검증할 때 사용할 IdValidator를 반환하는 메서드다.
+     * - 이 메서드를 포함하여 아래 패스워드, 닉네임, 메일 관련 검증 객체를 한 화면에서 모두 사용하지 않을 수도
+     *  있기 때문에 초기에 모두 할당하지 않고 필요에 의해 호출될 경우에만 객체를 할당하도록 하였다.
      *
-     * 검증 조건
-     * 1. ID Null, Empty 여부
-     * 2. a-z, A-Z, 0~9 외에는 포함될 수 없음.
-     * 3. 6자 이상 20자 이하
-     *
-     * @param id 검증할 값
-     * @param errMsgLiveData TextInputLayout에 표시될 에러 메시지 라이브 데이터 참조
      * @return
      */
-    public boolean isValidId(String id, SingleLiveEvent<String> errMsgLiveData) {
-        if(TextUtils.isEmpty(id)) {
-            errMsgLiveData.setValue("아이디를 입력해주세요.");
-            return false;
-        } else if (!id.matches("^[\\d|a-zA-Z]*$")){
-            errMsgLiveData.setValue("숫자 혹은 영문 대소문자만 가능합니다.");
-            return false;
-        } else if(id.length() < 6){
-            errMsgLiveData.setValue("6자 이상 20자 이하로 입력해주세요.");
-            return false;
-        }
-
-        errMsgLiveData.setValue("");
-        return true;
+    public IdValidator idValidator() {
+        if(idValidator == null)
+            idValidator = new IdValidator();
+        return idValidator;
     }
 
     /**
-     * Nickname 형식을 검증한다.
+     * Password를 검증할 때 사용할 IdValidator를 반환하는 메서드다.
      *
-     * 검증 조건
-     * 1. Nickname Null, Empty 여부
-     * 2. 한글, 숫자, 영문 외에는 포함될 수 없음.
-     * 3. 문자열 길이 4바이트 이상, 16바이트 이하(한글은 2byte, 영어는 1byte이기 때문에 length가 아닌 byte로 검사)
-     *
-     * @param nickname 검증할 값
-     * @param errMsgLiveData TextInputLayout에 표시될 에러 메시지 라이브 데이터 참조
      * @return
      */
-    public boolean isValidNickname(String nickname, SingleLiveEvent<String> errMsgLiveData) {
-        if(TextUtils.isEmpty(nickname)) {
-            errMsgLiveData.setValue("닉네임을 입력해주세요.");
-            return false;
-        } else if (!nickname.matches("^[\\d|가-힣|a-zA-Z]*$")) {
-            errMsgLiveData.setValue("한글, 숫자, 영문 대소문자만 입력 가능합니다.");
-            return false;
-        } else if(nickname.getBytes().length < 4) {
-            errMsgLiveData.setValue("길이가 너무 짧습니다.");
-            return false;
-        }
-
-        errMsgLiveData.setValue("");
-        return true;
+    public PasswordValidator passwordValidator() {
+        if(passwordValidator == null)
+            passwordValidator = new PasswordValidator();
+        return passwordValidator;
     }
 
     /**
-     * Password 형식을 검증한다.
+     * Nickname을 검증할 때 사용할 IdValidator를 반환하는 메서드다.
      *
-     * 검증 조건
-     * 1. Password Null, Empty 여부
-     * 2. 숫자, 영어(a-z, A-Z), 특수문자(!@#$%^&*) 외에는 포함될 수 없음.
-     * 3. 최소 10자 이상, 최대 길이는 코드로 제한.
-     * 4. 문자열에 숫자, 영어, 특수 문자 중 2개 이상 혼합
-     *
-     * @param password 검증할 값
-     * @param errMsgLiveData TextInputLayout에 표시될 에러 메시지 라이브 데이터 참조
      * @return
      */
-    public boolean isValidPassword(String password, SingleLiveEvent<String> errMsgLiveData) {
-        if(TextUtils.isEmpty(password)){
-            errMsgLiveData.setValue("비밀번호를 입력해주세요.");
-            return false;
-        } else if(password.length() < 10){
-            errMsgLiveData.setValue("10자 이상 20자 이하입니다.");
-            return false;
-        } else if(!password.matches("^[\\d|가-힣|a-zA-Z|!@#$%^&*]*$")){
-            errMsgLiveData.setValue("숫자, 영문, 특수 문자(!@#$%^&*)만 사용 가능합니다.");
-            return false;
-        } else if(!password.matches("^.*(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).*$")) {
-            errMsgLiveData.setValue("숫자, 영문, 특수 문자를 모두 포함해야 합니다.");
-            return false;
-        }
-
-        errMsgLiveData.setValue("");
-        return true;
+    public NicknameValidator nicknameValidator() {
+        if(nicknameValidator == null)
+            nicknameValidator = new NicknameValidator();
+        return nicknameValidator;
+    }
+    /**
+     * Email을 검증할 때 사용할 IdValidator를 반환하는 메서드다.
+     *
+     * @return
+     */
+    public EmailValidator emailValidator() {
+        if(emailValidator == null)
+            emailValidator = new EmailValidator();
+        return emailValidator;
     }
 
     /**
-     * 패드워드가 같은지 확인
-     *
-     * @param password 검증할 값 1
-     * @param passwordRe 검증할 값 2
-     * @param errMsgLiveData TextInputLayout에 표시될 에러 메시지 라이브 데이터 참조
-     * @return
+     * ID 관련 검증 메서드, 에러 메시지를 가지는 클래스.
      */
-    public boolean passwordEquals(String password, String passwordRe,
-                                  SingleLiveEvent<String> errMsgLiveData) {
-        if(!password.equals(passwordRe)){
-            errMsgLiveData.setValue("비밀번호가 서로 다릅니다.");
-            return false;
+    public class IdValidator {
+        private final int MIN_LEN = 6;
+        private final int MAX_LEN = 20;
+
+        public final String ERR_MSG_FORMAT = "숫자 혹은 영문 대소문자만 가능합니다.";
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+        public final String ERR_MSG_EMPTY = "아이디를 입력해주세요.";
+
+        // Check ID Format
+        public boolean isValidFormat(String id) {
+            return id.matches("^[\\d|a-zA-Z]*$");
         }
 
-        errMsgLiveData.setValue("");
-        return true;
+        // Check range
+        public boolean inRange(int idLen) {
+            return idLen >= MIN_LEN && idLen <= MAX_LEN;
+        }
     }
 
     /**
-     * Email의 형식을 검증한다.
-     *
-     * 검증 조건
-     * 1. Email Null, Empty 여부
-     * 2. 이메일을
-     *
-     * @param email 검증할 값
-     * @param errMsgLiveData TextInputLayout에 표시될 에러 메시지 라이브 데이터 참조
-     * @return
+     * Password 관련 검증 메서드, 에러 메시지를 가지는 클래스.
      */
-    public boolean isValidEmail(String email, SingleLiveEvent<String> errMsgLiveData) {
-        if(TextUtils.isEmpty(email)){
-            errMsgLiveData.setValue("이메일을 입력해주세요.");
-            return false;
-        } else if (!email.matches("^\\w+@\\w+\\.\\w+(\\.\\w+)?$")) { // email format
-            errMsgLiveData.setValue("이메일 형식을 확인해주세요.");
-            return false;
+    public class PasswordValidator {
+        private final int MIN_LEN = 10;
+        private final int MAX_LEN = 20;
+
+        public final String ERR_MSG_FORMAT = "숫자, 영문, 특수 문자(!@#$%^&*)만 사용 가능합니다.";
+        public final String ERR_MSG_CONDITIONS = "숫자, 영문, 특수 문자를 모두 포함해야 합니다.";
+        public final String ERR_MSG_EMPTY = "비밀번호를 입력해주세요.";
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+
+        // 외부에서 바로 호출할 수 있도록 public 으로 설정.
+        public static final String ERR_MSG_MISMATCH = "비밀번호가 서로 다릅니다.";
+
+        // Check Password Format
+        public boolean isValidFormat(String password) {
+            return password.matches("^[\\d|가-힣|a-zA-Z|!@#$%^&*]*$");
         }
 
-        errMsgLiveData.setValue("");
-        return true;
+        // Check Password Conditions
+        public boolean isValidConditions(String password) {
+            return password.matches("^.*(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).*$");
+        }
+
+        // Check range
+        public boolean inRange(int passwordLen) {
+            return passwordLen >= MIN_LEN && passwordLen <= MAX_LEN;
+        }
+    }
+
+    /**
+     * Nickname 관련 검증 메서드, 에러 메시지를 가지는 클래스.
+     */
+    public class NicknameValidator {
+        private final int MIN_LEN = 2;
+        private final int MAX_LEN = 10;
+
+        public final String ERR_MSG_FORMAT = "한글, 숫자, 영문 대소문자만 입력 가능합니다.";
+        public final String ERR_MSG_EMPTY = "닉네임을 입력해주세요.";
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+
+        // Check Nickname Format
+        public boolean isValidFormat(String nickname) {
+            return nickname.matches("^[\\d|가-힣|a-zA-Z]*$");
+        }
+
+        // Check range
+        public boolean inRange(int nicknameLen) {
+            return nicknameLen >= MIN_LEN && nicknameLen <= MAX_LEN;
+        }
+    }
+
+    /**
+     * Email 관련 검증 메서드, 에러 메시지를 가지는 클래스.
+     */
+    public class EmailValidator {
+        public final String ERR_MSG_FORMAT = "이메일 형식을 확인해주세요.";
+        public final String ERR_MSG_EMPTY = "이메일을 입력해주세요.";
+
+        // Check Email Format
+        public boolean isValidFormat(String email) {
+            return email.matches("^\\w+@\\w+\\.\\w+(\\.\\w+)?$");
+        }
     }
 }

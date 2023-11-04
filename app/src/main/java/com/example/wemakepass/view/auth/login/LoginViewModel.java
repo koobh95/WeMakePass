@@ -11,6 +11,7 @@ import com.example.wemakepass.data.model.dto.LoginRequest;
 import com.example.wemakepass.data.model.dto.UserInfoDTO;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
+import com.example.wemakepass.util.UserInfoUtil;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -25,20 +26,23 @@ public class LoginViewModel extends BaseViewModel {
     private Disposable loginDisposable;
 
     private final UserRepository userRepository;
-    private final AES256Util aes256Util = AES256Util.getInstance();
+    private final AES256Util aes256Util;
+    private final UserInfoUtil userInfoUtil;
 
     private final String TAG = "TAG_LoginViewModel";
 
     public LoginViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
+        aes256Util = AES256Util.getInstance();
+        userInfoUtil = new UserInfoUtil();
     }
 
     /**
      * - 로그인 버튼을 눌렀을 때 호출되는 콜백 메서드로 xml에서 바인딩되어 있다.
      * - 로그인 요청을 보냈을 때 아직 요청을 처리 중임에도 2번 연속 호출되는 것을 방지하기 위해서 로그인 요청
      *  작업에 대한 Disposable에 대한 참조를 별도로 관리하고 있다.
-     * - 로그인 요청을 보내기 전에 아이디, 비밀번호의 입력 여부와 최소 길이만 확인한 후 암호화한다. 그리고
-     *  LoginRequestDTO 클래스에 담아서 UserRepository로 전달한다.
+     * - 로그인 요청을 보내기 전에 입력된 아이디, 비밀번호에 대한 최소한의 검증만 수행한 후 암호화하여
+     *  LoginRequestDTO 클래스에 초기화하여 UserRepository로 전달한다.
      *
      * @param view
      */
@@ -46,28 +50,51 @@ public class LoginViewModel extends BaseViewModel {
         if(loginDisposable != null && !loginDisposable.isDisposed())
             return;
 
+        if(isValidId() && isValidPassword()){
+            LoginRequest loginRequestDTO = new LoginRequest(
+                    aes256Util.encrypt(idLiveData.getValue()),
+                    aes256Util.encrypt(passwordLiveData.getValue()));
+            addDisposable(loginDisposable = userRepository.requestLogin(loginRequestDTO));
+        }
+    }
+
+    /**
+     * Id에 대한 유효성을 검증하되 형식은 검사하지 않고 null 여부, 최소 최대 길이만 검증한다.
+     *
+     * @return
+     */
+    private boolean isValidId() {
         final String id = idLiveData.getValue();
-        final String password = passwordLiveData.getValue();
+        final UserInfoUtil.IdValidator validator = userInfoUtil.idValidator();
 
         if(TextUtils.isEmpty(id)) {
-            systemMessageLiveData.setValue("아이디를 입력해주세요.");
-            return;
-        } else if(id.length() < 6) {
-            systemMessageLiveData.setValue("아이디는 최소 6자 이상입니다.");
-            return;
+            systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);
+            return false;
+        } else if(!validator.inRange(id.length())) {
+            systemMessageLiveData.setValue("아이디는 " + validator.ERR_MSG_RANGE);
+            return false;
         }
+
+        return true;
+    }
+
+    /**
+     * Password에 대한 유효성을 검증하되 형식은 검사하지 않고 null 여부, 최소 최대 길이만 검증한다.
+     *
+     * @return
+     */
+    private boolean isValidPassword() {
+        final String password = passwordLiveData.getValue();
+        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
 
         if(TextUtils.isEmpty(password)) {
-            systemMessageLiveData.setValue("비밀번호를 입력해주세요.");
-            return;
-        } else if(password.length() < 10) {
-            systemMessageLiveData.setValue("비밀번호는 최소 10자 이상입니다.");
-            return;
+            systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);
+            return false;
+        } else if(!validator.inRange(password.length())) {
+            systemMessageLiveData.setValue("비밀번호는 " + validator.ERR_MSG_RANGE);
+            return false;
         }
-
-        LoginRequest loginRequestDTO = new LoginRequest(
-                aes256Util.encrypt(id), aes256Util.encrypt(password));
-        addDisposable(loginDisposable = userRepository.requestLogin(loginRequestDTO));
+        return true;
     }
 
     /**

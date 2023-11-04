@@ -80,9 +80,12 @@ public class PasswordResetFragment extends Fragment {
                     public void handleOnBackPressed() {
                         DialogUtil.showConfirmDialog(requireContext(),
                                 "이 화면을 나가면 인증정보가 초기화됩니다. 나가시겠습니까?",
-                                dialog -> requireActivity()
-                                        .getSupportFragmentManager()
-                                        .popBackStack());
+                                dialog -> {
+                                    dialog.dismiss();
+                                    requireActivity()
+                                            .getSupportFragmentManager()
+                                            .popBackStack();});
+
                     }
                 });
     }
