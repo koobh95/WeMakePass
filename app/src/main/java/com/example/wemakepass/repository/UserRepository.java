@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
+import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.dto.JwtDTO;
 import com.example.wemakepass.data.model.dto.LoginRequest;
 import com.example.wemakepass.data.model.dto.PasswordResetRequest;
@@ -27,7 +28,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class UserRepository extends BaseRepository {
     private SingleLiveEvent<UserInfoDTO> userInfoLiveData;
     private SingleLiveEvent<JwtDTO> jwtLiveData;
-    private SingleLiveEvent<Boolean> isSignUpLiveData, isPasswordResetCompleteLiveData;
+    private SingleLiveEvent<Boolean> isConfirmLiveData;
     private UserAPI userAPI;
 
     private final String TAG = "TAG_UserRepository";
@@ -96,7 +97,7 @@ public class UserRepository extends BaseRepository {
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                     if(response.isSuccessful()) {
-                        isSignUpLiveData.setValue(true);
+                        isConfirmLiveData.setValue(true);
                     } else {
                         ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
                         networkErrorLiveData.setValue(errorResponse);
@@ -109,8 +110,7 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
-     * 비밀번호 변경
-     * 식별자가 될 아이디, 비밀번호를 ㅂ
+     * 식별용 아이디, 새로운 비밀번호를 받아 비밀번호 변경을 요청한다.
      *
      * @param passwordResetRequest
      * @return
@@ -121,7 +121,31 @@ public class UserRepository extends BaseRepository {
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                     if(response.isSuccessful()) {
-                        isPasswordResetCompleteLiveData.setValue(true);
+                        isConfirmLiveData.setValue(true);
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.d(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                });
+    }
+
+    /**
+     * 새로운 닉네임을 파라미터로 받아 닉네임 변경을 요청한다.
+     *
+     * @param newNickname
+     * @return
+     */
+    public Disposable requestNicknameChange(String newNickname) {
+        return userAPI.nicknameChange(newNickname)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()) {
+                        isConfirmLiveData.setValue(true);
                     } else {
                         ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
                         networkErrorLiveData.setValue(errorResponse);
@@ -145,15 +169,9 @@ public class UserRepository extends BaseRepository {
         return userInfoLiveData;
     }
 
-    public SingleLiveEvent<Boolean> getIsSignUpLiveData() {
-        if(isSignUpLiveData == null)
-            isSignUpLiveData = new SingleLiveEvent<>();
-        return isSignUpLiveData;
-    }
-
-    public SingleLiveEvent<Boolean> getIsPasswordResetCompleteLiveData() {
-        if(isPasswordResetCompleteLiveData == null)
-            isPasswordResetCompleteLiveData = new SingleLiveEvent<>();
-        return isPasswordResetCompleteLiveData;
+    public SingleLiveEvent<Boolean> getIsConfirmLiveData() {
+        if(isConfirmLiveData == null)
+            isConfirmLiveData = new SingleLiveEvent<>();
+        return isConfirmLiveData;
     }
 }

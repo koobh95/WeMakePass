@@ -16,9 +16,13 @@ import retrofit2.http.POST;
  * @since 2023-10-30
  */
 public interface JwtAPI {
-    @POST("api/jwt/reissue")
+    String BASE_URI = "api/jwt/";
+
+    // 동기 토큰 재발급 요청
+    @POST(BASE_URI + "reissue")
     Call<JwtDTO> syncReissueToken(@Body JwtReissueTokenRequest jwtReissueTokenRequest);
 
-    @POST("api/jwt/reissue")
+    // 비동기 토큰 재발급 요청
+    @POST(BASE_URI + "reissue")
     Observable<Response<JwtDTO>> asyncReissueToken(@Body JwtReissueTokenRequest jwtReissueTokenRequest);
 }

@@ -253,6 +253,6 @@ public class SignUpViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent<Boolean> getIsSignUpLiveData() {
-        return userRepository.getIsSignUpLiveData();
+        return userRepository.getIsConfirmLiveData();
     }
 }

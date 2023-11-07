@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,13 @@ import java.util.List;
 public class AccountSettingFragment extends Fragment {
     private FragmentAccountSettingBinding binding;
 
+    private List<SettingCategoryVO> categoryList;
+    private SettingCategoryListAdapter settingCategoryListAdapter;
+
+    public static final String REQUEST_CODE_NICKNAME_CHANGE_FRAGMENT = "nicknameChangeFragment";
+    public static final String RESULT_KEY_NICKNAME_CHANGED = "nicknameChanged";
+    private final String TAG = "TAG_AccountSettingFragment";
+
     public static AccountSettingFragment newInstance() {
         return new AccountSettingFragment();
     }
@@ -47,8 +55,22 @@ public class AccountSettingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initFragmentResultListener();
         initToolbar();
         initSettingRecyclerView();
+    }
+
+    /**
+     * NicknameChangeFragment에서 닉네임이 변경될 경우 결과를 수신하여 RecyclerView의 닉네임을 업데이트한다.
+     */
+    public void initFragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener(
+                REQUEST_CODE_NICKNAME_CHANGE_FRAGMENT, requireActivity(),
+                (requestKey, result) -> {
+                    categoryList.get(0).getOptionList().get(1).setContent(
+                            AppConfig.UserPreference.getNickname());
+                    settingCategoryListAdapter.notifyItemChanged(0);
+                });
     }
 
     /**
@@ -67,9 +89,9 @@ public class AccountSettingFragment extends Fragment {
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(categoryList.size());
-        SettingCategoryListAdapter adapter = new SettingCategoryListAdapter(categoryList);
+        settingCategoryListAdapter = new SettingCategoryListAdapter(categoryList);
         binding.fragmentAccountSettingSettingRecyclerView.setLayoutManager(layoutManager);
-        binding.fragmentAccountSettingSettingRecyclerView.setAdapter(adapter);
+        binding.fragmentAccountSettingSettingRecyclerView.setAdapter(settingCategoryListAdapter);
     }
 
     /**
@@ -81,7 +103,7 @@ public class AccountSettingFragment extends Fragment {
      * @return
      */
     private List<SettingCategoryVO> getSettingList() {
-        List<SettingCategoryVO> categoryList = new ArrayList<>();
+        categoryList = new ArrayList<>();
 
         List<SettingOptionModel> myInfoOptionList = new ArrayList<>();
         myInfoOptionList.add(new SettingOptionModel.SettingOptionBuilder()

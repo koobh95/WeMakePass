@@ -34,7 +34,7 @@ public class PasswordResetViewModel extends BaseViewModel {
 
     /**
      * - 비밀번호 변경 버튼을 눌렀을 때 호출되는 콜백 메서드로 xml에서 바인딩되어 있다.
-     * - 입력된 비밀번호의 유효성을 확인한 후 문제가 없다면 데이터의 식별자인 user id와 비밀번호를 암호화하여
+     * - 입력된 비밀번호의 유효성을 확인한 후 문제가 없다면 데이터의 식별자인 userId와 비밀번호를 암호화하여
      *  Repository로 전달한다.
      *
      * @param userId
@@ -120,6 +120,6 @@ public class PasswordResetViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent<Boolean> getIsPasswordResetCompleteLiveData() {
-        return userRepository.getIsPasswordResetCompleteLiveData();
+        return userRepository.getIsConfirmLiveData();
     }
 }
