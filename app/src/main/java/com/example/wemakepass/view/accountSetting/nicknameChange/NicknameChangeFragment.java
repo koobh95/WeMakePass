@@ -97,7 +97,7 @@ public class NicknameChangeFragment extends Fragment {
          * 4. EditText를 Enable 상태로 변경.
          *
          */
-        viewModel.getNicknameChanged().observe(this, aBoolean -> {
+        viewModel.getNicknameChangedLiveData().observe(this, aBoolean -> {
             AppConfig.UserPreference.setNickname(viewModel.getNicknameLiveData().getValue());
             DialogUtil.showAlertDialog(requireContext(), "변경되었습니다.");
             Bundle bundle = new Bundle();

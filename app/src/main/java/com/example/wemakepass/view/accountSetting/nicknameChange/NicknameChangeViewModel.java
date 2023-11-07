@@ -1,7 +1,6 @@
 package com.example.wemakepass.view.accountSetting.nicknameChange;
 
 import android.text.TextUtils;
-import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
@@ -20,7 +19,6 @@ import io.reactivex.rxjava3.disposables.Disposable;
 public class NicknameChangeViewModel extends BaseViewModel {
     private SingleLiveEvent<String> nicknameLiveData;
     private Disposable nicknameChangeDisposable;
-    private String newNickname;
 
     private final UserRepository userRepository;
     private final UserInfoUtil userInfoUtil;
@@ -41,12 +39,12 @@ public class NicknameChangeViewModel extends BaseViewModel {
         if(nicknameChangeDisposable != null && !nicknameChangeDisposable.isDisposed())
             return false;
 
-        if(isValidNickname()) {
-            addDisposable(nicknameChangeDisposable =
-                    userRepository.requestNicknameChange(nicknameLiveData.getValue()));
-            return true;
-        }
-        return false;
+        if(!isValidNickname())
+            return false;
+
+        addDisposable(nicknameChangeDisposable =
+                userRepository.requestNicknameChange(nicknameLiveData.getValue()));
+        return true;
     }
 
     /**
@@ -61,7 +59,7 @@ public class NicknameChangeViewModel extends BaseViewModel {
      */
     public boolean isValidNickname() {
         final String nickname = nicknameLiveData.getValue();
-        final UserInfoUtil.NicknameValidator validator = userInfoUtil.nicknameValidator();
+        UserInfoUtil.NicknameValidator validator = userInfoUtil.nicknameValidator();
 
         if(TextUtils.isEmpty(nickname)) {
             systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);
@@ -86,7 +84,7 @@ public class NicknameChangeViewModel extends BaseViewModel {
         return nicknameLiveData;
     }
 
-    public SingleLiveEvent<Boolean> getNicknameChanged() {
+    public SingleLiveEvent<Boolean> getNicknameChangedLiveData() {
         return userRepository.getIsConfirmLiveData();
     }
 }

@@ -46,4 +46,9 @@ public interface UserAPI {
     @LoginRequired
     @GET(BASE_URI + "nickname_change")
     Observable<Response<String>> nicknameChange(@Query("newNickname") String newNickname);
+
+    // 현재 비밀번호 인증. 로그인 된 상태에서 비밀번호 변경을 수행할 때 사용.
+    @LoginRequired
+    @POST(BASE_URI + "password_auth")
+    Observable<Response<String>> currentPasswordAuth(@Body String currentPassword);
 }

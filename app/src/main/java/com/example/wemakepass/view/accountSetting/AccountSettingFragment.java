@@ -20,6 +20,7 @@ import com.example.wemakepass.data.model.vo.SettingCategoryVO;
 import com.example.wemakepass.databinding.FragmentAccountSettingBinding;
 import com.example.wemakepass.view.accountSetting.nicknameChange.NicknameChangeFragment;
 import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFragment;
+import com.example.wemakepass.view.auth.currentPassword.CurrentPasswordAuthFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,9 +128,10 @@ public class AccountSettingFragment extends Fragment {
         List<SettingOptionModel> accountModifyOptionList = new ArrayList<>();
         accountModifyOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setContent("비밀번호 변경")
-                .setOnClickListener(v -> {
-
-                })
+                .setOnClickListener(v ->
+                    ((AccountSettingActivity)requireActivity())
+                            .addFragment(CurrentPasswordAuthFragment.newInstance(),
+                                    R.anim.slide_from_bottom, R.anim.slide_to_bottom))
                 .build());
         categoryList.add(new SettingCategoryVO(accountModifyOptionList));
 

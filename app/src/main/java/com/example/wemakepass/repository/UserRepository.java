@@ -159,6 +159,29 @@ public class UserRepository extends BaseRepository {
                 });
     }
 
+    /**
+     * 현재 비밀번호를 검증하는 메서드
+     *
+     * @return
+     */
+    public Disposable currentPasswordAuth(String encryptedCurrentPassword) {
+        return userAPI.currentPasswordAuth(encryptedCurrentPassword)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()) {
+                        isConfirmLiveData.setValue(true);
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.d(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                });
+    }
+
     public SingleLiveEvent<JwtDTO> getJwtLiveData() {
         if(jwtLiveData == null)
             jwtLiveData = new SingleLiveEvent<>();

@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,7 @@ import com.example.wemakepass.util.MessageUtil;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
-import com.example.wemakepass.view.auth.signUp.SignUpFragment;
-import com.example.wemakepass.view.community.CommunityFragment;
+import com.example.wemakepass.view.signUp.SignUpFragment;
 import com.example.wemakepass.view.main.MainActivity;
 
 /**

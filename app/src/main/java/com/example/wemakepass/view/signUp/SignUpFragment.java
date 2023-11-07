@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.auth.signUp;
+package com.example.wemakepass.view.signUp;
 
 import android.os.Bundle;
 
@@ -20,7 +20,6 @@ import com.example.wemakepass.util.DialogUtil;
 import com.example.wemakepass.util.MessageUtil;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
-import com.example.wemakepass.view.examInfo.ExamInfoFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
