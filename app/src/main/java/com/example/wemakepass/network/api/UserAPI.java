@@ -36,7 +36,7 @@ public interface UserAPI {
     // 어플리케이션 내부에 저장해도 괜찮은 최소한의 정보로만 이루어진 유저 정보 요청
     @LoginRequired
     @GET(BASE_URI + "info")
-    Observable<Response<UserInfoDTO>> userInfo(@Query("userId") String userId);
+    Observable<Response<UserInfoDTO>> userInfo();
 
     // 비밀번호 리셋 요청
     @PUT(BASE_URI + "password_reset")

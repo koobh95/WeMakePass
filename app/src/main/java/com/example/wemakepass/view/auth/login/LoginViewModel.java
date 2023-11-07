@@ -102,7 +102,7 @@ public class LoginViewModel extends BaseViewModel {
      * - 이 메서드는 공개 가능한 최소한의 정보만을 서버에서 가져온다.
      */
     public void requestUserInfo(){
-        addDisposable(userRepository.requestUserInfo(idLiveData.getValue()));
+        addDisposable(userRepository.requestUserInfo());
     }
 
     public SingleLiveEvent<String> getSystemMessageLiveData() {

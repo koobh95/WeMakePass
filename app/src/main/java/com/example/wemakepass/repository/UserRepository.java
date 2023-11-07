@@ -65,12 +65,11 @@ public class UserRepository extends BaseRepository {
     /**
      * 일반적으로 로그인이 완료되었을 때 호출되며 앱 설정 파일에 저장할 유저 정보를 요청한다.
      *
-     * @param userId
      * @return
      */
     @LoginRequired
-    public Disposable requestUserInfo(String userId){
-        return userAPI.userInfo(userId)
+    public Disposable requestUserInfo(){
+        return userAPI.userInfo()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
