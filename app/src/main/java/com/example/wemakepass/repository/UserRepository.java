@@ -2,6 +2,7 @@ package com.example.wemakepass.repository;
 
 import android.util.Log;
 
+import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.config.AppConfig;
@@ -67,6 +68,7 @@ public class UserRepository extends BaseRepository {
      * @param userId
      * @return
      */
+    @LoginRequired
     public Disposable requestUserInfo(String userId){
         return userAPI.userInfo(userId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -139,6 +141,7 @@ public class UserRepository extends BaseRepository {
      * @param newNickname
      * @return
      */
+    @LoginRequired
     public Disposable requestNicknameChange(String newNickname) {
         return userAPI.nicknameChange(newNickname)
                 .observeOn(AndroidSchedulers.mainThread())

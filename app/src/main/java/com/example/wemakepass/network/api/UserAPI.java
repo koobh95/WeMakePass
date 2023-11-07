@@ -1,6 +1,7 @@
 package com.example.wemakepass.network.api;
 
 
+import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.data.model.dto.JwtDTO;
 import com.example.wemakepass.data.model.dto.LoginRequest;
 import com.example.wemakepass.data.model.dto.PasswordResetRequest;
@@ -33,14 +34,16 @@ public interface UserAPI {
     Observable<Response<JwtDTO>> login(@Body LoginRequest loginRequestDTO);
 
     // 어플리케이션 내부에 저장해도 괜찮은 최소한의 정보로만 이루어진 유저 정보 요청
+    @LoginRequired
     @GET(BASE_URI + "info")
     Observable<Response<UserInfoDTO>> userInfo(@Query("userId") String userId);
 
-    // 비밀번호 변경 요청
+    // 비밀번호 리셋 요청
     @PUT(BASE_URI + "password_reset")
     Observable<Response<String>> passwordReset(@Body PasswordResetRequest passwordResetRequestDTO);
 
     // 닉네임 변경 요청
+    @LoginRequired
     @GET(BASE_URI + "nickname_change")
     Observable<Response<String>> nicknameChange(@Query("newNickname") String newNickname);
 }
