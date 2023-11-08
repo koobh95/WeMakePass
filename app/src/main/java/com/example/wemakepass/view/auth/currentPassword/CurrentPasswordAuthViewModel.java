@@ -7,9 +7,7 @@ import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
-import com.example.wemakepass.util.UserInfoUtil;
-
-import java.security.KeyStore;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -24,12 +22,12 @@ public class CurrentPasswordAuthViewModel extends BaseViewModel {
     private Disposable authDisposable;
 
     private UserRepository userRepository;
-    private UserInfoUtil userInfoUtil;
+    private UserInfoUtils userInfoUtil;
     private AES256Util aes256Util;
 
     public CurrentPasswordAuthViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userInfoUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtils();
         aes256Util = AES256Util.getInstance();
     }
 
@@ -59,7 +57,7 @@ public class CurrentPasswordAuthViewModel extends BaseViewModel {
      */
     private boolean isValidPassword() {
         final String password = passwordLiveData.getValue();
-        UserInfoUtil.PasswordValidator validator = userInfoUtil.passwordValidator();
+        UserInfoUtils.PasswordValidator validator = userInfoUtil.passwordValidator();
 
         if(TextUtils.isEmpty(password)) {
             systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);

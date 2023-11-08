@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_margin="10dp"
-            android:background="@drawable/bg_btn_r15_c_mine_shaft_approx"
+            android:background="@drawable/bg_r15_c_mine_shaft_approx"
             android:text="닉네임 변경"
             app:layout_constraintBottom_toBottomOf="parent" />
 

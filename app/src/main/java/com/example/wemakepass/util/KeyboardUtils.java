@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
  * @author BH-Ku
  * @since 2023-06-05
  */
-public class KeyboardUtil {
+public class KeyboardUtils {
     public static void showKeyboard(Activity activity, View view) {
         view.requestFocus();
         InputMethodManager manager = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);

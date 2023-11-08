@@ -1,4 +1,4 @@
-package com.example.wemakepass.util;
+package com.example.wemakepass.data.util;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * @author BH-Ku
  * @since 2023-10-07
  */
-public class DateUtil {
+public class DateUtils {
     private static final DateTimeFormatter FORMAT_LOCAL_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter FORMAT_LOCAL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

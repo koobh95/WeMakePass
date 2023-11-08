@@ -6,7 +6,7 @@ import android.view.View;
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.repository.MailRepository;
-import com.example.wemakepass.util.UserInfoUtil;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 /**
  * FindUserIdFragment의 ViewModel 클래스
@@ -17,11 +17,11 @@ import com.example.wemakepass.util.UserInfoUtil;
 public class FindUserIdViewModel extends BaseViewModel {
     private SingleLiveEvent<String> emailLiveData;
     private MailRepository mailRepository;
-    private UserInfoUtil userUtil;
+    private UserInfoUtils userUtil;
 
     public FindUserIdViewModel() {
         mailRepository = new MailRepository(getNetworkErrorLiveData());
-        userUtil = new UserInfoUtil();
+        userUtil = new UserInfoUtils();
     }
 
     public void onSendMailButtonClick(View view){

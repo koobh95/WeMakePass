@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.databinding.FragmentNicknameChangeBinding;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.util.MessageUtil;
+import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.accountSetting.AccountSettingFragment;
 
 /**
@@ -80,12 +80,12 @@ public class NicknameChangeFragment extends Fragment {
      */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->{
-            MessageUtil.showToast(requireContext(), systemMessage);
+            MessageUtils.showToast(requireContext(), systemMessage);
             binding.fragmentNicknameChangeNicknameEditText.setEnabled(true);
         });
 
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
-            MessageUtil.showToast(requireContext(), errorResponse.getMessage());
+            MessageUtils.showToast(requireContext(), errorResponse.getMessage());
             binding.fragmentNicknameChangeNicknameEditText.setEnabled(true);
         });
 
@@ -99,7 +99,7 @@ public class NicknameChangeFragment extends Fragment {
          */
         viewModel.getNicknameChangedLiveData().observe(this, aBoolean -> {
             AppConfig.UserPreference.setNickname(viewModel.getNicknameLiveData().getValue());
-            DialogUtil.showAlertDialog(requireContext(), "변경되었습니다.");
+            DialogUtils.showAlertDialog(requireContext(), "변경되었습니다.");
             Bundle bundle = new Bundle();
             bundle.putSerializable(AccountSettingFragment.RESULT_KEY_NICKNAME_CHANGED, true);
             getParentFragmentManager()

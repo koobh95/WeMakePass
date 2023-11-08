@@ -1,7 +1,6 @@
 package com.example.wemakepass.view.auth.login;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
@@ -11,7 +10,7 @@ import com.example.wemakepass.data.model.dto.LoginRequest;
 import com.example.wemakepass.data.model.dto.UserInfoDTO;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
-import com.example.wemakepass.util.UserInfoUtil;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -27,14 +26,14 @@ public class LoginViewModel extends BaseViewModel {
 
     private final UserRepository userRepository;
     private final AES256Util aes256Util;
-    private final UserInfoUtil userInfoUtil;
+    private final UserInfoUtils userInfoUtil;
 
     private final String TAG = "TAG_LoginViewModel";
 
     public LoginViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
         aes256Util = AES256Util.getInstance();
-        userInfoUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtils();
     }
 
     /**
@@ -65,7 +64,7 @@ public class LoginViewModel extends BaseViewModel {
      */
     private boolean isValidId() {
         final String id = idLiveData.getValue();
-        final UserInfoUtil.IdValidator validator = userInfoUtil.idValidator();
+        final UserInfoUtils.IdValidator validator = userInfoUtil.idValidator();
 
         if(TextUtils.isEmpty(id)) {
             systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);
@@ -85,7 +84,7 @@ public class LoginViewModel extends BaseViewModel {
      */
     private boolean isValidPassword() {
         final String password = passwordLiveData.getValue();
-        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
+        final UserInfoUtils.PasswordValidator  validator = userInfoUtil.passwordValidator();
 
         if(TextUtils.isEmpty(password)) {
             systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);

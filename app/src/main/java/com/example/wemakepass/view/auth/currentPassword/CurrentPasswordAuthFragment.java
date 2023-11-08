@@ -15,8 +15,7 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.databinding.FragmentCurrentPasswordAuthBinding;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.util.MessageUtil;
+import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.view.accountSetting.AccountSettingActivity;
 import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFragment;
 
@@ -66,10 +65,10 @@ public class CurrentPasswordAuthFragment extends Fragment {
      */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                DialogUtil.showAlertDialog(requireContext(), systemMessage));
+                DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
-                DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage()));
+                DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage()));
 
         /**
          * 비밀번호 인증이 완료되는 것을 감시하며 인증될 경우 다음을 수행한다.
@@ -78,7 +77,7 @@ public class CurrentPasswordAuthFragment extends Fragment {
          *  3. PasswordResetFragment를 실행한다.
          */
         viewModel.getIsAuthLiveData().observe(this, aBoolean -> {
-            DialogUtil.showAlertDialog(requireContext(),
+            DialogUtils.showAlertDialog(requireContext(),
                     "인증되었습니다. 비밀번호 변경 화면으로 이동합니다.",
                     dialog -> {
                         dialog.dismiss();

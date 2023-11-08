@@ -8,10 +8,7 @@ import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.UserSignUpDTO;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
-import com.example.wemakepass.util.UserInfoUtil;
-import com.example.wemakepass.view.main.MainViewModel;
-
-import org.w3c.dom.Text;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -29,14 +26,14 @@ public class SignUpViewModel extends BaseViewModel {
     private Disposable signUpDisposable;
 
     private UserRepository userRepository;
-    private UserInfoUtil userInfoUtil;
+    private UserInfoUtils userInfoUtil;
     private final AES256Util aes256Util = AES256Util.getInstance();
 
     private final String TAG = "TAG_SignUpViewModel";
 
     public SignUpViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userInfoUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtils();
     }
 
     /**
@@ -69,7 +66,7 @@ public class SignUpViewModel extends BaseViewModel {
      */
     private boolean isValidId() {
         final String id = idLiveData.getValue();
-        final UserInfoUtil.IdValidator validator = userInfoUtil.idValidator();
+        final UserInfoUtils.IdValidator validator = userInfoUtil.idValidator();
 
         idErrMsgLiveData.setValue(""); // 에러 메시지 초기화
 
@@ -89,7 +86,7 @@ public class SignUpViewModel extends BaseViewModel {
      * @return
      */
     private boolean isValidPassword(final String password, SingleLiveEvent<String> errMsgLiveData) {
-        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
+        final UserInfoUtils.PasswordValidator  validator = userInfoUtil.passwordValidator();
 
         errMsgLiveData.setValue("");
 
@@ -118,7 +115,7 @@ public class SignUpViewModel extends BaseViewModel {
         passwordReErrMsgLiveData.setValue("");
 
         if(!password.equals(passwordRe)){
-            passwordReErrMsgLiveData.setValue(UserInfoUtil.PasswordValidator.ERR_MSG_MISMATCH);
+            passwordReErrMsgLiveData.setValue(UserInfoUtils.PasswordValidator.ERR_MSG_MISMATCH);
             return false;
         }
         return true;
@@ -131,7 +128,7 @@ public class SignUpViewModel extends BaseViewModel {
      */
     private boolean isValidNickname() {
         final String nickname = nicknameLiveData.getValue();
-        final UserInfoUtil.NicknameValidator validator = userInfoUtil.nicknameValidator();
+        final UserInfoUtils.NicknameValidator validator = userInfoUtil.nicknameValidator();
 
         nicknameErrMsgLiveData.setValue("");
 
@@ -152,7 +149,7 @@ public class SignUpViewModel extends BaseViewModel {
      */
     private boolean isValidEmail(){
         final String email = emailLiveData.getValue();
-        final UserInfoUtil.EmailValidator validator = userInfoUtil.emailValidator();
+        final UserInfoUtils.EmailValidator validator = userInfoUtil.emailValidator();
 
         emailErrMsgLiveData.setValue("");
 

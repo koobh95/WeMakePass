@@ -1,4 +1,4 @@
-package com.example.wemakepass.util;
+package com.example.wemakepass.data.util;
 
 import java.util.Locale;
 
@@ -9,7 +9,7 @@ import java.util.Locale;
  * @author BH-Ku
  * @since 2023-11-04
  */
-public class UserInfoUtil {
+public class UserInfoUtils {
     private IdValidator idValidator;
     private PasswordValidator passwordValidator;
     private NicknameValidator nicknameValidator;

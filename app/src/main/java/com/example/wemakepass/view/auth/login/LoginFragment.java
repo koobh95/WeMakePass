@@ -19,8 +19,8 @@ import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.databinding.FragmentLoginBinding;
 import com.example.wemakepass.network.util.AES256Util;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.util.MessageUtil;
+import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
     }
 
     /**
-     * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드다.
+     * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드.
      */
     private void initEventListener(){
         binding.fragmentLoginFindAccountButton.setOnClickListener(v ->
@@ -113,14 +113,14 @@ public class LoginFragment extends Fragment {
          * ViewModel이 비지니스 로직 처리 과정에서 발생하는 메시지가 발생할 경우 출력한다.
          */
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-            DialogUtil.showAlertDialog(requireContext(), systemMessage));
+            DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         /**
          * ViewModel-Repository 에서 네트워크 작업을 수행하다가 에러가 발생하는 것을 감지한다.
          */
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
             if(errorResponse.getCode().equals(ErrorCode.UNCERT_USER.name())){ // 인증되지 않은 유저
-                DialogUtil.showConfirmDialog(requireContext(),
+                DialogUtils.showConfirmDialog(requireContext(),
                         "이메일 인증이 필요합니다. 인증 화면으로 이동합니다.",
                         dialog -> {
                             dialog.dismiss();
@@ -130,7 +130,7 @@ public class LoginFragment extends Fragment {
                         });
                 return;
             }
-            DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
+            DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
 
         /**
@@ -163,7 +163,7 @@ public class LoginFragment extends Fragment {
             AppConfig.AuthPreference.setStoredId(binding.fragmentLoginStoredIdCheckBox.isChecked());
             AppConfig.AuthPreference.setKeepLogin(binding.fragmentLoginKeepLoginCheckBox.isChecked());
 
-            MessageUtil.showToast(requireContext(), "로그인되었습니다.");
+            MessageUtils.showToast(requireContext(), "로그인되었습니다.");
             startActivity(new Intent(requireActivity(), MainActivity.class));
         });
     }

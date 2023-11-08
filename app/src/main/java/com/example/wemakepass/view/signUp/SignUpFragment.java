@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentSignUpBinding;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.util.MessageUtil;
+import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.EmailCertFragment;
 import com.google.android.material.textfield.TextInputLayout;
@@ -70,7 +70,7 @@ public class SignUpFragment extends Fragment {
                     return;
                 }
 
-                DialogUtil.showConfirmDialog(requireContext(), "이 화면을 나가면 입력 중인 값은 모두 사라지게 됩니다.",
+                DialogUtils.showConfirmDialog(requireContext(), "이 화면을 나가면 입력 중인 값은 모두 사라지게 됩니다.",
                         dialog -> {
                             dialog.dismiss();
                             ((AuthActivity)requireActivity())
@@ -88,7 +88,7 @@ public class SignUpFragment extends Fragment {
      */
     private void initObserver(){
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
-            DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
+            DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
 
         viewModel.getIdErrMsgLiveData().observe(this, errorMessage ->
@@ -107,7 +107,7 @@ public class SignUpFragment extends Fragment {
                 setErrorMessage(binding.fragmentSignUpEmailTextLayout, errorMessage));
 
         viewModel.getIsSignUpLiveData().observe(this, isSignUp -> {
-            MessageUtil.showToast(requireContext(), "회원이 되신것을 환영합니다.");
+            MessageUtils.showToast(requireContext(), "회원이 되신것을 환영합니다.");
             ((AuthActivity)requireActivity())
                     .getSupportFragmentManager()
                     .popBackStack();

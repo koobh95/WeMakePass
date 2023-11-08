@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentPasswordResetBinding;
-import com.example.wemakepass.util.DialogUtil;
+import com.example.wemakepass.util.DialogUtils;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -78,7 +78,7 @@ public class PasswordResetFragment extends Fragment {
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        DialogUtil.showConfirmDialog(requireContext(),
+                        DialogUtils.showConfirmDialog(requireContext(),
                                 "이 화면을 나가면 인증정보가 초기화됩니다. 나가시겠습니까?",
                                 dialog -> {
                                     dialog.dismiss();
@@ -95,7 +95,7 @@ public class PasswordResetFragment extends Fragment {
      */
     private void initToolbar() {
         binding.fragmentPasswordResetToolbar.setNavigationOnClickListener(v -> {
-            DialogUtil.showConfirmDialog(requireContext(),
+            DialogUtils.showConfirmDialog(requireContext(),
                     "이 화면을 나가면 인증정보가 초기화됩니다. 나가시겠습니까?",
                     dialog -> {
                         dialog.dismiss();
@@ -121,10 +121,10 @@ public class PasswordResetFragment extends Fragment {
      */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                DialogUtil.showAlertDialog(requireContext(), systemMessage));
+                DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
-                DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage()));
+                DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage()));
 
         viewModel.getPasswordErrMsgLiveData().observe(this, errorMessage ->
                 setErrorMessage(binding.fragmentPasswordResetPasswordTextLayout, errorMessage));
@@ -136,7 +136,7 @@ public class PasswordResetFragment extends Fragment {
          * Password 변경에 성공했을 경우, 성공 메시지를 띄우고 Fragment를 종료한다.
          */
         viewModel.getIsPasswordResetCompleteLiveData().observe(this, isPasswordReset -> {
-            DialogUtil.showAlertDialog(requireContext(), "비밀번호가 변경되었습니다.",
+            DialogUtils.showAlertDialog(requireContext(), "비밀번호가 변경되었습니다.",
                     dialog -> {
                         dialog.dismiss();
                         requireActivity()

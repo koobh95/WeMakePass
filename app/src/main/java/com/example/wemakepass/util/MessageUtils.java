@@ -1,8 +1,6 @@
 package com.example.wemakepass.util;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
  * @author BH-Ku
  * @since 2023-06-04
  */
-public class MessageUtil {
+public class MessageUtils {
     public static void showSnackbar(View view, String msg) {
         Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
     }

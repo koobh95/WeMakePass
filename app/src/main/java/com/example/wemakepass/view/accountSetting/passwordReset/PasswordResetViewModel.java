@@ -7,7 +7,7 @@ import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.PasswordResetRequest;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
-import com.example.wemakepass.util.UserInfoUtil;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -23,13 +23,13 @@ public class PasswordResetViewModel extends BaseViewModel {
 
     private Disposable passwordResetDisposable;
     private UserRepository userRepository;
-    private UserInfoUtil userInfoUtil;
+    private UserInfoUtils userInfoUtil;
 
     private final AES256Util aes256Util = AES256Util.getInstance();
 
     public PasswordResetViewModel(){
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userInfoUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtils();
     }
 
     /**
@@ -60,7 +60,7 @@ public class PasswordResetViewModel extends BaseViewModel {
      * @return
      */
     private boolean isValidPassword(String password, SingleLiveEvent<String> errMsgLiveData) {
-        final UserInfoUtil.PasswordValidator  validator = userInfoUtil.passwordValidator();
+        final UserInfoUtils.PasswordValidator  validator = userInfoUtil.passwordValidator();
 
         errMsgLiveData.setValue("");
 
@@ -89,7 +89,7 @@ public class PasswordResetViewModel extends BaseViewModel {
         passwordReErrMsgLiveData.setValue("");
 
         if(!password.equals(passwordRe)){
-            passwordReErrMsgLiveData.setValue(UserInfoUtil.PasswordValidator.ERR_MSG_MISMATCH);
+            passwordReErrMsgLiveData.setValue(UserInfoUtils.PasswordValidator.ERR_MSG_MISMATCH);
             return false;
         }
         return true;

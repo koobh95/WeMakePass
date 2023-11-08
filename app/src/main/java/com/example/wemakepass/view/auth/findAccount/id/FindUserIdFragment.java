@@ -8,16 +8,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindUserIdBinding;
-import com.example.wemakepass.util.DateUtil;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.view.community.CommunityFragment;
+import com.example.wemakepass.util.DialogUtils;
 
 /**
  * 아이디 찾기를 수행하는 Fragment.
@@ -59,13 +56,13 @@ public class FindUserIdFragment extends Fragment {
          * 비지니스 로직을 처리하면서 발생하는 메시지 출력
          */
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                DialogUtil.showAlertDialog(requireContext(), systemMessage));
+                DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         /**
          * 서버로부터 메일이 발송되었다는 응답을 받았을 때 사용자에게 Dialog를 출력하여 알림
          */
         viewModel.getIsSendMailLiveData().observe(this, aBoolean ->
-                DialogUtil.showAlertDialog(requireContext(),
+                DialogUtils.showAlertDialog(requireContext(),
                         "입력한 이메일로 회원님의 아이디를 전송했습니다."));
     }
 }

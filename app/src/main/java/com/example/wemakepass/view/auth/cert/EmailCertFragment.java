@@ -9,8 +9,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.databinding.FragmentEmailCertBinding;
-import com.example.wemakepass.util.DialogUtil;
+import com.example.wemakepass.util.DialogUtils;
 
 /**
  *  계정에 대한 이메일 인증을 수행하는 Activity다.
@@ -91,7 +89,7 @@ public class EmailCertFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 if(viewModel.isRunningTimer()){
-                    DialogUtil.showConfirmDialog(requireContext(),
+                    DialogUtils.showConfirmDialog(requireContext(),
                             "인증이 진행중입니다. 정말로 종료하시겠습니까?",
                             dialog -> {
                                 dialog.dismiss();
@@ -131,14 +129,14 @@ public class EmailCertFragment extends Fragment {
      */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                DialogUtil.showAlertDialog(requireContext(), systemMessage));
+                DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
             if(errorResponse.getMessage().equals(ErrorCode.CERT_CODE_MISMATCH.name())){
-                DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
+                DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage());
                 return;
             }
-            DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage());
+            DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage());
         });
 
         /**
@@ -153,7 +151,7 @@ public class EmailCertFragment extends Fragment {
          * - ViewModel에서 타이머를 시작하는 메서드를 호출한다.
          */
         viewModel.getIsSendMailLiveData().observe(this, send -> {
-            DialogUtil.showAlertDialog(requireContext(), "이메일을 전송했습니다.");
+            DialogUtils.showAlertDialog(requireContext(), "이메일을 전송했습니다.");
             binding.fragmentEmailCertTimerTextView.setVisibility(View.VISIBLE);
             binding.fragmentEmailCertRequestButton.setEnabled(false);
             binding.fragmentEmailCertConfirmButton.setEnabled(true);
@@ -175,7 +173,7 @@ public class EmailCertFragment extends Fragment {
          * 인증이 완료된 경우 알림과 함께 Fragment를 종료한다.
          */
         viewModel.getIsConfirmLiveData().observe(this, aBoolean -> {
-            DialogUtil.showAlertDialog(requireContext(), "인증되었습니다. 다시 로그인해주세요.", dialog -> {
+            DialogUtils.showAlertDialog(requireContext(), "인증되었습니다. 다시 로그인해주세요.", dialog -> {
                 dialog.dismiss();
                 requireActivity().getSupportFragmentManager().popBackStack();
             });

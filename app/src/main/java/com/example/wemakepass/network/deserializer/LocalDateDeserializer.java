@@ -1,6 +1,6 @@
 package com.example.wemakepass.network.deserializer;
 
-import com.example.wemakepass.util.DateUtil;
+import com.example.wemakepass.data.util.DateUtils;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -32,6 +32,6 @@ public class LocalDateDeserializer implements JsonDeserializer<LocalDate> {
     @Override
     public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
-        return DateUtil.parseLocalDate(json.getAsString());
+        return DateUtils.parseLocalDate(json.getAsString());
     }
 }

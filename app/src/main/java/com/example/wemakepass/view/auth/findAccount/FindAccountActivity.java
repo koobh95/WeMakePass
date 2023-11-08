@@ -1,25 +1,13 @@
 package com.example.wemakepass.view.auth.findAccount;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.media.metrics.Event;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.LinearLayout;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityFindAccountBinding;
-import com.example.wemakepass.databinding.FragmentFindPasswordBinding;
-import com.example.wemakepass.util.DialogUtil;
+import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.view.auth.findAccount.id.FindUserIdFragment;
 import com.example.wemakepass.view.auth.findAccount.password.FindPasswordFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -84,7 +72,7 @@ public class FindAccountActivity extends AppCompatActivity {
                 if(findPasswordFragment != null &&
                         tabLayout.getSelectedTabPosition() != TAB_FIND_PASSWORD &&
                         findPasswordFragment.isRunningTimer()){
-                    DialogUtil.showConfirmDialog(binding.getRoot().getContext(),
+                    DialogUtils.showConfirmDialog(binding.getRoot().getContext(),
                             "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
                             dialog -> {
                                 replaceFragment();

@@ -10,7 +10,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.example.wemakepass.config.AppConfig;
-import com.example.wemakepass.util.MessageUtil;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.main.MainActivity;
 
@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
          */
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
             Log.d(TAG, "유효하지 않은 토큰입니다. 로그인 화면으로 이동합니다.");
-            MessageUtil.showToast(this, errorResponse.getMessage());
+            MessageUtils.showToast(this, errorResponse.getMessage());
             startAuthActivity();
         });
     }

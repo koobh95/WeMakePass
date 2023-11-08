@@ -1,13 +1,11 @@
 package com.example.wemakepass.view.auth.findAccount.password;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.ViewUtils;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,10 +16,9 @@ import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.FragmentFindPasswordBinding;
-import com.example.wemakepass.util.DialogUtil;
-import com.example.wemakepass.util.KeyboardUtil;
+import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.KeyboardUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
-import com.example.wemakepass.view.community.CommunityFragment;
 
 /**
  * 비밀번호 변경을 위한 인증 수행을 담당하는 Fragment
@@ -79,10 +76,10 @@ public class FindPasswordFragment extends Fragment {
      */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                DialogUtil.showAlertDialog(requireContext(), systemMessage));
+                DialogUtils.showAlertDialog(requireContext(), systemMessage));
 
         viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
-                DialogUtil.showAlertDialog(requireContext(), errorResponse.getMessage()));
+                DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage()));
 
         /**
          * 인증이 시작됨
@@ -98,9 +95,9 @@ public class FindPasswordFragment extends Fragment {
             binding.fragmentFindPasswordTimerTextView.setVisibility(View.VISIBLE);
             binding.fragmentFindPasswordCodeEditText.setEnabled(true);
             viewModel.startTimer();
-            DialogUtil.showAlertDialog(requireContext(), "이메일을 전송했습니다.",
+            DialogUtils.showAlertDialog(requireContext(), "이메일을 전송했습니다.",
                     dialog -> {
-                        KeyboardUtil.showKeyboard(
+                        KeyboardUtils.showKeyboard(
                                 requireActivity(), binding.fragmentFindPasswordCodeEditText);
                         dialog.dismiss();
                     });
@@ -125,7 +122,7 @@ public class FindPasswordFragment extends Fragment {
          *  AuthActivity로 PasswordResetFragment 실행 여부(boolean), 변경할 계정의 아이디를 전달한다.
          */
         viewModel.getIsConfirmLiveData().observe(this, aBoolean -> {
-            DialogUtil.showAlertDialog(requireContext(),
+            DialogUtils.showAlertDialog(requireContext(),
                     "인증되었습니다. 비밀번호 변경 화면으로 이동합니다.",
                     dialog -> {
                         dialog.dismiss();
@@ -148,7 +145,7 @@ public class FindPasswordFragment extends Fragment {
     }
 
     public void showShutdownConfirmDialog(){
-        DialogUtil.showConfirmDialog(requireContext(),
+        DialogUtils.showConfirmDialog(requireContext(),
                 "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
                 dialog -> requireActivity().finish());
     }

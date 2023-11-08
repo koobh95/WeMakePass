@@ -6,7 +6,7 @@ import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.repository.UserRepository;
-import com.example.wemakepass.util.UserInfoUtil;
+import com.example.wemakepass.data.util.UserInfoUtils;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -21,11 +21,11 @@ public class NicknameChangeViewModel extends BaseViewModel {
     private Disposable nicknameChangeDisposable;
 
     private final UserRepository userRepository;
-    private final UserInfoUtil userInfoUtil;
+    private final UserInfoUtils userInfoUtil;
 
     public NicknameChangeViewModel() {
         userRepository = new UserRepository(getNetworkErrorLiveData());
-        userInfoUtil = new UserInfoUtil();
+        userInfoUtil = new UserInfoUtils();
     }
 
     /**
@@ -59,7 +59,7 @@ public class NicknameChangeViewModel extends BaseViewModel {
      */
     public boolean isValidNickname() {
         final String nickname = nicknameLiveData.getValue();
-        UserInfoUtil.NicknameValidator validator = userInfoUtil.nicknameValidator();
+        UserInfoUtils.NicknameValidator validator = userInfoUtil.nicknameValidator();
 
         if(TextUtils.isEmpty(nickname)) {
             systemMessageLiveData.setValue(validator.ERR_MSG_EMPTY);

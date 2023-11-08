@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_btn_r15_c_mine_shaft_approx"
+            android:background="@drawable/bg_r15_c_mine_shaft_approx"
             android:onClick="@{viewModel::onSendMailButtonClick}"
             android:text="이메일 전송하기"
             app:layout_constraintTop_toBottomOf="@id/fragment_find_user_id_email_edit_text" />
