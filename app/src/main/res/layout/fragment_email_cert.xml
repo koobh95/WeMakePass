@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.wemakepass.view.auth.cert.EmailCertViewModel" />
+            type="com.example.wemakepass.view.auth.cert.AccountCertViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/baltic_sea"
         android:clickable="true"
-        tools:context=".view.auth.cert.EmailCertFragment">
+        tools:context=".view.auth.cert.AccountCertFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/fragment_email_cert_toolbar"

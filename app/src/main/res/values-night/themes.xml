@@ -36,6 +36,7 @@
         <item name="boxCornerRadiusBottomStart">10dp</item>
     </style>
 
+    <!-- TextInputLayout+TextInputEditText로 검색창을 구현할 경우 사용하는 검색창 레이아웃 -->
     <style name="Theme.TextInputLayout.SearchBar" parent="Theme.TextInputLayout">
         <item name="hintEnabled">false</item>
         <item name="boxStrokeWidth">0dp</item>
@@ -45,6 +46,7 @@
         <item name="endIconMode">clear_text</item>
     </style>
 
+    <!-- TextInputLayout+TextInputEditText로 검색창을 구현할 경우 사용하는 검색창 레이아웃 -->
     <style name="Theme.TextInputEditText.SearchBar" parent="">
         <item name="android:hint">검색</item>
         <item name="android:inputType">text</item>
@@ -52,8 +54,16 @@
         <item name="background">@color/transparent</item>
     </style>
 
+    <!-- TabLayout - Tab Name Text Style. 텍스트 스타일 변경을 위해선 필수 사용. -->
     <style name="Theme.TabLayout.Tab.TextAppearance.Large" parent="">
         <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <!-- MaterialToolbar의 Title Text Style. 타이틀 텍스트 스타일을 변경하기 위해선 필수 사용. -->
+    <style name="Theme.Toolbar.Title.Main" parent="">
+        <item name="android:textColor">@color/ship_cove</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textSize">@dimen/font_size_xlarge</item>
     </style>
 
     <style name="Theme.CheckBox" parent="Theme.AppCompat">

@@ -17,7 +17,7 @@ public class ErrorResponse {
     private static final String UNKNOWN_ERROR_MESSAGE = "네트워크 통신 중 알 수 없는 오류가 발생했습니다.";
     public static final String AUTHENTICATION_FAILED_MESSAGE = "로그인 유효 기간이 만료되었습니다. 다시 로그인해주세요.";
 
-    public ErrorResponse() {}
+    private ErrorResponse() {}
 
     public ErrorResponse(String code, String message) {
         this.code = code;

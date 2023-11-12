@@ -164,7 +164,7 @@ public class UserRepository extends BaseRepository {
      *
      * @return
      */
-    public Disposable currentPasswordAuth(String encryptedCurrentPassword) {
+    public Disposable requestCurrentPasswordAuth(String encryptedCurrentPassword) {
         return userAPI.currentPasswordAuth(encryptedCurrentPassword)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

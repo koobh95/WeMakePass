@@ -24,14 +24,14 @@ import com.example.wemakepass.util.DialogUtils;
  * @author BH-Ku
  * @since 2023-10-24
  */
-public class EmailCertFragment extends Fragment {
+public class AccountCertFragment extends Fragment {
     private FragmentEmailCertBinding binding;
-    private EmailCertViewModel viewModel;
+    private AccountCertViewModel viewModel;
 
     private String userId;
 
     private static final String ARG_USER_ID = "userId";
-    private final String TAG = "TAG_EmailCertFragment";
+    private final String TAG = "TAG_AccountCertFragment";
 
     /**
      * - 이전 화면에서 받아야 할 데이터가 있으므로 new 키워드가 아닌 newInstance 메서드를 사용한다.
@@ -39,19 +39,16 @@ public class EmailCertFragment extends Fragment {
      * @param userId
      * @return
      */
-    public static EmailCertFragment newInstance(String userId) {
-        EmailCertFragment emailCertFragment = new EmailCertFragment();
+    public static AccountCertFragment newInstance(String userId) {
+        AccountCertFragment accountCertFragment = new AccountCertFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_USER_ID, userId);
-        emailCertFragment.setArguments(bundle);
-        return emailCertFragment;
+        accountCertFragment.setArguments(bundle);
+        return accountCertFragment;
     }
 
     /**
      * newInstance 메서드로 저장해놓은 bundle에서 userId를 꺼내 멤버 변수에 저장한다.
-     *
-     * @param savedInstanceState If the fragment is being re-created from
-     * a previous saved state, this is the state.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +63,7 @@ public class EmailCertFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_email_cert, container, false);
         binding.setLifecycleOwner(this);
-        viewModel = new ViewModelProvider(this).get(EmailCertViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AccountCertViewModel.class);
         binding.setViewModel(viewModel);
         return binding.getRoot();
     }

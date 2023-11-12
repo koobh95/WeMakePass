@@ -3,7 +3,7 @@ package com.example.wemakepass.adapter.viewholder;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wemakepass.data.model.data.JmInfoModel;
+import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.databinding.ItemInterestJmBinding;
 import com.example.wemakepass.listener.OnItemClickListener;
 
@@ -21,7 +21,7 @@ public class InterestJmViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-    public void bind(JmInfoModel item) {
+    public void bind(InterestJmModel item) {
         binding.itemInterestJmTextView.setText(item.getJmName());
     }
 

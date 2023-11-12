@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.data.JmInfoModel;
+import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.data.util.StringUtils;
 import com.example.wemakepass.repository.JmRepository;
@@ -84,25 +84,25 @@ public class InterestJmSearchViewModel extends BaseViewModel {
      * - 리스트에 있는 데이터의 최대 수를 확인하여 삽입 가능한 상태인지 확인한 후 삽입을 결정한다.
      * - 리스트에 값이 하나라도 존재할 경우 삽입하려는 값이 중복인지 확인한 후 중복이 아니라면 삽입한다.
      *
-     * @param jmInfoModel 삽입하려는 데이터
+     * @param interestJmModel 삽입하려는 데이터
      */
-    public void addInterestJmItem(JmInfoModel jmInfoModel) {
-        final List<JmInfoModel> list = interestJmRepository.getInterestJmListLiveData().getValue();
+    public void addInterestJmItem(InterestJmModel interestJmModel) {
+        final List<InterestJmModel> list = interestJmRepository.getInterestJmListLiveData().getValue();
         if(list.size() == InterestJmRepository.MAX_ELEMENT){
             systemMessageLiveData.setValue("최대 5개까지 추가할 수 있습니다.");
             return;
         }
 
         if(list.size() != 0){
-            for(JmInfoModel item : list){
-                if(item.getJmCode().equals(jmInfoModel.getJmCode())){
+            for(InterestJmModel item : list){
+                if(item.getJmCode().equals(interestJmModel.getJmCode())){
                     systemMessageLiveData.setValue("이미 추가된 종목입니다.");
                     return;
                 }
             }
         }
 
-        interestJmRepository.addItem(jmInfoModel);
+        interestJmRepository.addItem(interestJmModel);
     }
 
     /**
@@ -120,7 +120,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
         return keywordLiveData;
     }
 
-    public SingleLiveEvent<List<JmInfoModel>> getInterestJmListLiveData() {
+    public SingleLiveEvent<List<InterestJmModel>> getInterestJmListLiveData() {
         return interestJmRepository.getInterestJmListLiveData();
     }
 

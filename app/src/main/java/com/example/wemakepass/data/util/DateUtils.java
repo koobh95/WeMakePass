@@ -15,8 +15,8 @@ import java.time.format.DateTimeFormatter;
  * @since 2023-10-07
  */
 public class DateUtils {
-    private static final DateTimeFormatter FORMAT_LOCAL_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter FORMAT_LOCAL_DATE_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
+    private static final DateTimeFormatter localDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private static final String TAG = "TAG_DateUtil";
 
@@ -29,7 +29,7 @@ public class DateUtils {
     public static LocalDate parseLocalDate(@NonNull final String value) {
         if(value.equals(""))
             return null;
-        return LocalDate.parse(value, FORMAT_LOCAL_DATE);
+        return LocalDate.parse(value, localDateFormat);
     }
 
     /**
@@ -41,6 +41,6 @@ public class DateUtils {
     public static LocalDateTime parseLocalDateTime(@NonNull final String value){
         if(value.equals(""))
             return null;
-        return LocalDateTime.parse(value, FORMAT_LOCAL_DATE_TIME);
+        return LocalDateTime.parse(value, localDateTimeFormat);
     }
 }

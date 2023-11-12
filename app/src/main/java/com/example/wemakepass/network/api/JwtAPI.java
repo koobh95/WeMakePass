@@ -10,7 +10,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 /**
- *  Jwt 관련 API를 모아놓은 인터페이스
+ *  Jwt 관련 작업을 모아놓은 API 인터페이스.
  *
  * @author BH-Ku
  * @since 2023-10-30

@@ -14,12 +14,12 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
- * EmailCertActivity의 ViewModel 클래스.
+ * AccountCertActivity의 ViewModel 클래스.
  *
  * @author BH-Ku
  * @since 2023-10-24
  */
-public class EmailCertViewModel extends BaseViewModel {
+public class AccountCertViewModel extends BaseViewModel {
     private SingleLiveEvent<String> codeLiveData, timerLiveData;
     private SingleLiveEvent<Boolean> isTimeOver;
     private MailRepository mailRepository;
@@ -29,7 +29,7 @@ public class EmailCertViewModel extends BaseViewModel {
     private final int LIMIT_TIME = 179;
     private final String TAG = "TAG_EmailCertViewModel";
 
-    public EmailCertViewModel(){
+    public AccountCertViewModel(){
         mailRepository = new MailRepository(getNetworkErrorLiveData());
     }
 
@@ -43,7 +43,7 @@ public class EmailCertViewModel extends BaseViewModel {
             return;
         }
 
-        if(codeLiveData.getValue().length() != EmailCertViewModel.CODE_LEN) {
+        if(codeLiveData.getValue().length() != AccountCertViewModel.CODE_LEN) {
             systemMessageLiveData.setValue("인증번호는 6자리입니다.");
             return;
         }
@@ -72,7 +72,7 @@ public class EmailCertViewModel extends BaseViewModel {
      *  타이머 Observable이 동작 중인지 여부를 확인한다. isDisposed 즉, 폐기된 상태가 아니라면 동작 중인 것으로
      * 간주한다.
      *
-     * @return
+     * @return 타이머 동작 여부
      */
     public boolean isRunningTimer() {
         return timerDisposable != null && !timerDisposable.isDisposed();

@@ -6,7 +6,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * 메일 관련 API를 모아놓은 인터페이스
+ * 메일 관련 작업을 모아놓은 API 인터페이스.
  *
  * @author BH-Ku
  * @since 2023-06-07

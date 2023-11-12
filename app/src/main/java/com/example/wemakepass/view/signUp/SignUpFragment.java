@@ -19,7 +19,7 @@ import com.example.wemakepass.databinding.FragmentSignUpBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
-import com.example.wemakepass.view.auth.cert.EmailCertFragment;
+import com.example.wemakepass.view.auth.cert.AccountCertFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -114,7 +114,7 @@ public class SignUpFragment extends Fragment {
 
             ((AuthActivity)requireActivity())
                     .addFragment(
-                            EmailCertFragment.newInstance(viewModel.getIdLiveData().getValue()),
+                            AccountCertFragment.newInstance(viewModel.getIdLiveData().getValue()),
                             R.anim.slide_from_bottom,
                             R.anim.slide_to_bottom);
         });

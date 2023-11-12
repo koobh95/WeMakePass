@@ -17,7 +17,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
- * User 정보 관련 API를 모아놓은 인터페이스
+ * User 정보 관련 작업을 모아놓은 API 인터페이스.
  *
  * @author BH-Ku
  * @since 2023-06-07

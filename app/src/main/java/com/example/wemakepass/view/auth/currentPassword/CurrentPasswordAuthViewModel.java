@@ -46,7 +46,8 @@ public class CurrentPasswordAuthViewModel extends BaseViewModel {
             return;
 
         String encryptedCurrentPassword = aes256Util.encrypt(passwordLiveData.getValue());
-        addDisposable(authDisposable = userRepository.currentPasswordAuth(encryptedCurrentPassword));
+        addDisposable(authDisposable =
+                userRepository.requestCurrentPasswordAuth(encryptedCurrentPassword));
     }
 
     /**

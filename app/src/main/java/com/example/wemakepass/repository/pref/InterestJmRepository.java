@@ -3,7 +3,7 @@ package com.example.wemakepass.repository.pref;
 import android.text.TextUtils;
 
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.data.JmInfoModel;
+import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.pref.InterestJmPreferences;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2023-11-08
  */
 public class InterestJmRepository {
-    private SingleLiveEvent<List<JmInfoModel>> interestJmListLiveData;
+    private SingleLiveEvent<List<InterestJmModel>> interestJmListLiveData;
 
     public static final int MAX_ELEMENT = 5; // 삽입 가능한 데이터 최대 개수
 
@@ -32,7 +32,7 @@ public class InterestJmRepository {
 
     public InterestJmRepository(){
         interestJmListLiveData = new SingleLiveEvent<>();
-        loadData();
+        initInterestJmListLiveData();
     }
 
     /**
@@ -43,8 +43,8 @@ public class InterestJmRepository {
      *
      * @param item 추가될 데이터
      */
-    public void addItem(JmInfoModel item) {
-        List<JmInfoModel> newList = new ArrayList<>(interestJmListLiveData.getValue());
+    public void addItem(InterestJmModel item) {
+        List<InterestJmModel> newList = new ArrayList<>(interestJmListLiveData.getValue());
         newList.add(item);
         updateList(newList);
     }
@@ -63,7 +63,7 @@ public class InterestJmRepository {
     public void removeItem(int removeItemPosition){
         if(removeItemPosition == -1)
             return;
-        List<JmInfoModel> newList = new ArrayList<>(interestJmListLiveData.getValue());
+        List<InterestJmModel> newList = new ArrayList<>(interestJmListLiveData.getValue());
         newList.remove(removeItemPosition);
         updateList(newList);
     }
@@ -74,13 +74,13 @@ public class InterestJmRepository {
      *
      * @param newList 변경 사항이 반영되어 있는 새로운 리스트
      */
-    private void updateList(List<JmInfoModel> newList) {
+    private void updateList(List<InterestJmModel> newList) {
         try {
             JSONArray jsonArray = new JSONArray();
-            for(JmInfoModel jmInfoModel : newList) {
+            for(InterestJmModel interestJmModel : newList) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("jmCode", jmInfoModel.getJmCode());
-                jsonObject.put("jmName", jmInfoModel.getJmName());
+                jsonObject.put("jmCode", interestJmModel.getJmCode());
+                jsonObject.put("jmName", interestJmModel.getJmName());
                 jsonArray.put(jsonObject);
             }
             InterestJmPreferences.setJmData(jsonArray.toString()); // save
@@ -91,23 +91,36 @@ public class InterestJmRepository {
     }
 
     /**
-     * - 이 Repository class가 초기화될 때 생성자에 의해 단 한 번 호출되어 SharedPreferences에 있는 값을
-     *  불러온다.
-     * - 불러온 값은 JsonArray가 String으로 변환된 상태이므로 다시 JsonArray로 변환한 뒤 Json을 하나씩
-     *  읽고 파싱하여 List로 변환한다.
-     * - 데이터가 없을 경우 LiveData를 Observing하는 곳에서 NullPointException이 발생하지 않도록 비어 있는
-     *  ArrayList를 할당한다.
+     * - 내부 메서드인 loadInterestJmList를 호출하여 Preferences 내의 데이터를 받아 오고 null이 아닐 경우
+     *  읽어온 리스트를 그대로 LiveData에 초기화한다.
+     * - 읽어온 데이터가 없을 경우 LiveData를 Observing하는 곳에서 NullPointException이 발생하지 않도록
+     *  비어 있는 ArrayList를 할당한다.
+     * - 이 메서드는 class가 초기화될 때 생성자에 의해 단 한 번 호출된다.
+     *
      *
      * @return
      */
-    private void loadData(){
-        final String jsonString = InterestJmPreferences.getJmData();
-        if(TextUtils.isEmpty(jsonString)) {
+    private void initInterestJmListLiveData(){
+        List<InterestJmModel> list = getInterestJmList();
+        if(list == null)
             interestJmListLiveData.setValue(new ArrayList<>());
-            return;
-        }
+        else
+            interestJmListLiveData.setValue(list);
+    }
 
-        List<JmInfoModel> list = new ArrayList<>();
+    /**
+     * - Preferences로 부터 InterestJmList를 읽어온다.
+     * - 내부에서 호출하는 경우 LiveData 초기화가 목적이며 외부(ViewModel)에서 호출되는 경우 현재 메모리 상에서
+     *  가지고 있는 데이터와 실제 데이터를 비교하는 것이 목적이다.
+     * - 불러온 값은 JsonArray가 String으로 변환된 상태이므로 다시 JsonArray로 변환한 뒤 Json을 하나씩
+     *  읽고 파싱하여 List로 변환한다.
+     */
+    public List<InterestJmModel> getInterestJmList(){
+        final String jsonString = InterestJmPreferences.getJmData();
+        if(TextUtils.isEmpty(jsonString))
+            return null;
+
+        List<InterestJmModel> list = new ArrayList<>();
         try {
             JsonParser jsonParser = new JsonParser();
             JsonElement json = jsonParser.parse(jsonString);
@@ -115,22 +128,23 @@ public class InterestJmRepository {
 
             for(JsonElement jsonElement : jsonArray){
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
-                JmInfoModel jmInfoModel = new JmInfoModel(
+                InterestJmModel interestJmModel = new InterestJmModel(
                         jsonObject.get("jmCode").getAsString(),
                         jsonObject.get("jmName").getAsString());
-                list.add(jmInfoModel);
+                list.add(interestJmModel);
             }
         } catch(Exception e){
             e.printStackTrace();
         }
-        interestJmListLiveData.setValue(list);
+
+        return list;
     }
 
     /**
      * 최초 로딩 시 반드시 초기화되기 때문에 타 LiveData와 달리 null을 체크하여 초기화하지 않는다.
      * @return
      */
-    public SingleLiveEvent<List<JmInfoModel>> getInterestJmListLiveData() {
+    public SingleLiveEvent<List<InterestJmModel>> getInterestJmListLiveData() {
         return interestJmListLiveData;
     }
 }

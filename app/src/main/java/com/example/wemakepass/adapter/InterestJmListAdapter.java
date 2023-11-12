@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.wemakepass.adapter.viewholder.InterestJmViewHolder;
-import com.example.wemakepass.data.model.data.JmInfoModel;
+import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.databinding.ItemInterestJmBinding;
 import com.example.wemakepass.listener.OnItemClickListener;
 
@@ -18,19 +18,19 @@ import com.example.wemakepass.listener.OnItemClickListener;
  * @author BH-Ku
  * @since 2023-11-08
  */
-public class InterestJmListAdapter extends ListAdapter<JmInfoModel, InterestJmViewHolder> {
+public class InterestJmListAdapter extends ListAdapter<InterestJmModel, InterestJmViewHolder> {
     private OnItemClickListener onRemoveClickListener;
 
     private final String TAG = "TAG_InterestJmListAdapter";
 
-    private static final DiffUtil.ItemCallback<JmInfoModel> diffCallback = new DiffUtil.ItemCallback<>() {
+    private static final DiffUtil.ItemCallback<InterestJmModel> diffCallback = new DiffUtil.ItemCallback<>() {
         @Override
-        public boolean areItemsTheSame(@NonNull JmInfoModel oldItem, @NonNull JmInfoModel newItem) {
+        public boolean areItemsTheSame(@NonNull InterestJmModel oldItem, @NonNull InterestJmModel newItem) {
             return oldItem == newItem;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull JmInfoModel oldItem, @NonNull JmInfoModel newItem) {
+        public boolean areContentsTheSame(@NonNull InterestJmModel oldItem, @NonNull InterestJmModel newItem) {
             return oldItem.getJmCode().equals(newItem.getJmCode());
         }
     };

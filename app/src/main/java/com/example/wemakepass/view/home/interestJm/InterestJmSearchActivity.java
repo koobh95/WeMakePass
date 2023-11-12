@@ -1,6 +1,5 @@
 package com.example.wemakepass.view.home.interestJm;
 
-import androidx.annotation.AnimatorRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.databinding.DataBindingUtil;
@@ -9,16 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.InterestJmListAdapter;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
-import com.example.wemakepass.data.model.data.JmInfoModel;
+import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.ActivityInterestJmSearchBinding;
 import com.example.wemakepass.util.ExpandAnimationUtils;
@@ -140,8 +136,8 @@ public class InterestJmSearchActivity extends AppCompatActivity {
         jmSearchListAdapter = new JmSearchListAdapter();
         jmSearchListAdapter.setOnItemClickListener(position -> {
             final JmInfoDTO jmInfoDTO = jmSearchListAdapter.getCurrentList().get(position);
-            JmInfoModel jmInfoModel = new JmInfoModel(jmInfoDTO.getJmCode(), jmInfoDTO.getJmName());
-            viewModel.addInterestJmItem(jmInfoModel);
+            InterestJmModel interestJmModel = new InterestJmModel(jmInfoDTO.getJmCode(), jmInfoDTO.getJmName());
+            viewModel.addInterestJmItem(interestJmModel);
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);

@@ -7,11 +7,11 @@ package com.example.wemakepass.data.model.data;
  * @author BH-Ku
  * @since 2023-11-08
  */
-public class JmInfoModel {
+public class InterestJmModel {
     private final String jmCode;
     private final String jmName;
 
-    public JmInfoModel(String jmCode, String jmName) {
+    public InterestJmModel(String jmCode, String jmName) {
         this.jmCode = jmCode;
         this.jmName = jmName;
     }

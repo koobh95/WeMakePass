@@ -22,7 +22,7 @@ import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
-import com.example.wemakepass.view.auth.cert.EmailCertFragment;
+import com.example.wemakepass.view.auth.cert.AccountCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
 import com.example.wemakepass.view.signUp.SignUpFragment;
 import com.example.wemakepass.view.main.MainActivity;
@@ -125,7 +125,7 @@ public class LoginFragment extends Fragment {
                         dialog -> {
                             dialog.dismiss();
                             ((AuthActivity)requireActivity()).addFragment(
-                                    EmailCertFragment.newInstance(viewModel.getIdLiveData().getValue()),
+                                    AccountCertFragment.newInstance(viewModel.getIdLiveData().getValue()),
                                     R.anim.slide_from_bottom, R.anim.slide_to_bottom);
                         });
                 return;
