@@ -48,6 +48,7 @@ public class InterestJmSearchActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(InterestJmSearchViewModel.class);
         binding.setViewModel(viewModel);
 
+        initToolbar();
         initEventListener();
         initObserver();
         initJmSearchRecyclerView();
@@ -65,6 +66,14 @@ public class InterestJmSearchActivity extends AppCompatActivity {
         intent.putExtra(MainActivity.ARG_INTEREST_JM_EDITED, interestJmEdited);
         setResult(MainActivity.CODE_INTEREST_JM_SEARCH_ACTIVITY, intent);
         super.onBackPressed();
+    }
+
+    /**
+     * Toolbar를 초기화하는 메서드.
+     */
+    private void initToolbar() {
+        binding.activityInterestJmSearchToolbar.setNavigationOnClickListener(v ->
+                onBackPressed());
     }
 
     /**
