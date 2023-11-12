@@ -1,11 +1,14 @@
 package com.example.wemakepass.view.main;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityMainBinding;
@@ -18,10 +21,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
  * - 사용자가 로그인을 정상적으로 수행한 후, 혹은 사용자가 앱에 접속했을 때 가지고 있는 토큰의 유효성이 검증되었을
- *  경우에만 이 화면에 진입할 수 있다.
+ * 경우에만 이 화면에 진입할 수 있다.
  * - MainActivity는 Fragment를 부착할 ContainerView와 컨테이너에 표시할 Fragment를 변경하기 위한
- *  BottomNavigationView만을 가지고 있으며 이 클래스는 오로지 컨테이너에 표시되는 Fragment 변경에 관한 동작만
- *  수행한다.
+ * BottomNavigationView만을 가지고 있으며 이 클래스는 오로지 컨테이너에 표시되는 Fragment 변경에 관한 동작만
+ * 수행한다.
  *
  * @author BH-Ku
  * @since 2023-11-01
@@ -29,11 +32,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+
     private HomeFragment homeFragment;
     private ExamInfoFragment examInfoFragment;
     private CommunityFragment communityFragment;
     private WorkbookFragment workbookFragment;
 
+    public static final String ARG_INTEREST_JM_EDITED = "interestJmEdited";
+    public static final int CODE_INTEREST_JM_SEARCH_ACTIVITY = 100;
     private final String TAG = "TAG_MainActivity";
 
     @Override
@@ -41,16 +48,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        initActivityResultLauncher();
         initBottomNavigationView();
+    }
+
+    /**
+     *  HomeFragment > InterestJmSearchActivity 에서 관심 종목 리스트에 대한 변경이 발생했는지에 대한
+     * 결과값을 받기 위해서 ActivityResultLauncher를 생성한다. 값이 true일 경우 HomeFragment 객체에서
+     * 갱신 관련 메서드를 호출한다.
+     */
+    private void initActivityResultLauncher() {
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if(result.getResultCode() == CODE_INTEREST_JM_SEARCH_ACTIVITY &&
+                            result.getData().getBooleanExtra(ARG_INTEREST_JM_EDITED, false)) {
+                        homeFragment.updateInterestJmList();
+                    }
+                }
+        );
     }
 
     /**
      * - BottomNavigationView에 대한 설정을 수행한다.
      * - 메뉴 첫 번째에 위치한 HomeFragment가 Activity에 진입한 후 가장 먼저 표시되므로 HomeFragment를
-     *  객체화하여 Container에 추가한다.
+     * 객체화하여 Container에 추가한다.
      * - HomeFragment를 제외한 나머지 3개(ExamInfo, Community, Workbook)는 사용자에 의해 선택될 수도 있고
-     *  선택되지 않을 수도 있다. 따라서 사용자가 해당 메뉴를 선택할 경우애만 객체화를 수행하도록 하여 쓸데없는
-     *  메모리 낭비를 최소화한다.
+     * 선택되지 않을 수도 있다. 따라서 사용자가 해당 메뉴를 선택할 경우애만 객체화를 수행하도록 하여 쓸데없는
+     * 메모리 낭비를 최소화한다.
      * - 마지막 메뉴인 MyInfo를 선택하면 MyInfoActivity를 실행한다.
      */
     private void initBottomNavigationView() {
@@ -82,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * - ContainerView에 Parameter로 들어온 Fragment를 부착한다.
      * - 이 메서드는 최소 1번, 최대 4번 호출된다. Fragment들은 관련 Menu가 선택되지 않는 이상 객체화되지 않고
-     *  Container에 add 될 일도 없기 때문이다. 또한 한 번 add되면 show, hide되는 일은 있어도 replace, remove
-     *  되는 일은 없다.
+     * Container에 add 될 일도 없기 때문이다. 또한 한 번 add되면 show, hide되는 일은 있어도 replace, remove
+     * 되는 일은 없다.
      *
      * @param fragment : 현재 선택된 Menu의 Fragment
      */
@@ -96,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * - 현재 선택된 메뉴에 해당하는 Fragment를 제외한 나머지 모든 Fragment들은 hide 메서드를 호출하여 보이지
-     *  않게 하고 선택된 메뉴에 대한 Fragment만 show를 호출하여 보이도록 한다.
+     * 않게 하고 선택된 메뉴에 대한 Fragment만 show를 호출하여 보이도록 한다.
      * - 이 메서드는 Reselect 시에는 호출되지 않는다.
      * - hide 시키려는 Fragment가 아직 객체화되지 않았을 가능성이 있으므로 null을 체크한다.
      * - 단순 replace나 add로 Fragment를 교체하면 메뉴를 이동한 후 이전 Fragment의 상태가 유지되지 않기 때문에
-     *  이와 같이 로직을 짰다.
+     * 이와 같이 로직을 짰다.
      *
      * @param selectedMenuId
      */
@@ -129,5 +154,9 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.hide(workbookFragment);
 
         fragmentTransaction.commit();
+    }
+
+    public ActivityResultLauncher<Intent> getActivityResultLauncher() {
+        return activityResultLauncher;
     }
 }

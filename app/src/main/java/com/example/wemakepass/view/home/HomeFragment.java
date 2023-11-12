@@ -24,6 +24,7 @@ import com.example.wemakepass.adapter.divider.DividerWithoutLast;
 import com.example.wemakepass.databinding.FragmentHomeBinding;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.home.interestJm.InterestJmSearchActivity;
+import com.example.wemakepass.view.main.MainActivity;
 import com.example.wemakepass.view.workbook.WorkbookFragment;
 
 /**
@@ -71,22 +72,25 @@ public class HomeFragment extends Fragment {
      * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드.
      */
     private void initEventListener(){
-        binding.fragmentHomeInterestJmSearchButton.setOnClickListener(v->
-                startActivity(new Intent(requireActivity(), InterestJmSearchActivity.class)));
+        /**
+         *  관심 종목 검색 화면(InterestJmSearchActivity)에서 변경 사항이 있었는지에 대해 확인하기 위해서
+         * startActivity가 아닌 MainActivity에서 구현된 ActivityResultLauncher를 사용하여 Activity를
+         * 실행한다.
+         */
+        binding.fragmentHomeInterestJmSearchButton.setOnClickListener(v-> {
+            Intent intent = new Intent(requireActivity(), InterestJmSearchActivity.class);
+            ((MainActivity)requireActivity()).getActivityResultLauncher().launch(intent);
+        });
     }
 
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */
     private void initObserver() {
-        viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
-                MessageUtils.showToast(requireContext(), errorResponse.getMessage()));
-
         /**
          * SharedPreferences에 저장되어 있는 관심 종목 리스트를 불러 온다.
          */
         viewModel.getInterestJmListLiveData().observe(this, list -> {
-            binding.fragmentHomeScheduleLoadingProgressBar.getRoot().setVisibility(View.GONE);
             if(list.size() == 0){
                 changeVisibilityJmSchedView(VIEW_TYPE_TEXT_VIEW);
             } else {
@@ -141,5 +145,9 @@ public class HomeFragment extends Fragment {
                 viewType == VIEW_TYPE_TEXT_VIEW ? View.VISIBLE : View.GONE);
         binding.fragmentHomeScheduleRecyclerView.setVisibility(
                 viewType == VIEW_TYPE_RECYCLER_VIEW ? View.VISIBLE : View.GONE);
+    }
+
+    public void updateInterestJmList() {
+        viewModel.interestJmListUpdate();
     }
 }

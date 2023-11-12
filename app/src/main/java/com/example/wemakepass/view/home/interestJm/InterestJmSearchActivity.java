@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
@@ -19,6 +21,7 @@ import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.ActivityInterestJmSearchBinding;
 import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
+import com.example.wemakepass.view.main.MainActivity;
 
 /**
  * 관심 종목을 검색/추가/삭제할 수 있는 Activity
@@ -32,6 +35,8 @@ public class InterestJmSearchActivity extends AppCompatActivity {
 
     private JmSearchListAdapter jmSearchListAdapter;
     private InterestJmListAdapter interestJmListAdapter;
+
+    private boolean interestJmEdited = false; // 관심 종목의 변경 여부
 
     private final String TAG = "TAG_InterestJmSearchActivity";
 
@@ -47,6 +52,19 @@ public class InterestJmSearchActivity extends AppCompatActivity {
         initObserver();
         initJmSearchRecyclerView();
         initInterestJmRecyclerView();
+    }
+
+    /**
+     *  뒤로 가기를 눌러 화면을 종료했을 때 관심 종목 리스트의 변경 여부를 이전 Activity(MainActivity)에
+     * 전달한다. 세세하게 변경 여부를 따지지 않고 단순히 관심 종목 리스트에서 삭제 혹은 추가가 일어났는지에 대한
+     * 여부만 전달한다.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.ARG_INTEREST_JM_EDITED, interestJmEdited);
+        setResult(MainActivity.CODE_INTEREST_JM_SEARCH_ACTIVITY, intent);
+        super.onBackPressed();
     }
 
     /**
@@ -81,7 +99,6 @@ public class InterestJmSearchActivity extends AppCompatActivity {
          * - Load/Update된 List의 아이템이 없을 경우 RectclerView의 Visibility를 확인, Visible 상태일 경우
          *  Gone 상태로 변경한다. 반대로 아이템이 하나라도 있을 경우 Visibility를 확인, Gone일 경우 Visible
          *  상태로 변경한다.
-         *
          */
         viewModel.getInterestJmListLiveData().observe(this, list -> {
             RecyclerView recyclerView = binding.activityInterestJmSearchInterestJmRecyclerView;
@@ -120,8 +137,10 @@ public class InterestJmSearchActivity extends AppCompatActivity {
      */
     private void initInterestJmRecyclerView() {
         interestJmListAdapter = new InterestJmListAdapter();
-        interestJmListAdapter.setOnRemoveClickListener(position ->
-            viewModel.removeInterestJmItem(position));
+        interestJmListAdapter.setOnRemoveClickListener(position ->{
+            viewModel.removeInterestJmItem(position);
+            interestJmEdited = true; // 관심 종목 리스트 갱신 여부
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, true);
         layoutManager.setStackFromEnd(true);
@@ -138,6 +157,7 @@ public class InterestJmSearchActivity extends AppCompatActivity {
             final JmInfoDTO jmInfoDTO = jmSearchListAdapter.getCurrentList().get(position);
             InterestJmModel interestJmModel = new InterestJmModel(jmInfoDTO.getJmCode(), jmInfoDTO.getJmName());
             viewModel.addInterestJmItem(interestJmModel);
+            interestJmEdited = true; // 관심 종목 리스트 갱신 여부
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);

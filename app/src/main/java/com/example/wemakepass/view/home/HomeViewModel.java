@@ -1,5 +1,7 @@
 package com.example.wemakepass.view.home;
 
+import android.util.Log;
+
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.enums.SchedLoadStateCode;
@@ -9,6 +11,7 @@ import com.example.wemakepass.repository.JmSchedRepository;
 import com.example.wemakepass.repository.pref.InterestJmRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +32,18 @@ public class HomeViewModel extends BaseViewModel {
         interestJmRepository = new InterestJmRepository();
         jmSchedRepository = new JmSchedRepository(getNetworkErrorLiveData());
         interestJmListLiveData = interestJmRepository.getInterestJmListLiveData();
+    }
+
+    /**
+     * - HomeFragment 시작 초기에 Preferences에 저장된 관심 종목이 있는지 확인하여 존재할 경우 이 메서드를
+     *  호출하여 각 종목 코드에 대한 일정 데이터를 요청한다.
+     */
+    public void loadInterestJmSchedule() {
+        final List<InterestJmModel> jmList = interestJmListLiveData.getValue();
+        jmSchedRepository.getInterestJmSchedListLiveData().setValue(new ArrayList<>()); // 초기화
+
+        for(InterestJmModel interestJmModel : jmList)
+            addDisposable(jmSchedRepository.requestJmSched(interestJmModel));
     }
 
     /**
@@ -79,14 +94,42 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     /**
-     * - HomeFragment 시작 초기에 Preferences에 저장된 관심 종목이 있는지 확인하여 존재할 경우 이 메서드를
-     *  호출하여 각 종목 코드에 대한 일정 데이터를 요청한다.
+     * - InterestJmSearchActivity에서 진입했다가 돌아왔을 때 관심 종목에 변경 사항이 있는지 검사 후 변경 사항이
+     * 있을 경우 목록을 재로딩한다.
+     * - 기존 리스트와 새로운 리스트에서 변경 여부를 확인하고 변경된 부분만을 찾아 데이터를 요청하는 코드를
+     *  작성하는 와중에 코드 복잡도가 올라가는 것에 비해 성능상 이점이 크지 않다고 생각되어 단순히 변경 여부만을
+     *  판단한 후 모든 데이터를 업데이트하기로 했다. 데이터가 최대 5개밖에 안되기도 하고 부분 업데이트를 하게 되면
+     *  단순 이 메서드에서 그치지 않고 다른 메서드에도 수정이 필요하기 때문이다.
+     * - 성능상 손해를 보는 부분은 불필요한 요청 및 일정 탐색을 해야 한다는 것이고 RecyclerView는 DiffUtil을
+     *  구현하고 있기 때문에 UI 업데이트 비용은 부분 업데이트를 수행했을 때와 같다.
+     * - 데이터가 없을 경우 NullPointException 방지를 위해 빈 List를 반환하므로 Null 검사는 하지 않는다.
      */
-    public void loadInterestJmSchedule() {
-        final List<InterestJmModel> jmList = interestJmListLiveData.getValue();
+    public void interestJmListUpdate() {
+        final List<InterestJmModel> oldList = interestJmListLiveData.getValue();
+        final List<InterestJmModel> newList = interestJmRepository.getInterestJmList();
 
-        for(InterestJmModel interestJmModel : jmList)
-            addDisposable(jmSchedRepository.requestJmSched(interestJmModel));
+        // 기존 리스트와 새로운 리스트의 요소 수가 다름.
+        if(oldList.size() != newList.size()) {
+            interestJmListLiveData.setValue(newList);
+            return;
+        }
+
+        // 두 리스트의 크기가 같으므로 각 요소들을 비교한다.
+        boolean changed;
+        for(int i = 0; i < oldList.size(); i++) {
+            changed = true;
+            for(int k = 0; k < oldList.size(); k++){
+                if(oldList.get(i).getJmCode().equals(newList.get(k).getJmCode())) {
+                    changed = false; // 일치하는 종목이 있음.
+                    break;
+                }
+            }
+
+            if(changed) { // 일치하는 종목이 없었을 경우, 중복이 발생했다고 판단.
+                interestJmListLiveData.setValue(newList);
+                return;
+            }
+        }
     }
 
     public SingleLiveEvent<List<InterestJmModel>> getInterestJmListLiveData() {

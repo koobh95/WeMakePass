@@ -127,9 +127,9 @@ public class FindPasswordFragment extends Fragment {
                     dialog -> {
                         dialog.dismiss();
                         Intent intent = new Intent();
-                        intent.putExtra(AuthActivity.ARG_PASSWORD_RESET, true);
+                        intent.putExtra(AuthActivity.ARG_PASSWORD_RESET_FRAGMENT, true);
                         intent.putExtra(AuthActivity.ARG_USER_ID, viewModel.getIdLiveData().getValue());
-                        requireActivity().setResult(AuthActivity.CODE_PASSWORD_RESET, intent);
+                        requireActivity().setResult(AuthActivity.CODE_PASSWORD_RESET_FRAGMENT, intent);
                         requireActivity().finish();
                     });
         });

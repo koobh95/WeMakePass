@@ -19,11 +19,11 @@ import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFra
  * - 인증 관련 작업을 처리하는 Activity로서 Container View 역할을 한다.
  * - 최초 실행 시 LoginFragment가 표시된다.
  * - 표시되는 Fragment
- *  LoginFragment
- *  SignUpFragment
- *  PasswordReset
+ * LoginFragment
+ * SignUpFragment
+ * PasswordReset
  * - 전환되는 Activity
- *  AccountFindActivity
+ * AccountFindActivity
  *
  * @author BH-Ku
  * @since 2023-10-24
@@ -34,8 +34,8 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     public static final String ARG_USER_ID = "userId";
-    public static final String ARG_PASSWORD_RESET = "passwordReset";
-    public static final int CODE_PASSWORD_RESET = 100;
+    public static final String ARG_PASSWORD_RESET_FRAGMENT = "passwordReset";
+    public static final int CODE_PASSWORD_RESET_FRAGMENT = 100;
     private final String TAG = "TAG_AuthActivity";
 
     @Override
@@ -48,17 +48,17 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
     }
 
     /**
-     *  AuthActivity가 실행되고 FindPasswordFragment에서 인증이 완료될 경우 이 Activity에서
+     * AuthActivity가 실행되고 FindPasswordFragment에서 인증이 완료될 경우 이 Activity에서
      * PasswordResetFragment를 실행해주기 위해 activityResultLauncher를 생성해둔다.
      */
     private void initActivityResultLauncher() {
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if(result.getResultCode() == CODE_PASSWORD_RESET &&
-                            result.getData().getBooleanExtra(ARG_PASSWORD_RESET, false)){
+                    if (result.getResultCode() == CODE_PASSWORD_RESET_FRAGMENT &&
+                            result.getData().getBooleanExtra(ARG_PASSWORD_RESET_FRAGMENT, false)) {
                         addFragment(PasswordResetFragment.newInstance(
-                                result.getData().getStringExtra(ARG_USER_ID)),
+                                        result.getData().getStringExtra(ARG_USER_ID)),
                                 R.anim.slide_from_bottom,
                                 R.anim.slide_to_bottom);
                     }
@@ -85,7 +85,7 @@ public class AuthActivity extends AppCompatActivity implements AttachFragmentLis
     }
 
     /**
-     *  LoginFragment에서 "계정 찾기" 버튼이 선택될 경우 이 메서드를 호출하여 ActivityResultLauncher에 대한
+     * LoginFragment에서 "계정 찾기" 버튼이 선택될 경우 이 메서드를 호출하여 ActivityResultLauncher에 대한
      * 참조를 얻고 lunch 메서드를 호출하여 FindAccountActivity를 실행한다.
      *
      * @return
