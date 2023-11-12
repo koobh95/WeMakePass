@@ -2,6 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/all_list_divider"
-        android:start="15dp"
-        android:end="15dp"/>
+        android:start="10dp"
+        android:end="10dp"/>
 </layer-list>
