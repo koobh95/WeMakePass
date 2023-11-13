@@ -33,15 +33,15 @@ public class FindAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityFindAccountBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        setupToolbar();
-        setupTabLayout();
+        initToolbar();
+        initTabLayout();
     }
 
     /**
      *  Toolbar의 Navigation Button(←)을 누를 경우 비밀번호 찾기가 진행 중인지 확인하고 진행 중일 경우
      * 정말로 종료할 것인지 묻는 Dialog를 출력한다.
      */
-    private void setupToolbar() {
+    private void initToolbar() {
         binding.activityFindAccountToolbar.setNavigationOnClickListener(v -> {
             if(findPasswordFragment != null && findPasswordFragment.isRunningTimer())
                 findPasswordFragment.showShutdownConfirmDialog();
@@ -59,8 +59,8 @@ public class FindAccountActivity extends AppCompatActivity {
      *  indicator가 이동했다. 각 Tab에 직접 OnClick, OnTouchListener를 부착하는 등의 여러 시도를 해봤지만
      *  실패했다. 다만 기능상 문제가 있는 것은 아니다.
      */
-    private void setupTabLayout() {
-        String[] tabItemNames = getResources().getStringArray(R.array.tab_item_find_account);
+    private void initTabLayout() {
+        String[] tabItemNames = getResources().getStringArray(R.array.tab_items_find_account);
         TabLayout tabLayout = binding.activityFindAccountTabLayout;
 
         for(String tabName : tabItemNames)

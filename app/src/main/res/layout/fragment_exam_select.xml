@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.exam.ExamViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:clickable="true"
+        tools:context=".view.exam.select.ExamSelectFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/fragment_exam_select_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/baltic_sea"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="시험 선택"
+            app:titleCentered="true" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/fragment_exam_select_start_button"
+            app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_toolbar">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/fragment_exam_select_jm_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:gravity="start|center_vertical"
+                    android:text="종목"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_exam_select_jm_find_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/border_r10_baltic_sea"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_jm_title_text_view">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_select_jm_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:gravity="start|center_vertical"
+                        android:text="먼저 종목을 검색해주세요."
+                        android:textSize="@dimen/font_size_medium"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_search_bar_icon"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/baseline_search_24"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/fragment_exam_select_year_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="년도"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_jm_find_layout" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/fragment_exam_select_year_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+
+                    android:background="@drawable/all_spinner"
+                    android:textSize="@dimen/font_size_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_exam_select_year_title_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/fragment_exam_select_seq_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start|center_vertical"
+                    android:text="회차"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_year_spinner" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/fragment_exam_select_seq_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/all_spinner"
+                    android:textSize="@dimen/font_size_medium"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_seq_title_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/fragment_exam_select_format_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="구분"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_seq_spinner" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/fragment_exam_select_format_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/all_spinner"
+                    android:textSize="@dimen/font_size_medium"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_exam_select_format_title_text_view" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_exam_select_format_spinner"
+                    android:text="@string/exam_select_guidelines"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_exam_select_start_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/baltic_sea"
+            android:text="시험 시작"
+            android:textSize="@dimen/font_size_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

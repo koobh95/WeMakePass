@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">We Make Pass</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="user_id_guidelines">- 아이디는 영문(a-z, A-Z), 숫자(0-9)만 사용 가능합니다.\n- 아이디 길이는 6자 이상 20자 이하여야 합니다.</string>
+    <string name="user_id_guidelines">– 아이디는 영문(a–z, A-Z), 숫자(0-9)만 사용 가능합니다.\n- 아이디 길이는 6자 이상 20자 이하여야 합니다.</string>
     <string name="nickname_guidelines">- 닉네임은 한글, 영문(a-z, A-Z), 숫자(0-9)만 사용 가능합니다.\n- 한글 기준 2~8자, 숫자와 영문 기준 4~16자 제한입니다.</string>
     <string name="password_guidelines">- 비밀번호는 10자 이상 20자 이하로 영문(a-z, A-Z), 숫자, 특수 문자가 모두 포함되어야 합니다.\n- 사용 가능한 특수 문자는 !@#$%^&amp;* 입니다.</string>
     <string name="current_password_auth_guidelines"> 현재 비밀번호를 확인해 일치할 경우 비밀번호 변경 화면으로 넘어갑니다.</string>
     <string name="email_guidelines">- 이메일은 본인 인증 수단 및 비밀번호 찾기에 사용됩니다.\n- 이메일을 허위로 입력할 경우 본인 인증이 불가능할 수 있으며 본인 인증이 되지 않을 경우 모든 서비스 이용이 제한됩니다.</string>
     <string name="email_cert_guidelines">- 전송된 이메일은 3분간 유효합니다.\n- 제한 시간 내 인증을 완료하지 못한 경우 다시 요청해주세요.</string>
     <string name="password_reset_guidelines">새롭게 사용할 비밀번호를 설정합니다. 단, 이전 비밀번호를 재사용할 수 없습니다.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exam_select_guidelines"> 시험 종목을 선택하면 선택할 수 있는 년도를 불러옵니다. 년도를 선택하면 회차가 로딩되고 회차를 선택하면 구분이 로딩됩니다. 마지막으로 구분을 선택하면 시험 시작 버튼이 활성화됩니다.</string>
 </resources>

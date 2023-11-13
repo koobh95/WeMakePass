@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.data.InterestJmModel;
-import com.example.wemakepass.data.pref.InterestJmPreferences;
+import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -83,7 +83,7 @@ public class InterestJmRepository {
                 jsonObject.put("jmName", interestJmModel.getJmName());
                 jsonArray.put(jsonObject);
             }
-            InterestJmPreferences.setJmData(jsonArray.toString()); // save
+            AppDataPreferences.setInterestJmData(jsonArray.toString()); // save
             interestJmListLiveData.setValue(newList);
         } catch(Exception e){
             e.printStackTrace();
@@ -116,7 +116,7 @@ public class InterestJmRepository {
      *  읽고 파싱하여 List로 변환한다.
      */
     public List<InterestJmModel> getInterestJmList(){
-        final String jsonString = InterestJmPreferences.getJmData();
+        final String jsonString = AppDataPreferences.getInterestJmData();
         if(TextUtils.isEmpty(jsonString))
             return null;
 

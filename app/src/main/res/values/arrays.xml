@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="tab_item_find_account">
+    <string-array name="tab_items_find_account">
         <item>아이디 찾기</item>
         <item>비밀번호 찾기</item>
+    </string-array>
+
+    <string-array name="tab_items_search_log">
+        <item>검색 기록</item>
+        <item>검색 결과</item>
     </string-array>
 
     <string-array name="exam_organ_title_array">

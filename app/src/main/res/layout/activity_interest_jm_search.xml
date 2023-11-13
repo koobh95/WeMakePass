@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:layout_margin="10dp"
-            android:background="@drawable/bg_r15_c_baltic_sea"
+            android:background="@drawable/bg_r15_baltic_sea_bd_dove_gray"
             android:minHeight="@dimen/toolbar_height"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/baseline_arrow_back_24">

@@ -36,7 +36,7 @@
         <item name="boxCornerRadiusBottomStart">10dp</item>
     </style>
 
-    <!-- TextInputLayout+TextInputEditText로 검색창을 구현할 경우 사용하는 검색창 레이아웃 -->
+    <!-- TextInputLayout + TextInputEditText로 검색창을 구현할 경우 TextInputLayout에 적용하는 style -->
     <style name="Theme.TextInputLayout.SearchBar" parent="Theme.TextInputLayout">
         <item name="hintEnabled">false</item>
         <item name="boxStrokeWidth">0dp</item>
@@ -46,7 +46,7 @@
         <item name="endIconMode">clear_text</item>
     </style>
 
-    <!-- TextInputLayout+TextInputEditText로 검색창을 구현할 경우 사용하는 검색창 레이아웃 -->
+    <!-- TextInputLayout + TextInputEditText로 검색창을 구현할 경우 TextInputEditText에 적용하는 style -->
     <style name="Theme.TextInputEditText.SearchBar" parent="">
         <item name="android:hint">검색</item>
         <item name="android:inputType">text</item>
@@ -64,6 +64,14 @@
         <item name="android:textColor">@color/ship_cove</item>
         <item name="android:textStyle">bold|italic</item>
         <item name="android:textSize">@dimen/font_size_xlarge</item>
+    </style>
+
+    <!-- TabLayout의 Indicator 스타일, Tab item의 텍스트 스타일을 지정 -->
+    <style name="Theme.TabLayout" parent="">
+        <item name="tabSelectedTextColor">@color/ship_cove</item>
+        <item name="tabIndicatorColor">@color/ship_cove</item>
+        <item name="tabTextAppearance">@style/Theme.TabLayout.Tab.TextAppearance.Large</item>
+
     </style>
 
     <style name="Theme.CheckBox" parent="Theme.AppCompat">

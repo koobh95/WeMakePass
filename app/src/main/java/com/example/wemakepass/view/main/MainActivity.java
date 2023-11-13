@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initActivityResultLauncher();
-        initBottomNavigationView();
+        //initActivityResultLauncher();
+        //initBottomNavigationView();
+        addFragment(WorkbookFragment.newInstance());
     }
 
     /**

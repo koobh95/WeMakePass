@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.exam.ExamViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:clickable="true"
+        tools:context=".view.exam.jmSearch.JmSearchFragment">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/fragment_jm_search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appbar_height"
+            android:background="@color/baltic_sea"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="종목 검색" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_jm_search_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:background="@drawable/all_bg_search_bar"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_jm_search_toolbar">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fragment_jm_search_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                app:endIconDrawable="@drawable/baseline_close_24"
+                app:endIconMode="clear_text"
+                app:endIconTint="@color/white"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_jm_search_icon_image_view"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_jm_search_bar_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:hint="종목 검색"
+                    android:textColorHint="@color/white" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/fragment_jm_search_icon_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/baseline_search_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fragment_jm_search_text_input_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/fragment_jm_search_tab_layout"
+            style="@style/Theme.TabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_layout_large_height"
+            android:background="@drawable/border_top_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_jm_search_result_recycler_view"
+            app:layout_constraintTop_toBottomOf="@id/fragment_jm_search_bar_layout"
+            app:tabIndicatorFullWidth="true" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_jm_search_result_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_jm_search_tab_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
