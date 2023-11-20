@@ -8,8 +8,8 @@ package com.example.wemakepass.data.model.data;
  * @since 2023-11-08
  */
 public class InterestJmModel {
-    private final String jmCode;
-    private final String jmName;
+    private final String jmCode; // 종목 식별 아이디
+    private final String jmName; // 종목 이름
 
     public InterestJmModel(String jmCode, String jmName) {
         this.jmCode = jmCode;

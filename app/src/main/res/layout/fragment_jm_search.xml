@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.wemakepass.view.exam.ExamViewModel" />
+            type="com.example.wemakepass.view.exam.jmSearch.JmSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbar_height"
             android:background="@color/baltic_sea"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             app:title="종목 검색" />
 
@@ -50,17 +52,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
-                    android:hint="종목 검색"
-                    android:textColorHint="@color/white" />
+                    android:hint="검색"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={viewModel.keywordLiveData}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/fragment_jm_search_icon_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="15dp"
+                android:background="@color/transparent"
+                android:onClick="@{viewModel::onSearchButtonClick}"
                 android:src="@drawable/baseline_search_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/fragment_jm_search_text_input_layout" />
@@ -73,14 +80,21 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_layout_large_height"
             android:background="@drawable/border_top_bottom"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_jm_search_result_recycler_view"
             app:layout_constraintTop_toBottomOf="@id/fragment_jm_search_bar_layout"
             app:tabIndicatorFullWidth="true" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_jm_search_log_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_jm_search_tab_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_jm_search_result_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_jm_search_tab_layout" />
 

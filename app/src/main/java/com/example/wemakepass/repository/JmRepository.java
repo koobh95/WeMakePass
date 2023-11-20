@@ -17,14 +17,13 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
- * 종목 정보와 관련된 네트워크 작업을 처리하는 레포지토리
+ * 종목 정보와 관련된 네트워크 작업을 처리하는 Repository
  *
  * @author BH-Ku
  * @since 2023-11-08
  */
 public class JmRepository extends BaseRepository {
     private JmAPI jmAPI;
-    private List<JmInfoDTO> jmInfoList;
     private SingleLiveEvent<List<JmInfoDTO>> jmInfoListLiveData;
 
     private final String TAG = "TAG_JmRepository";
@@ -40,14 +39,35 @@ public class JmRepository extends BaseRepository {
      * @param keyword 검색어
      * @return
      */
-    public Disposable search(String keyword){
-        return jmAPI.findJmList(keyword)
+    public Disposable requestSearch(String keyword){
+        return jmAPI.search(keyword)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
                     if(response.isSuccessful()) {
-                        jmInfoList = response.body();
-                        jmInfoListLiveData.setValue(jmInfoList);
+                        jmInfoListLiveData.setValue(response.body());
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.d(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                });
+    }
+
+    /**
+     * 시험 데이터가 있는 종목에 한해서 검색을 수행한다.
+     * @return
+     */
+    public Disposable requestSearchForJmWithExamInfo(String keyword){
+        return jmAPI.searchForJmWithExamInfo(keyword)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()) {
+                        jmInfoListLiveData.setValue(response.body());
                     } else {
                         ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
                         networkErrorLiveData.setValue(errorResponse);

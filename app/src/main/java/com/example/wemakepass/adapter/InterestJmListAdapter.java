@@ -13,15 +13,13 @@ import com.example.wemakepass.databinding.ItemInterestJmBinding;
 import com.example.wemakepass.listener.OnItemClickListener;
 
 /**
- * InterestJmSearchActivity에서 검색 결과를 출력하는 RecyclerView의 Adapter 클래스.
+ * InterestJmSearchActivity에서 관심 등록된 종목 이름을 출력하는 RecyclerView의 Adapter 클래스.
  *
  * @author BH-Ku
  * @since 2023-11-08
  */
 public class InterestJmListAdapter extends ListAdapter<InterestJmModel, InterestJmViewHolder> {
     private OnItemClickListener onRemoveClickListener;
-
-    private final String TAG = "TAG_InterestJmListAdapter";
 
     private static final DiffUtil.ItemCallback<InterestJmModel> diffCallback = new DiffUtil.ItemCallback<>() {
         @Override

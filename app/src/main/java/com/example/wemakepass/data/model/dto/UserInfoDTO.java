@@ -8,9 +8,9 @@ package com.example.wemakepass.data.model.dto;
  * @since 2023-10-26
  */
 public class UserInfoDTO {
-    private String userId;
-    private String nickname;
-    private String email;
+    private String userId; // 유저 아이디
+    private String nickname; // 유저 닉네임
+    private String email; // 유저가 가입 시 인증에 사용한 이메일
 
     public UserInfoDTO(String userId, String nickname, String email) {
         this.userId = userId;

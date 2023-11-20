@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //initActivityResultLauncher();
         //initBottomNavigationView();
-        addFragment(WorkbookFragment.newInstance());
+        addFragment(WorkbookFragment.newInstance()); // test
     }
 
     /**

@@ -23,7 +23,8 @@ public class AppDataPreferences {
     private static final String PREF_NAME = "wmpPreferences";
 
     private static final String KEY_INTEREST_JM = "interestJm_";
-    private static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_";
+
+    public static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_";
 
     public AppDataPreferences(Context context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -46,17 +47,19 @@ public class AppDataPreferences {
     }
 
     /**
-     * - ExamActivity > JmSearchFragment 에서 검색 기록 데이터
+     * - 검색 기록 데이터를 조회하거나 저장한다.
      * - 문자열에서 데이터는 파이프 라인 문자('|')를 사용하여 구분한다.
+     * - 모든 검색 기록이 같은 형태를 취하고 있기 때문에 비슷한 코드들이 반복되는 것을 줄이기 위해서
+     *  LogRepository에서 로그 관련 조회, 검색, 삭제, 초기화등을 모두 수행한다. 단 어떤 로그인지를 구분하기
+     *  위해서 Key을 상이하게 사용한다. 자세한 내용은 LogRepository를 참고.
      *
      * @return
      */
-    public static String getExamJmSearchLogData() {
-        return pref.getString(KEY_EXAM_JM_SEARCH_LOG + AppConfig.UserPreference.getUserId(), "");
+    public static String getLogData(String key) {
+        return pref.getString(key + AppConfig.UserPreference.getUserId(), "");
     }
 
-    public static void setExamJmSearchLogData(String data) {
-        pref.edit().putString(KEY_EXAM_JM_SEARCH_LOG + AppConfig.UserPreference.getUserId(), data)
-                .apply();
+    public static void setLogData(String key, String data) {
+        pref.edit().putString(key + AppConfig.UserPreference.getUserId(), data).apply();
     }
 }

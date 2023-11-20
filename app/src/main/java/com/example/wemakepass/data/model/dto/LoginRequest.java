@@ -7,8 +7,8 @@ package com.example.wemakepass.data.model.dto;
  * @since 2023-05-16
  */
 public class LoginRequest {
-    private String userId;
-    private String password;
+    private String userId; // 유저의 Id
+    private String password; // 암호화된 유저의 비밀번호
 
     public LoginRequest(String userId, String password) {
         this.userId = userId;

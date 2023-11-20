@@ -39,7 +39,8 @@ public class InterestJmSearchViewModel extends BaseViewModel {
 
     /**
      * - TextInputEditText에서 검색어를 입력하고 "완료"를 누를 경우 호출되는 메서드다.
-     * - 검색 작업이 중복 호출되지 않도록 백그라운드 작업이 실행 중인지 확인한다.
+     * - 검색 작업이 중복 호출되지 않도록 백그라운드 작업이 실행 중인지 확인한다. 이미 검색이 실행 중일 경우 기존
+     *  작업을 취소한 뒤 새로 들어온 검색을 요청한다.
      * - 한국산업인력공단에서 제공하는 종목 정보 611개 중 6개를 제외한 모든 데이터(종목 이름)가 띄어 쓰기를 하고
      *  있지 않다. 따라서 검색을 수월하게 하기 위해 공백을 모두 지운 채로 검색을 수행한다.
      * - 공백 입력은 허용하지만 실제 검증, 요청 단계에서는 공백을 취급하지 않기 때문에 공백을 입력해도 1글자로
@@ -47,14 +48,14 @@ public class InterestJmSearchViewModel extends BaseViewModel {
      */
     public void search() {
         if(searchDisposable != null && !searchDisposable.isDisposed())
-            return;
+            searchDisposable.isDisposed();
 
         final String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
         if(!isValidKeyword(keyword))
             return;
 
         addDisposable(searchDisposable =
-                jmRepository.search(keyword.toUpperCase(Locale.KOREA)));
+                jmRepository.requestSearch(keyword.toUpperCase(Locale.KOREA)));
     }
 
     /**
@@ -106,7 +107,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
     }
 
     /**
-     * - 관심 종목에서 특정 아이템을 삭제하기 위해서 아이템의 x 버튼을 누를 경우 호출되는 메서드다.     *
+     * - 관심 종목에서 특정 아이템을 삭제하기 위해서 아이템의 x 버튼을 누를 경우 호출되는 메서드다.
      *
      * @param position 삭제하고자 하는 아이템의 index
      */

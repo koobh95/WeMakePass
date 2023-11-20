@@ -7,10 +7,10 @@ package com.example.wemakepass.data.model.dto;
  * @since 2023-05-14
  */
 public class UserSignUpDTO {
-    private String userId;
-    private String password;
-    private String nickname;
-    private String email;
+    private String userId; // 유저 아이디
+    private String password; // 계정 비밀번호
+    private String nickname; // 유저 닉네임
+    private String email; // 계정 인증에 사용할 이메일
 
     public UserSignUpDTO(String userId, String password, String nickname, String email){
         this.userId = userId;

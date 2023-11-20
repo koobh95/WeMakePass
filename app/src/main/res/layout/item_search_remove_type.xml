@@ -7,22 +7,22 @@
     android:paddingEnd="10dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/item_search_add_text_view"
+        android:id="@+id/item_search_remove_type_content_text_view"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="5dp"
         android:ellipsize="end"
         android:gravity="start|center_vertical"
-        app:layout_constraintEnd_toStartOf="@+id/item_search_add_button"
+        app:layout_constraintEnd_toStartOf="@+id/item_search_remove_type_remove_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/item_search_add_button"
+        android:id="@+id/item_search_remove_type_remove_button"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/transparent"
-        android:src="@drawable/baseline_add_circle_outline_24"
+        android:src="@drawable/baseline_close_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_search_add_text_view" />
+        app:layout_constraintStart_toEndOf="@+id/item_search_remove_type_content_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

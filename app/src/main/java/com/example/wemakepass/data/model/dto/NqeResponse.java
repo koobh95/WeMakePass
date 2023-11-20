@@ -19,7 +19,7 @@ import java.util.List;
 public class NqeResponse<T> {
     private final String resultCode; // 실패 시 XML을 파싱하여 에러 코드가 저장된다.
     private String resultMessage; // 실패 시 NqeApiErrorCode에서 에러 코드에 해당하는 메시지를 찾아 저장.
-    private List<T> items; //
+    private List<T> items;
 
     // 같은 곳에서 제공하는 API지만 성공 코드로 0을 제공하는 것도 있고 00을 제공하는 것도 있다.
     private final String SUCCESSFUL_CODE_A = "0";

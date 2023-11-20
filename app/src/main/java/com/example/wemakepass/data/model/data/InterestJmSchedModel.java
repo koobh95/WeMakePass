@@ -17,10 +17,10 @@ import com.example.wemakepass.data.model.dto.JmSchedDTO;
  *
  */
 public class InterestJmSchedModel {
-    private InterestJmModel interestJmModel;
-    private JmSchedDTO jmSchedDTO;
-    private SchedLoadStateCode schedLoadStateCode;
-    private boolean expanded;
+    private InterestJmModel interestJmModel; // 관심 종목 정보
+    private JmSchedDTO jmSchedDTO; // 관심 종목 정보에 대한 시험 일정 정보
+    private SchedLoadStateCode schedLoadStateCode; // 일정 로딩 여부
+    private boolean expanded; // MainActivity > HomeFragment에서 일정 펼침 여부
 
     /**
      * 특정 종목의 일정을 조회했을 때 유효한 일정이 있을 경우 이 생성자를 통해 초기화한다.

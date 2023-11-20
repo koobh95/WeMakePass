@@ -7,21 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import com.example.wemakepass.adapter.viewholder.JmSearchViewHolder;
+import com.example.wemakepass.adapter.viewholder.SearchTextTypeViewHolder;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
-import com.example.wemakepass.databinding.ItemSearchAddBinding;
+import com.example.wemakepass.databinding.ItemSearchTextTypeBinding;
 import com.example.wemakepass.listener.OnItemClickListener;
 
 /**
- * InterestJmSearchActivity에서 관심 종목 목록을 출력하는 RecyclerView의 Adapter 클래스.
+ *  InterestJmSearchActivity, JmSearchActivity에서 종목에 대한 검색 결과를 출력하는 RecyclerView의
+ * Adapter 클래스
  *
  * @author BH-Ku
- * @since 2023-11-08
+ * @since 2023-11-17
  */
-public class JmSearchListAdapter extends ListAdapter<JmInfoDTO, JmSearchViewHolder> {
+public class JmSearchListAdapter extends ListAdapter<JmInfoDTO, SearchTextTypeViewHolder> {
     private OnItemClickListener onItemClickListener;
-
-    private final String TAG = "TAG_InterestJmListSearchAdapter";
 
     private static final DiffUtil.ItemCallback<JmInfoDTO> diffCallback = new DiffUtil.ItemCallback<>() {
         @Override
@@ -41,15 +40,15 @@ public class JmSearchListAdapter extends ListAdapter<JmInfoDTO, JmSearchViewHold
 
     @NonNull
     @Override
-    public JmSearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SearchTextTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         assert onItemClickListener != null;
-        return new JmSearchViewHolder(ItemSearchAddBinding.inflate(
+        return new SearchTextTypeViewHolder(ItemSearchTextTypeBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull JmSearchViewHolder holder, int position) {
-        holder.bind(getItem(position));
+    public void onBindViewHolder(@NonNull SearchTextTypeViewHolder holder, int position) {
+        holder.setContent(getItem(position).getJmName());
         holder.setOnItemClickListener(onItemClickListener);
     }
 

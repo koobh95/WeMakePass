@@ -142,7 +142,7 @@ public class InterestJmSearchActivity extends AppCompatActivity {
     /**
      * - 관심 종목 RecyclerView를 초기화한다.
      * - 횡스크롤이다.
-     * - 역순으로 출력한다.
+     * - 가장 최근 추가한 종목을 우선 순위로 보여주기 위해서 역순으로 출력한다.
      */
     private void initInterestJmRecyclerView() {
         interestJmListAdapter = new InterestJmListAdapter();
