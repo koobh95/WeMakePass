@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.exam.guide.ExamGuideViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:clickable="true"
+        tools:context=".view.exam.guide.ExamGuideFragment">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_exam_guide_start_button"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/appbar_height">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/fragment_exam_guide_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/appbar_height"
+                    android:background="@color/baltic_sea"
+                    app:layout_scrollFlags="scroll|snap|enterAlways"
+                    app:navigationIcon="@drawable/baseline_arrow_back_24"
+                    app:title="시험 안내" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_main_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="30dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_sub_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingBottom="20dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_main_title_text_view" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_exam_guide_num_of_question_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:layout_constraintEnd_toStartOf="@+id/fragment_exam_guide_time_limit_layout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_sub_title_text_view">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_num_of_question_title_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="총 문항 수"
+                            android:textSize="@dimen/font_size_medium"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/fragment_exam_guide_num_of_question_content_text_view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_num_of_question_content_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_num_of_question_title_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_exam_guide_time_limit_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/border_side"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:layout_constraintEnd_toStartOf="@id/fragment_exam_guide_format_layout"
+                        app:layout_constraintStart_toEndOf="@id/fragment_exam_guide_num_of_question_layout"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_sub_title_text_view">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_time_limit_title_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="시간 제한"
+                            android:textSize="@dimen/font_size_medium"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/fragment_exam_guide_time_limit_content_text_view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_time_limit_content_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_time_limit_title_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_exam_guide_format_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/fragment_exam_guide_time_limit_layout"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_sub_title_text_view">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_format_title_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="구분"
+                            android:textSize="@dimen/font_size_medium"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toTopOf="@id/fragment_exam_guide_format_content_text_view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="packed" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_format_content_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_format_title_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/fragment_exam_guide_subject_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:background="@drawable/border_top_bottom"
+                        android:paddingTop="30dp"
+                        android:paddingBottom="30dp"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_num_of_question_layout">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_subject_title_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="과목 안내"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/fragment_exam_guide_subject_content_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:paddingTop="10dp"
+                            android:textSize="16sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_subject_title_text_view" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_pass_commentary_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="10dp"
+                        android:paddingTop="40dp"
+                        android:paddingEnd="10dp"
+                        android:text="시험 합격 조건"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_subject_layout" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_pass_commentary_content_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="20dp"
+                        android:text="@string/exam_guide_pass_commentary"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_pass_commentary_title_text_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_app_commentary_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="10dp"
+                        android:paddingTop="40dp"
+                        android:paddingEnd="10dp"
+                        android:text="어플리케이션 안내 사항"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_pass_commentary_content_text_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_app_commentary_content_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="20dp"
+                        android:text="@string/exam_guide_app_commentary"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_app_commentary_title_text_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_tip_commentary_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="10dp"
+                        android:paddingTop="40dp"
+                        android:paddingEnd="10dp"
+                        android:text="시험 Tip"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_app_commentary_content_text_view" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/fragment_exam_guide_tip_commentary_content_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="30dp"
+                        android:text="@string/exam_guide_tip_commentary"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_exam_guide_tip_commentary_title_text_view" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/fragment_exam_guide_start_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/baltic_sea"
+            android:text="시험 시작"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

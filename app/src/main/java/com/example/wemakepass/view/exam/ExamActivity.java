@@ -9,8 +9,11 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 
 import com.example.wemakepass.R;
+import com.example.wemakepass.data.model.dto.ExamInfoDTO;
+import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.ActivityExamBinding;
 import com.example.wemakepass.listener.AttachFragmentListener;
+import com.example.wemakepass.view.exam.guide.ExamGuideFragment;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 /**
@@ -23,6 +26,9 @@ public class ExamActivity extends AppCompatActivity implements AttachFragmentLis
     private ActivityExamBinding binding;
     private ExamViewModel viewModel;
 
+    public static final String ARG_SELECTED_JM_INFO = "selectedJmInfo";
+    public static final String ARG_SELECTED_EXAM_INFO = "selectedExamInfo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +36,6 @@ public class ExamActivity extends AppCompatActivity implements AttachFragmentLis
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(ExamViewModel.class);
         binding.setViewModel(viewModel);
-
         replaceFragment(ExamSelectFragment.newInstance());
     }
 

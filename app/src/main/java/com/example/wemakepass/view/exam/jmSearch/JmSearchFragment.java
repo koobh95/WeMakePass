@@ -22,6 +22,7 @@ import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentJmSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
+import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -178,8 +179,8 @@ public class JmSearchFragment extends Fragment {
                             + "\"을(를) 선택하시겠습니까?",
                     dialog -> {
                         Bundle bundle = new Bundle();
-                        bundle.putString(ExamSelectFragment.ARG_SELECTED_JM_CODE,
-                                selectedJmInfo.getJmCode());
+                        bundle.putSerializable(ExamActivity.ARG_SELECTED_JM_INFO,
+                                selectedJmInfo);
                         getParentFragmentManager()
                                 .setFragmentResult(ExamSelectFragment.RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT, bundle);
                         requireActivity()

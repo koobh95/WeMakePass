@@ -22,7 +22,13 @@ public interface ExamInfoAPI {
 
     // 특정 종목 코드에 해당하는 시험들을 모두 조회한다.
     @LoginRequired
-    @GET(BASE_URI)
+    @GET(BASE_URI + "list")
     Observable<Response<List<ExamInfoDTO>>> examInfoList(
             @Query("jmCode") String jmCode);
+
+    // 특정 시험의 과목 목록을 조회한다.
+    @LoginRequired
+    @GET(BASE_URI + "subject_list")
+    Observable<Response<List<String>>> subjectList(
+            @Query("examId") int examId);
 }

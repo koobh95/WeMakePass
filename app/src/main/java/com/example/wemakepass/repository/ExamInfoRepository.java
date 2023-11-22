@@ -15,6 +15,7 @@ import java.util.EnumMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -26,6 +27,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class ExamInfoRepository extends BaseRepository {
     private SingleLiveEvent<List<ExamInfoDTO>> examInfoListLiveData;
+    private SingleLiveEvent<List<String>> subjectListLiveData;
 
     private final ExamInfoAPI examInfoAPI;
 
@@ -39,7 +41,7 @@ public class ExamInfoRepository extends BaseRepository {
     /**
      * 특정 종목 코드에 해당하는 시험 정보 목록을 불러 온다.
      *
-     * @param jmCode
+     * @param jmCode 종목의 고유 ID
      * @return
      */
     public Disposable requestExamInfoList(String jmCode) {
@@ -60,9 +62,39 @@ public class ExamInfoRepository extends BaseRepository {
                 });
     }
 
+    /**
+     * 특정 시험 코드에 해당하는 과목 목록을 불러온다.
+     *
+     * @param examId 시험의 고유 ID
+     * @return
+     */
+    public Disposable requestSubjectList(int examId) {
+        return examInfoAPI.subjectList(examId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()){
+                        subjectListLiveData.setValue(response.body());
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.e(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    Log.e(TAG, networkErrorLiveData.getValue().toString());
+                });
+    }
+
     public SingleLiveEvent<List<ExamInfoDTO>> getExamInfoListLiveData() {
         if(examInfoListLiveData == null)
             examInfoListLiveData = new SingleLiveEvent<>();
         return examInfoListLiveData;
+    }
+
+    public SingleLiveEvent<List<String>> getSubjectListLiveData() {
+        if(subjectListLiveData == null)
+            subjectListLiveData = new SingleLiveEvent<>();
+        return subjectListLiveData;
     }
 }
