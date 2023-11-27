@@ -30,5 +30,5 @@ public interface ExamInfoAPI {
     @LoginRequired
     @GET(BASE_URI + "subject_list")
     Observable<Response<List<String>>> subjectList(
-            @Query("examId") int examId);
+            @Query("examId") long examId);
 }

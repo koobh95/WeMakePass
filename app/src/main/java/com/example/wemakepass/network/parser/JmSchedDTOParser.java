@@ -20,15 +20,15 @@ public class JmSchedDTOParser extends NqeResponseParser<JmSchedDTO> {
                 o.get("qualgbCd").getAsString(),
                 o.get("qualgbNm").getAsString(),
                 o.get("description").getAsString(),
-                DateUtils.parseLocalDate(o.get("docRegStartDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("docRegEndDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("docExamStartDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("docExamEndDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("docPassDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("pracRegStartDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("pracRegEndDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("pracExamStartDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("pracExamEndDt").getAsString()),
-                DateUtils.parseLocalDate(o.get("pracPassDt").getAsString()));
+                DateUtils.toLocalDate(o.get("docRegStartDt").getAsString()),
+                DateUtils.toLocalDate(o.get("docRegEndDt").getAsString()),
+                DateUtils.toLocalDate(o.get("docExamStartDt").getAsString()),
+                DateUtils.toLocalDate(o.get("docExamEndDt").getAsString()),
+                DateUtils.toLocalDate(o.get("docPassDt").getAsString()),
+                DateUtils.toLocalDate(o.get("pracRegStartDt").getAsString()),
+                DateUtils.toLocalDate(o.get("pracRegEndDt").getAsString()),
+                DateUtils.toLocalDate(o.get("pracExamStartDt").getAsString()),
+                DateUtils.toLocalDate(o.get("pracExamEndDt").getAsString()),
+                DateUtils.toLocalDate(o.get("pracPassDt").getAsString()));
     }
 }

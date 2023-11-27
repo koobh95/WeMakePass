@@ -20,7 +20,7 @@
         style="@style/Theme.TabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_layout_large_height"
-        android:background="@drawable/border_top_bottom"
+        android:background="@drawable/border_top_bottom_bg_black"
         app:layout_constraintTop_toBottomOf="@id/activity_find_account_toolbar"
         app:tabIndicatorFullWidth="true"
         app:tabMode="fixed" />

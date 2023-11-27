@@ -1,5 +1,7 @@
 package com.example.wemakepass.data.util;
 
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import java.time.LocalDate;
@@ -26,8 +28,8 @@ public class DateUtils {
      * @param value 문자열 형태의 날짜값
      * @return
      */
-    public static LocalDate parseLocalDate(@NonNull final String value) {
-        if(value.equals(""))
+    public static LocalDate toLocalDate(final String value) {
+        if(TextUtils.isEmpty(value))
             return null;
         return LocalDate.parse(value, localDateFormat);
     }
@@ -38,8 +40,8 @@ public class DateUtils {
      * @param value 문자열 형태의 날짜값
      * @return
      */
-    public static LocalDateTime parseLocalDateTime(@NonNull final String value){
-        if(value.equals(""))
+    public static LocalDateTime toLocalDateTime(final String value){
+        if(TextUtils.isEmpty(value))
             return null;
         return LocalDateTime.parse(value, localDateTimeFormat);
     }

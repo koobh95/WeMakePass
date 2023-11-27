@@ -60,8 +60,8 @@ public class AccountCertViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .take(LIMIT_TIME+2)
                 .subscribe(time -> {
-                            Log.d(TAG, "Time=" + time);
-                            timerLiveData.setValue(String.format("%tM:%<tS",  ((LIMIT_TIME - time) * 1000L)));
+                            timerLiveData.setValue(String.format("%tM:%<tS",
+                                    ((LIMIT_TIME - time) * 1000L)));
                         }, t -> {
                             // onError
                         } ,() -> isTimeOver.setValue(true));

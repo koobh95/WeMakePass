@@ -9,11 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 
 import com.example.wemakepass.R;
-import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.ActivityExamBinding;
 import com.example.wemakepass.listener.AttachFragmentListener;
-import com.example.wemakepass.view.exam.guide.ExamGuideFragment;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 /**

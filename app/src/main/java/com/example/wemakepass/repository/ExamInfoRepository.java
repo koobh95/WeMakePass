@@ -68,7 +68,7 @@ public class ExamInfoRepository extends BaseRepository {
      * @param examId 시험의 고유 ID
      * @return
      */
-    public Disposable requestSubjectList(int examId) {
+    public Disposable requestSubjectList(long examId) {
         return examInfoAPI.subjectList(examId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())

@@ -24,7 +24,7 @@ public class ExamGuideViewModel extends BaseViewModel {
      *
      * @param examId
      */
-    public void loadSubjectList(int examId) {
+    public void loadSubjectList(long examId) {
         addDisposable(examInfoRepository.requestSubjectList(examId));
     }
 

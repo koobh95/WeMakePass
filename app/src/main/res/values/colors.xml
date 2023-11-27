@@ -19,5 +19,7 @@
     <color name="shark_approx">#2D3037</color>
     <color name="turquoise_approx">#38DDB8</color>
     <color name="silver_chalice_approx">#A6A6A6</color>
-    <color name="alpha_30">#30000000</color>
+    <color name="green">#00FF00</color>
+    <color name="rose">#FF0079</color>
+    <color name="alpha_50">#50000000</color>
 </resources>

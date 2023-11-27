@@ -20,7 +20,10 @@ import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentExamGuideBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.ExpandAnimationUtils;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
+import com.example.wemakepass.view.exam.doc.ExamDocFragment;
+import com.example.wemakepass.view.exam.prac.ExamPracFragment;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 import java.util.List;
@@ -102,9 +105,8 @@ public class ExamGuideFragment extends Fragment {
      * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드.
      */
     private void initEventListener() {
-        binding.fragmentExamGuideStartButton.setOnClickListener(v -> {
-
-        });
+        binding.fragmentExamGuideStartButton.setOnClickListener(v ->
+                startExamFragment());
     }
 
     /**
@@ -174,5 +176,18 @@ public class ExamGuideFragment extends Fragment {
                             .getSupportFragmentManager()
                             .popBackStack();
                 });
+    }
+
+    /**
+     * 시험 형식에 따라 다른 Fragment를 실행한다.
+     * 실기 -> ExamPracFragment
+     * 필기, 1차, 2차, 3차 -> ExamDocFragment
+     */
+    private void startExamFragment(){
+        ExamActivity examActivity = (ExamActivity)requireActivity();
+        if(examInfoDTO.getExamFormat().equals("실기"))
+            examActivity.replaceFragment(ExamPracFragment.newInstance(jmInfoDTO, examInfoDTO));
+        else
+            examActivity.replaceFragment(ExamDocFragment.newInstance(jmInfoDTO, examInfoDTO));
     }
 }

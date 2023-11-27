@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_dialog">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dialog_exam_result_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/border_top_bottom_bg_mine_shaft_solid"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_viewer_result_message_text_view"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dialog_exam_result_viewer_main_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_xlarge"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_viewer_sub_title_text_view"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dialog_exam_result_viewer_sub_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_viewer_main_title_text_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_exam_result_viewer_result_message_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_viewer_elapsed_time_text_view"
+        app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_title_layout" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_exam_result_viewer_elapsed_time_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_viewer_detailed_score_text_view"
+        app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_viewer_result_message_text_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_exam_result_viewer_detailed_score_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border_top_bottom_bg_mine_shaft_solid"
+        android:gravity="start"
+        android:paddingStart="10dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_viewer_subject_result_text_view"
+        app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_viewer_elapsed_time_text_view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_exam_result_viewer_subject_result_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="start"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@id/dialog_exam_result_dismiss_button"
+        app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_viewer_detailed_score_text_view" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dialog_exam_result_dismiss_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="10dp"
+        android:background="@drawable/bg_r15_baltic_sea"
+        android:text="닫기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_exam_result_viewer_subject_result_text_view"
+        app:layout_constraintVertical_bias="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

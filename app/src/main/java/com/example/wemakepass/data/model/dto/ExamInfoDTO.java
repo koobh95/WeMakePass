@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @since 2023-11-14
  */
 public class ExamInfoDTO implements Serializable {
-    private int examId; // 시험 정보의 식별 아이디
+    private long examId; // 시험 정보의 식별 아이디
     private String jmCode; // 시험이 속한 종목의 종목 식별 아이디
     private String implYear; // 시행 년도, DB에서 int값으로 저장되어 있지만 편의상 String으로 변경
     private String implSeq; // 시행 회차, DB에서 int값으로 저장되어 있지만 편의상 String으로 변경
@@ -17,7 +17,17 @@ public class ExamInfoDTO implements Serializable {
     private int numOfQuestion; // 문항 개수
     private int timeLimit; // 시험 제한 시간
 
-    public int getExamId() {
+    public ExamInfoDTO(long examId, String jmCode, String implYear, String implSeq, String examFormat, int numOfQuestion, int timeLimit) {
+        this.examId = examId;
+        this.jmCode = jmCode;
+        this.implYear = implYear;
+        this.implSeq = implSeq;
+        this.examFormat = examFormat;
+        this.numOfQuestion = numOfQuestion;
+        this.timeLimit = timeLimit;
+    }
+
+    public long getExamId() {
         return examId;
     }
 
