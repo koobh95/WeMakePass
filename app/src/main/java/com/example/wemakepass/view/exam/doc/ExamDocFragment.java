@@ -35,6 +35,7 @@ import com.example.wemakepass.task.exam.ExamDocScoringTask;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
+import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
 import com.example.wemakepass.view.exam.result.ExamResultViewerDialog;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class ExamDocFragment extends Fragment {
     public static ExamDocFragment newInstance(JmInfoDTO jmInfoDTO, ExamInfoDTO examInfoDTO) {
         ExamDocFragment fragment = new ExamDocFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ExamActivity.ARG_SELECTED_JM_INFO, jmInfoDTO);
+        bundle.putSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO, jmInfoDTO);
         bundle.putSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO, examInfoDTO);
         fragment.setArguments(bundle);
         return fragment;
@@ -76,7 +77,7 @@ public class ExamDocFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         assert bundle != null;
-        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_JM_INFO);
+        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
         examInfoDTO = (ExamInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO);
     }
 

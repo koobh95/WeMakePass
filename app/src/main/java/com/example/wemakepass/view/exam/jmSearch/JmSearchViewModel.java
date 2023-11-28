@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
+import com.example.wemakepass.data.enums.JmSearchType;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.example.wemakepass.data.util.StringUtils;
@@ -29,13 +30,35 @@ public class JmSearchViewModel extends BaseViewModel {
     private SearchLogRepository searchLogRepository;
     private JmRepository jmRepository;
 
+    private JmSearchType jmSearchType;
+
     private final int KEYWORD_LEN_MIM = 2; // 검색어 최소 길이(공백 미포함)
     private final int KEYWORD_LEN_MAX = 20; // 검색어 최대 길이(공백 미포함)
     private final String TAG = "TAG_JmSearchViewModel";
 
     public JmSearchViewModel() {
-        searchLogRepository = new SearchLogRepository(AppDataPreferences.KEY_EXAM_JM_SEARCH_LOG);
         jmRepository = new JmRepository(getNetworkErrorLiveData());
+    }
+
+    /**
+     * - ViewModel이 초기화된 후 바로 호출되며 Fragment가 초기화되면서 전달받은 JmSearchType을 받아 저장한다.
+     * - 전달받은 jmSearchType으로 생성할 로그 파일을 결정한다.
+     *
+     * @param jmSearchType 종목 검색 타입
+     */
+    public void initJmSearchType(JmSearchType jmSearchType) {
+        this.jmSearchType = jmSearchType;
+        String prefKey = null;
+
+        switch (jmSearchType){
+            case SEARCH_EXAM:
+                prefKey = AppDataPreferences.KEY_EXAM_JM_SEARCH_LOG;
+                break;
+            case SEARCH_BOARD:
+                prefKey = AppDataPreferences.KEY_BOARD_SEARCH_LOG;
+        }
+
+        searchLogRepository = new SearchLogRepository(prefKey);
     }
 
     /**
@@ -49,22 +72,33 @@ public class JmSearchViewModel extends BaseViewModel {
 
     /**
      * - EditText에 존재하는 문자열(keyword)를 토대로 검색을 수행한다.
-     * - 이미 검색을 진행 중일 경우 기존 작업은 dispose 시킨 뒤 검색을 수행한다.
+     * - 이미 검색을 진행 중인 경우 기존 작업은 dispose 시킨 뒤 뒤에 발생항 검색을 수행한다.
      * - 데이터베이스에서 종목 이름 데이터는 애초에 공백이 없기 때문에 keyword는 공백을 허용하지 않는다. 따라서
      *  검색어를 검증할 때 공백을 모두 삭제한 후 검증을 진행한다.
+     * - 데이터베이스에서 종목 이름 데이터에 일부 영어를 포함한 데이터는 모두 대문자로 되어 있기 때문에 소문자가
+     *  있을 경우 모두 대문자로 변경한다.
      * - 검색어가 검색 조건을 만족했을 경우 검색을 수행하는 동시에 검색어 기록에도 추가한다.
+     * - jmSearchType에 따라 다른 API를 호출한다.
      */
     public void search() {
         if(searchDisposable != null && !searchDisposable.isDisposed())
             searchDisposable.isDisposed();
 
-        final String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
+        String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
         if(!isValidKeyword(keyword))
             return;
 
         searchLogRepository.addLog(keyword);
-        addDisposable(searchDisposable =
-                jmRepository.requestSearchForJmWithExamInfo(keyword.toUpperCase(Locale.KOREA)));
+        keyword = keyword.toUpperCase(Locale.KOREA);
+        switch (jmSearchType){
+            case SEARCH_EXAM: // 시험이 존재하는 종목 검색
+                searchDisposable = jmRepository.requestSearchForJmWithExamInfo(keyword);
+                break;
+            case SEARCH_BOARD: // 게시판이 존재하는 종목 검색
+                // 추가 예정
+        }
+
+        addDisposable(searchDisposable);
     }
 
     /**

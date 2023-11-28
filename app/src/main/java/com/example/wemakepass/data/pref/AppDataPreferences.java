@@ -24,7 +24,8 @@ public class AppDataPreferences {
 
     private static final String KEY_INTEREST_JM = "interestJm_";
 
-    public static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_";
+    public static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_"; // 시험 종목 검색
+    public static final String KEY_BOARD_SEARCH_LOG = "boardSearchLog"; // 게시판 검색
 
     public AppDataPreferences(Context context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

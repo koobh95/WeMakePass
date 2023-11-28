@@ -19,7 +19,6 @@ import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 public class ExamActivity extends AppCompatActivity implements AttachFragmentListener {
     private ActivityExamBinding binding;
 
-    public static final String ARG_SELECTED_JM_INFO = "selectedJmInfo";
     public static final String ARG_SELECTED_EXAM_INFO = "selectedExamInfo";
 
     @Override

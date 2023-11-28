@@ -23,6 +23,7 @@ import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.doc.ExamDocFragment;
+import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ExamGuideFragment extends Fragment {
                                                 @NonNull ExamInfoDTO selectedExamInfo) {
         ExamGuideFragment fragment = new ExamGuideFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ExamActivity.ARG_SELECTED_JM_INFO, selectedJmInfo);
+        bundle.putSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO, selectedJmInfo);
         bundle.putSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO, selectedExamInfo);
         fragment.setArguments(bundle);
         return fragment;
@@ -56,7 +57,7 @@ public class ExamGuideFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         assert bundle != null;
-        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_JM_INFO);
+        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
         examInfoDTO = (ExamInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO);
     }
 
