@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +21,13 @@ import android.view.inputmethod.EditorInfo;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
 import com.example.wemakepass.adapter.SearchLogListAdapter;
+import com.example.wemakepass.adapter.divider.DividerWithoutLast;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentJmSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
-import com.google.android.material.tabs.TabLayout;
 
 /**
  * 시험 선택 화면에서 종목을 검색하는 기능을 제공하는 Fragment
@@ -39,8 +42,8 @@ public class JmSearchFragment extends Fragment {
     private JmSearchListAdapter jmSearchResultListAdapter;
     private SearchLogListAdapter searchLogListAdapter;
 
-    private final int TAB_SEARCH_LOG = 0; // 검색 기록을 나타낼 Tab의 Position
-    private final int TAB_SEARCH_RESULT = 1; // 검색 결과를 나타낼 Tab의 Position
+    private final int LAYOUT_LOG = 0;
+    private final int LAYOUT_SEARCH_RESULT = 1;
     private final String TAG = "TAG_JmSearchFragment";
 
     public static JmSearchFragment newInstance() {
@@ -65,7 +68,6 @@ public class JmSearchFragment extends Fragment {
         initEventListener();
         initObserver();
         initToolbar();
-        initTabLayout();
     }
 
     /**
@@ -77,6 +79,20 @@ public class JmSearchFragment extends Fragment {
                 viewModel.search();
             return true;
         });
+
+        // 검색 기록 레이아웃에서 로그 삭제 버튼
+        binding.fragmentJmSearchLogDeleteAllButton.setOnClickListener(v -> {
+            DialogUtils.showConfirmDialog(requireContext(),
+                    "모든 로그를 삭제하시겠습니까?",
+                    dialog -> {
+                        viewModel.deleteLogAll();
+                        dialog.dismiss();
+                    });
+        });
+
+        // 검색 결과 레이아웃에서 X 버튼
+        binding.fragmentJmSearchResultClearButton.setOnClickListener(v ->
+                changeLayoutVisibility(LAYOUT_LOG));
     }
 
     /**
@@ -102,14 +118,22 @@ public class JmSearchFragment extends Fragment {
          * - 검색을 실행한 후 검색 결과를 관찰한다.
          * - 검색 결과가 없을 경우 Toast로 메시지를 출력한다. 또한 검색 결과가 없더라도 이전 검색 결과를
          *  갱신하기 위해서 리스트는 업데이트한다.
-         * - 검색 결과가 1개 이상 있을 때 현재 TabLayout에 선택된 Tab이 "검색 기록"일 경우 "검색 결과"로
-         *  강제로 변경하기 위해 관련 메서드를 호출한다.
+         * - 검색 결과가 1개 이상 있다면 검색 기록 레이아웃과 검색 결과 레이아웃의 Visibility를 조정한다.
          */
         viewModel.getJmInfoListLiveData().observe(this, list -> {
             jmSearchResultListAdapter.submitList(list);
             if (list.size() == 0)
                 MessageUtils.showToast(requireContext(), "검색 결과가 없습니다.");
-            changeRecyclerViewVisibility(TAB_SEARCH_RESULT);
+            changeLayoutVisibility(LAYOUT_SEARCH_RESULT);
+        });
+
+        /**
+         *  검색어를 입력하는 EditText에 검색어가 모두 지워질 경우 검색 기록 레이아웃이 보여지도록 Visibility를
+         * 변경한다.
+         */
+        viewModel.getKeywordLiveData().observe(this, keyword ->{
+            if(TextUtils.isEmpty(keyword))
+                changeLayoutVisibility(LAYOUT_LOG);
         });
     }
 
@@ -124,47 +148,24 @@ public class JmSearchFragment extends Fragment {
     }
 
     /**
-     * TabLayout에 대한 초기 설정을 수행한다.
-     */
-    private void initTabLayout() {
-        String[] tabItemNames = getResources().getStringArray(R.array.tab_items_search_log);
-        TabLayout tabLayout = binding.fragmentJmSearchTabLayout;
-
-        for (String tabName : tabItemNames)
-            tabLayout.addTab(tabLayout.newTab().setText(tabName));
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                changeRecyclerViewVisibility(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
-        });
-    }
-
-    /**
      * - 검색 기록 RecyclerView를 초기화한다.
      * - 가장 최근에 검색한 기록을 가장 위에 보여주기 위해서 역순으로 출력한다.
      */
     private void initSearchLogRecyclerView() {
+        RecyclerView recyclerView = binding.fragmentJmSearchLogRecyclerView;
         searchLogListAdapter = new SearchLogListAdapter();
         searchLogListAdapter.setOnItemClickListener(position -> {
             viewModel.getKeywordLiveData().setValue(
                     searchLogListAdapter.getCurrentList().get(position));
             viewModel.search();
         });
-        searchLogListAdapter.setOnRemoveButtonClickListener(position -> viewModel.removeLog(position));
+        searchLogListAdapter.setOnRemoveButtonClickListener(position -> viewModel.deleteLog(position));
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(),
                 LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-        binding.fragmentJmSearchLogRecyclerView.setLayoutManager(layoutManager);
-        binding.fragmentJmSearchLogRecyclerView.setAdapter(searchLogListAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(searchLogListAdapter);
     }
 
     /**
@@ -196,32 +197,20 @@ public class JmSearchFragment extends Fragment {
     }
 
     /**
-     * - TabLayout에서 선택된 Tab에 따라 다른 RecyclerView를 보여주기 위해서 Visibility를 조정하는 역할을
-     *  하는 메서드다.
-     * - 검색을 수행했을 때 조회된 데이터가 있고 현재 선택된 탭이 "검색 기록" 탭일 경우 강제로 "검색 결과" 탭으로
-     *  이동하도록 하고 있다. 그렇기 때문에 RecyclerView의 Visibility를 조정하기에 앞서 현재 선택된 Tab을
-     *  확인하여 일치하지 않을 경우 변경한다.
+     * 검색 기록 레이아웃과 검색 결과 레이아웃 중 화면에 보여질 레이아웃을 결정한다.
      *
-     * @param visibleTabPosition 선택된 Tab 혹은 선택할 Tab의 Position이다.
+     * @param visibleLayout 화면에 보여줄 레이아웃
      */
-    private void changeRecyclerViewVisibility(int visibleTabPosition) {
-        TabLayout tabLayout = binding.fragmentJmSearchTabLayout;
-        RecyclerView searchLogRecyclerView = binding.fragmentJmSearchLogRecyclerView;
-        RecyclerView searchResultRecyclerView = binding.fragmentJmSearchResultRecyclerView;
+    private void changeLayoutVisibility(int visibleLayout) {
+        ConstraintLayout logLayout = binding.fragmentJmSearchLogLayout;
+        ConstraintLayout searchLayout = binding.fragmentJmSearchResultLayout;
 
-        if (tabLayout.getSelectedTabPosition() != visibleTabPosition) {
-            if (visibleTabPosition == TAB_SEARCH_LOG)
-                tabLayout.selectTab(tabLayout.getTabAt(TAB_SEARCH_LOG));
-            else
-                tabLayout.selectTab(tabLayout.getTabAt(TAB_SEARCH_RESULT));
-        }
-
-        if (visibleTabPosition == TAB_SEARCH_LOG) {
-            searchResultRecyclerView.setVisibility(View.GONE);
-            searchLogRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            searchLogRecyclerView.setVisibility(View.GONE);
-            searchResultRecyclerView.setVisibility(View.VISIBLE);
+        if(visibleLayout == LAYOUT_LOG) {
+            logLayout.setVisibility(View.VISIBLE);
+            searchLayout.setVisibility(View.GONE);
+        } else if (visibleLayout == LAYOUT_SEARCH_RESULT){
+            logLayout.setVisibility(View.GONE);
+            searchLayout.setVisibility(View.VISIBLE);
         }
     }
 }

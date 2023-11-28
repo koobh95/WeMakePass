@@ -44,6 +44,7 @@
         <item name="background">@color/transparent</item>
         <item name="endIconDrawable">@drawable/baseline_close_24</item>
         <item name="endIconMode">clear_text</item>
+        <item name="endIconTint">@color/white</item>
     </style>
 
     <!-- TextInputLayout + TextInputEditText로 검색창을 구현할 경우 TextInputEditText에 적용하는 style -->
@@ -51,7 +52,8 @@
         <item name="android:hint">검색</item>
         <item name="android:inputType">text</item>
         <item name="maxLines">1</item>
-        <item name="background">@color/transparent</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:imeOptions">actionSearch</item>
     </style>
 
     <!-- TabLayout - Tab Name Text Style. 텍스트 스타일 변경을 위해선 필수 사용. -->

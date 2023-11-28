@@ -1,7 +1,6 @@
 package com.example.wemakepass.repository.pref;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.pref.AppDataPreferences;
@@ -61,15 +60,15 @@ public class SearchLogRepository {
      * - 로그를 출력하는 RecyclerView를 submitList로 업데이트하기 위해 새로운 리스트를 생성한 뒤 데이터를
      *  조작한다.
      *
-     * @param removeIndex 삭제할 로그의 위치(index)
+     * @param deleteIndex 삭제할 로그의 위치(index)
      */
-    public void removeLog(int removeIndex) {
+    public void deleteLog(int deleteIndex) {
         List<String> newList = new ArrayList<>(searchLogListLiveData.getValue());
         if(newList.size() == 1){
             clear();
             return;
         }
-        newList.remove(removeIndex);
+        newList.remove(deleteIndex);
         update(newList);
     }
 
@@ -113,10 +112,10 @@ public class SearchLogRepository {
     }
 
     /**
-     *  로그 삭제가 발생한 뒤 update 메서드에 진입했을 때 데이터가 존재하지 않을 경우 이 메서드가 호출된다. 저장할
-     * 데이터가 없으므로 초기화한다.
+     * - 객체가 참조하고 있는 설정 파일의 로그를 모두 삭제한다.
+     * - 로그 삭제가 발생한 뒤 update 메서드에 진입했을 때 데이터가 존재하지 않을 경우에도 이 메서드가 호출된다.
      */
-    private void clear() {
+    public void clear() {
         AppDataPreferences.setLogData(PREF_KEY, "");
         searchLogListLiveData.setValue(new ArrayList<>());
     }

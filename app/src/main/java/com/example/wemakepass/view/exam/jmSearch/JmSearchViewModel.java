@@ -1,7 +1,6 @@
 package com.example.wemakepass.view.exam.jmSearch;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
@@ -69,6 +68,22 @@ public class JmSearchViewModel extends BaseViewModel {
     }
 
     /**
+     * 검색 기록 목록에서 특정 기록을 삭제한다.
+     *
+     * @param removeIndex 삭제할 아이템의 index
+     */
+    public void deleteLog(int removeIndex){
+        searchLogRepository.deleteLog(removeIndex);
+    }
+
+    /**
+     * 검색 기록 목록을 모두 삭제한다.
+     */
+    public void deleteLogAll() {
+        searchLogRepository.clear();
+    }
+
+    /**
      *  검색어에 대해 유효한 값인지 검증을 수행한다. 검증 조건은 값이 존재하는가, 값의 최소 최대 길이에 적합한가에
      * 대해서만 검증한다.
      *
@@ -88,15 +103,6 @@ public class JmSearchViewModel extends BaseViewModel {
         }
 
         return true;
-    }
-
-    /**
-     * 검색 기록 목록에서 특정 기록을 삭제한다.
-     *
-     * @param removeIndex 삭제할 아이템의 index
-     */
-    public void removeLog(int removeIndex){
-        searchLogRepository.removeLog(removeIndex);
     }
 
     public SingleLiveEvent<List<String>> getSearchLogListLiveData() {
