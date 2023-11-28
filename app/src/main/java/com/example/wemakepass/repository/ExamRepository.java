@@ -39,7 +39,7 @@ public class ExamRepository extends BaseRepository {
     }
 
     /**
-     * 특정 시험의 문제 데이터를 요청한다.
+     * 특정 필기(객관식) 시험의 문제 데이터를 요청한다.
      *
      * @param examId 요청할 시험의 식별값
      * @return
@@ -64,7 +64,7 @@ public class ExamRepository extends BaseRepository {
     }
 
     /**
-     * 특정 시험의 답안 데이터를 요청한다.
+     * 특정 필기(객관식) 시험의 답안 데이터를 요청한다.
      *
      * @param examId 요청할 시험의 식별값
      * @return
@@ -90,7 +90,7 @@ public class ExamRepository extends BaseRepository {
     }
 
     /**
-     * 시험 응시에 끝났을 때 결과를 서버로 전송한다.
+     * 시험이 끝났을 때 결과를 서버로 전송한다.
      *
      * @param examResultDTO 시험 결과 데이터
      * @return
@@ -113,7 +113,6 @@ public class ExamRepository extends BaseRepository {
                     t.printStackTrace();
                 });
     }
-
 
     public SingleLiveEvent<List<ExamDocQuestionDTO>> getExamDocQuestionListLiveData() {
         if(examDocQuestionListLiveData == null) {

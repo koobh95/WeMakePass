@@ -147,7 +147,6 @@ public class ExamDocViewModel extends BaseViewModel {
     }
 
     public long getElapsedTime() {
-        assert timerDisposable.isDisposed();
         return elapsedTime;
     }
 

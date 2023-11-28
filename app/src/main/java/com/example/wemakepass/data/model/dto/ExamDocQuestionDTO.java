@@ -13,7 +13,7 @@ public class ExamDocQuestionDTO {
     private String question; // 질의
     private String options; // Json 형태의 질의문
     private int score; // 배점
-    private String refImage; // 참고 이미지 이름
+    private String refImage; // 참고 이미지 파일의 이름
 
     public long getQuestionId() {
         return questionId;

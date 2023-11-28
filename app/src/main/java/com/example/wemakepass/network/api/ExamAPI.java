@@ -24,13 +24,13 @@ import retrofit2.http.Query;
 public interface ExamAPI {
     String BASE_URI = "api/exam/";
 
-    // 특정 시험이 가지는 문제 데이터들을 조회
+    // 특정 필기 시험이 가지는 문제 데이터들을 조회
     @LoginRequired
     @GET(BASE_URI + "doc/question")
     Observable<Response<List<ExamDocQuestionDTO>>> examDocQuestionList(
             @Query("examId") long examId);
 
-    // 특정 시험이 가지는 답안 데이터들을 조회
+    // 특정 필기 시험이 가지는 답안 데이터들을 조회
     @LoginRequired
     @GET(BASE_URI + "doc/answer")
     Observable<Response<List<ExamDocAnswerDTO>>> examDocAnswerList(

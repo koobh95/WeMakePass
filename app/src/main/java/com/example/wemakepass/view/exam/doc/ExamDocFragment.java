@@ -57,7 +57,7 @@ public class ExamDocFragment extends Fragment {
 
     private JmInfoDTO jmInfoDTO; // 선택된 종목 데이터
     private ExamInfoDTO examInfoDTO; // 선택된 시험 데이터
-    private int examCursor; // 현재 가리키고 있는 문제의 커서
+    private int examCursor;
 
     private final int DRAWER_GRAVITY = GravityCompat.START; // DrawerLayout의 위치
     private final String TAG = "TAG_ExamDocFragment";
@@ -94,7 +94,7 @@ public class ExamDocFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.loadExamData(examInfoDTO.getExamId()); // 문제 로딩
-        viewModel.initAnswerList(examInfoDTO.getNumOfQuestion()); // 답안 로딩
+        viewModel.initAnswerList(examInfoDTO.getNumOfQuestion()); // 사용자 답안 리스트 초기화
         initBackPressedListener();
         initEventListener();
         initObserver();
@@ -102,8 +102,6 @@ public class ExamDocFragment extends Fragment {
         initDrawerLayout();
         initQuestionOptionRecyclerView();
         initAnswerRecyclerView();
-
-        setDummyAnswer(); // test
     }
 
     /**
@@ -151,10 +149,10 @@ public class ExamDocFragment extends Fragment {
     /**
      * - Fragment 뒤로가기 처리를 담당하는 메서드.
      * - 다음과 같은 상황을 가정하여 뒤로 가기 이벤트를 처리한다.
-     *  아직 데이터를 로딩 중인 경우 → 아무것도 하지 않음.
-     *  DrawerLayout이 열려 있는 경우 → 레이아웃을 닫음.
-     *  타이머가 실행 중인 경우 → 시험이 실행 중인 것을 알리고 정말로 죵료할 것인지 묻는 다이얼로그 실행.
-     *  타이머가 종료된 경우 → 시험이 끝났음을 알리고 정말로 화면을 종료할 것인지를 묻는 다이얼로그를 실행.
+     * * 아직 데이터를 로딩 중인 경우 → 아무것도 하지 않음.
+     * * DrawerLayout이 열려 있는 경우 → 레이아웃을 닫음.
+     * * 타이머가 실행 중인 경우 → 시험이 실행 중인 것을 알리고 정말로 죵료할 것인지 묻는 다이얼로그 실행.
+     * * 타이머가 종료된 경우 → 시험이 끝났음을 알리고 정말로 화면을 종료할 것인지를 묻는 다이얼로그를 실행.
      */
     private void initBackPressedListener() {
         requireActivity()
@@ -363,8 +361,6 @@ public class ExamDocFragment extends Fragment {
 
             if (!TextUtils.isEmpty(answerDto.getExplanation()))
                 sb.append("\n[해설]\n").append(answerDto.getExplanation());
-            else
-                Log.d(TAG, "★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★" + answerDto.getExplanation());
 
             binding.fragmentExamDocAnswerAndCommentaryTextView.setText(sb.toString());
         }
@@ -407,8 +403,7 @@ public class ExamDocFragment extends Fragment {
     }
 
     /**
-     *  Fragment가 실행되었을 때 문제 데이터를 읽어오지 못할 경우 이 메서드가 호출된다. 적절한 메시지를 출력한 뒤
-     * 해당 Fragment를 포함한 Activity를 모두 종료한다.
+     * Fragment가 실행되었을 때 문제 데이터를 읽어오지 못할 경우 이 메서드가 호출된다.
      */
     private void startLoadingFailedDialog() {
         DialogUtils.showAlertDialog(requireContext(),
@@ -431,14 +426,5 @@ public class ExamDocFragment extends Fragment {
         }
         binding.fragmentExamDocDrawerLayout.closeDrawer(DRAWER_GRAVITY);
         examResultViewerDialog.show();
-    }
-
-    private void setDummyAnswer() {
-        //String data = "2113242344231331311232321244134421322134114433322424334442213222223234234211413241212434112122143414";
-        String data = "211324234423133131123232124413442132213411443332242433444221322222323423421141324121243"; // 과락
-        List<ExamDocAnswerModel> list = viewModel.getMyAnswerList();
-        for (int i = 0; i < data.length(); i++)
-            list.get(i).setAnswer(data.charAt(i) - '0' - 1);
-        examDocAnswerListAdapter.notifyDataSetChanged();
     }
 }

@@ -23,8 +23,6 @@ import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.doc.ExamDocFragment;
-import com.example.wemakepass.view.exam.prac.ExamPracFragment;
-import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 import java.util.List;
 
@@ -180,13 +178,16 @@ public class ExamGuideFragment extends Fragment {
 
     /**
      * 시험 형식에 따라 다른 Fragment를 실행한다.
-     * 실기 -> ExamPracFragment
+     *
      * 필기, 1차, 2차, 3차 -> ExamDocFragment
+     *
+     * @since 2023-11-28 수정 → 실기는 채점 방식이 난해하여 잠시 보류.
      */
     private void startExamFragment(){
         ExamActivity examActivity = (ExamActivity)requireActivity();
         if(examInfoDTO.getExamFormat().equals("실기"))
-            examActivity.replaceFragment(ExamPracFragment.newInstance(jmInfoDTO, examInfoDTO));
+            //examActivity.replaceFragment(ExamPracFragment.newInstance(jmInfoDTO, examInfoDTO));
+            ; // 준비 중, 실기 데이터를 DB에서 지웠기 때문에 분기될 일이 없음. 추후 수정을 위해 코드는 남겨둠.
         else
             examActivity.replaceFragment(ExamDocFragment.newInstance(jmInfoDTO, examInfoDTO));
     }

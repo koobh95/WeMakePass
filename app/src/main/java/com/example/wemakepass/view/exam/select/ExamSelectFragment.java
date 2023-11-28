@@ -22,7 +22,6 @@ import com.example.wemakepass.databinding.FragmentExamSelectBinding;
 import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
-import com.example.wemakepass.view.exam.ExamViewModel;
 import com.example.wemakepass.view.exam.guide.ExamGuideFragment;
 import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
 
