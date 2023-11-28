@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.example.wemakepass.view.home.interestJm.InterestJmSearchViewModel" />
+            type="com.example.wemakepass.view.main.home.interestJm.InterestJmSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/baltic_sea"
-        tools:context=".view.home.interestJm.InterestJmSearchActivity">
+        tools:context=".view.main.home.interestJm.InterestJmSearchActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/activity_interest_jm_search_toolbar"

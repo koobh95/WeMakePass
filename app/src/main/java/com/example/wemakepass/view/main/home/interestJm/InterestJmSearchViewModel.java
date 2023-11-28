@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.home.interestJm;
+package com.example.wemakepass.view.main.home.interestJm;
 
 import android.text.TextUtils;
 

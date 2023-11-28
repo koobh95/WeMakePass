@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.home;
+package com.example.wemakepass.view.main.home;
 
 import android.util.Log;
 

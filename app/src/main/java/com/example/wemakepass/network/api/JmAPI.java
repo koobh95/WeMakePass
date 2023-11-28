@@ -28,9 +28,15 @@ public interface JmAPI {
     Observable<Response<List<JmInfoDTO>>> search(
             @Query("keyword") String keyword);
 
-    // 기본적으로 search 메서드와 같지만 시험 관련 데이터를 가지고 있는 종목으로 조회 범위를 한정한다.
+    // 시험 관련 데이터를 가지고 있는 종목을 대상으로 조회한다.
     @LoginRequired
     @GET(BASE_URI + "search/with_exam_info")
     Observable<Response<List<JmInfoDTO>>> searchForJmWithExamInfo(
+            @Query("keyword") String keyword);
+
+    // 게시판이 존재하는 종목을 대상으로 조회한다.
+    @LoginRequired
+    @GET(BASE_URI + "search/with_board")
+    Observable<Response<List<JmInfoDTO>>> searchForJmWithBoard(
             @Query("keyword") String keyword);
 }

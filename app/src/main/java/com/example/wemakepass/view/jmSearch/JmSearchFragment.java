@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.exam.jmSearch;
+package com.example.wemakepass.view.jmSearch;
 
 import android.os.Bundle;
 
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +20,11 @@ import android.view.inputmethod.EditorInfo;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
 import com.example.wemakepass.adapter.SearchLogListAdapter;
-import com.example.wemakepass.adapter.divider.DividerWithoutLast;
 import com.example.wemakepass.data.enums.JmSearchType;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentJmSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
-import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 /**
@@ -50,6 +47,7 @@ public class JmSearchFragment extends Fragment {
 
     private final int LAYOUT_LOG = 0;
     private final int LAYOUT_SEARCH_RESULT = 1;
+    public static final String RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT = "jmSearchFragment";
     public static final String ARG_SELECTED_JM_INFO = "selectedJmInfo";
     private static final String KEY_JM_SEARCH_TYPE = "jmSearchType";
     private final String TAG = "TAG_JmSearchFragment";
@@ -205,7 +203,7 @@ public class JmSearchFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable(ARG_SELECTED_JM_INFO, selectedJmInfo);
             getParentFragmentManager().setFragmentResult
-                    (ExamSelectFragment.RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT, bundle);
+                    (RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT, bundle);
             requireActivity()
                     .getSupportFragmentManager()
                     .popBackStack();

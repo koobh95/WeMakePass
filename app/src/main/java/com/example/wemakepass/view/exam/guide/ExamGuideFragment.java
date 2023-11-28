@@ -20,10 +20,9 @@ import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentExamGuideBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.ExpandAnimationUtils;
-import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.doc.ExamDocFragment;
-import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
+import com.example.wemakepass.view.jmSearch.JmSearchFragment;
 
 import java.util.List;
 

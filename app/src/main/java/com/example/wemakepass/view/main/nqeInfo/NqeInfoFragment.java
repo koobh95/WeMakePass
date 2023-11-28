@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.community;
+package com.example.wemakepass.view.main.nqeInfo;
 
 import android.os.Bundle;
 
@@ -9,17 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
-import com.example.wemakepass.view.examInfo.ExamInfoFragment;
 
-public class CommunityFragment extends Fragment {
-
-    public static CommunityFragment newInstance() {
-        return new CommunityFragment();
+/**
+ *
+ * @author BH-Ku
+ */
+public class NqeInfoFragment extends Fragment {
+    public static NqeInfoFragment newInstance() {
+        return new NqeInfoFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_community, container, false);
+        return inflater.inflate(R.layout.fragment_nqe_info, container, false);
     }
 }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:clickable="true"
-    tools:context=".view.workbook.WorkbookFragment">
+    tools:context=".view.main.workbook.WorkbookFragment">
 
     <include
         android:id="@+id/fragment_workbook_toolbar"

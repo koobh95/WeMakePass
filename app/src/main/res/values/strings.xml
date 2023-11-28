@@ -50,4 +50,6 @@
         도서도 좋지만 인터넷 검색을 활용하는 것도 좋습니다.\n
         - 실전에서 OMR 카드를 작성해야 하는 경우, 답안 작성 시간을 염두해두고 모의시험에 응시해야 합니다.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

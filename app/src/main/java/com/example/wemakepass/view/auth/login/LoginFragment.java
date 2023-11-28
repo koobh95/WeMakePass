@@ -24,7 +24,7 @@ import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.cert.AccountCertFragment;
 import com.example.wemakepass.view.auth.findAccount.FindAccountActivity;
-import com.example.wemakepass.view.signUp.SignUpFragment;
+import com.example.wemakepass.view.auth.signUp.SignUpFragment;
 import com.example.wemakepass.view.main.MainActivity;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.community;
+package com.example.wemakepass.view.main.community;
 
 import com.example.wemakepass.base.BaseViewModel;
 

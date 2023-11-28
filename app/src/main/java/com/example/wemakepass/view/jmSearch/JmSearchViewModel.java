@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.exam.jmSearch;
+package com.example.wemakepass.view.jmSearch;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -95,7 +95,7 @@ public class JmSearchViewModel extends BaseViewModel {
                 searchDisposable = jmRepository.requestSearchForJmWithExamInfo(keyword);
                 break;
             case SEARCH_BOARD: // 게시판이 존재하는 종목 검색
-                // 추가 예정
+                searchDisposable = jmRepository.requestSearchForJmWithBoard(keyword);
         }
 
         addDisposable(searchDisposable);

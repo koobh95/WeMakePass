@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +23,9 @@ import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
 import com.example.wemakepass.view.exam.guide.ExamGuideFragment;
-import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
+import com.example.wemakepass.view.jmSearch.JmSearchFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +43,6 @@ public class ExamSelectFragment extends Fragment {
     // JmSearchFragment 에서 선택한 종목 정보
     private JmInfoDTO selectedJmInfo;
 
-    public static final String RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT = "jmSearchFragment";
     private final String TAG = "TAG_ExamSelectFragment";
 
     public static ExamSelectFragment newInstance() {
@@ -79,7 +75,8 @@ public class ExamSelectFragment extends Fragment {
      */
     private void initFragmentResultListener() {
         getParentFragmentManager()
-                .setFragmentResultListener(RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT, requireActivity(),
+                .setFragmentResultListener(JmSearchFragment.RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT,
+                        requireActivity(),
                         (requestKey, result) -> {
                             selectedJmInfo = (JmInfoDTO) result
                                     .getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);

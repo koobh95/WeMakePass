@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ import com.example.wemakepass.adapter.ExamDocAnswerListAdapter;
 import com.example.wemakepass.adapter.ExamDocOptionListAdapter;
 import com.example.wemakepass.adapter.divider.DividerWithoutLast;
 import com.example.wemakepass.data.enums.ErrorCode;
-import com.example.wemakepass.data.model.data.ExamDocAnswerModel;
 import com.example.wemakepass.data.model.dto.ExamDocAnswerDTO;
 import com.example.wemakepass.data.model.dto.ExamDocQuestionDTO;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
@@ -35,10 +33,8 @@ import com.example.wemakepass.task.exam.ExamDocScoringTask;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
-import com.example.wemakepass.view.exam.jmSearch.JmSearchFragment;
+import com.example.wemakepass.view.jmSearch.JmSearchFragment;
 import com.example.wemakepass.view.exam.result.ExamResultViewerDialog;
-
-import java.util.List;
 
 /**
  * - 객관식 시험 환경을 제공하는 Fragment

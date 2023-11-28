@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.wemakepass.view.home.HomeViewModel" />
+            type="com.example.wemakepass.view.main.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/black"
         android:clickable="true"
-        tools:context=".view.home.HomeFragment">
+        tools:context=".view.main.home.HomeFragment">
 
         <include
             android:id="@+id/fragment_home_toolbar"

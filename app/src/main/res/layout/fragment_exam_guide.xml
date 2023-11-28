@@ -25,12 +25,12 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/appbar_height">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/fragment_exam_guide_toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/appbar_height"
+                    android:layout_height="@dimen/toolbar_height"
                     android:background="@color/baltic_sea"
                     app:layout_scrollFlags="scroll|snap|enterAlways"
                     app:navigationIcon="@drawable/baseline_arrow_back_24"

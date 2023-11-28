@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.home;
+package com.example.wemakepass.view.main.home;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -9,12 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +21,8 @@ import com.example.wemakepass.adapter.InterestJmSchedListAdapter;
 import com.example.wemakepass.adapter.divider.DividerWithoutLast;
 import com.example.wemakepass.data.model.vo.ExamOrganVO;
 import com.example.wemakepass.databinding.FragmentHomeBinding;
-import com.example.wemakepass.util.MessageUtils;
-import com.example.wemakepass.view.home.interestJm.InterestJmSearchActivity;
+import com.example.wemakepass.view.main.home.interestJm.InterestJmSearchActivity;
 import com.example.wemakepass.view.main.MainActivity;
-import com.example.wemakepass.view.workbook.WorkbookFragment;
 
 import java.util.ArrayList;
 import java.util.List;

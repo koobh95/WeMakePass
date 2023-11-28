@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.signUp;
+package com.example.wemakepass.view.auth.signUp;
 
 import android.text.TextUtils;
 import android.view.View;

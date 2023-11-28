@@ -8,15 +8,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.databinding.ActivityMainBinding;
-import com.example.wemakepass.view.community.CommunityFragment;
-import com.example.wemakepass.view.examInfo.ExamInfoFragment;
-import com.example.wemakepass.view.home.HomeFragment;
+import com.example.wemakepass.view.main.community.CommunityFragment;
+import com.example.wemakepass.view.main.home.HomeFragment;
 import com.example.wemakepass.view.accountSetting.AccountSettingActivity;
-import com.example.wemakepass.view.workbook.WorkbookFragment;
+import com.example.wemakepass.view.main.nqeInfo.NqeInfoFragment;
+import com.example.wemakepass.view.main.workbook.WorkbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     private HomeFragment homeFragment;
-    private ExamInfoFragment examInfoFragment;
+    private NqeInfoFragment nqeInfoFragment;
     private CommunityFragment communityFragment;
     private WorkbookFragment workbookFragment;
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //initActivityResultLauncher();
         //initBottomNavigationView();
-        addFragment(WorkbookFragment.newInstance()); // test
+        addFragment(communityFragment.newInstance()); // test
     }
 
     /**
@@ -87,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
             int selectedItemId = item.getItemId();
 
             if (selectedItemId == R.id.menu_main_bottom_exam_info) {
-                if (examInfoFragment == null)
-                    addFragment(examInfoFragment = ExamInfoFragment.newInstance());
+                if (nqeInfoFragment == null)
+                    addFragment(nqeInfoFragment = NqeInfoFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_community) {
                 if (communityFragment == null)
                     addFragment(communityFragment = CommunityFragment.newInstance());
@@ -140,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.hide(homeFragment);
 
         if (selectedMenuId == R.id.menu_main_bottom_exam_info)
-            fragmentTransaction.show(examInfoFragment);
-        else if (examInfoFragment != null)
-            fragmentTransaction.hide(examInfoFragment);
+            fragmentTransaction.show(nqeInfoFragment);
+        else if (nqeInfoFragment != null)
+            fragmentTransaction.hide(nqeInfoFragment);
 
         if (selectedMenuId == R.id.menu_main_bottom_community)
             fragmentTransaction.show(communityFragment);
