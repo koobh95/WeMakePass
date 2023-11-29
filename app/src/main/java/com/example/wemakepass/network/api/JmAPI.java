@@ -33,10 +33,4 @@ public interface JmAPI {
     @GET(BASE_URI + "search/with_exam_info")
     Observable<Response<List<JmInfoDTO>>> searchForJmWithExamInfo(
             @Query("keyword") String keyword);
-
-    // 게시판이 존재하는 종목을 대상으로 조회한다.
-    @LoginRequired
-    @GET(BASE_URI + "search/with_board")
-    Observable<Response<List<JmInfoDTO>>> searchForJmWithBoard(
-            @Query("keyword") String keyword);
 }

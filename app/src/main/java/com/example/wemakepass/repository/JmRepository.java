@@ -79,28 +79,6 @@ public class JmRepository extends BaseRepository {
                 });
     }
 
-    /**
-     * 게시판이 있는 종목에 한해서 검색을 수행한다.
-     * @return
-     */
-    public Disposable requestSearchForJmWithBoard(String keyword){
-        return jmAPI.searchForJmWithBoard(keyword)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(response -> {
-                    if(response.isSuccessful()) {
-                        jmInfoListLiveData.setValue(response.body());
-                    } else {
-                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
-                        networkErrorLiveData.setValue(errorResponse);
-                        Log.d(TAG, errorResponse.toString());
-                    }
-                }, t -> {
-                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
-                    Log.d(TAG, networkErrorLiveData.getValue().toString());
-                });
-    }
-
     public SingleLiveEvent<List<JmInfoDTO>> getJmInfoListLiveData() {
         if(jmInfoListLiveData == null)
             jmInfoListLiveData = new SingleLiveEvent<>();
