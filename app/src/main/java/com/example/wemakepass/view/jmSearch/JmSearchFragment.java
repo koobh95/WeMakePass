@@ -20,18 +20,13 @@ import android.view.inputmethod.EditorInfo;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
 import com.example.wemakepass.adapter.SearchLogListAdapter;
-import com.example.wemakepass.data.enums.JmSearchType;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentJmSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
-import com.example.wemakepass.view.exam.select.ExamSelectFragment;
 
 /**
- * 종목 검색을 제공하는 Fragment로 성격이 맞는 일부 기능에서 공용으로 사용된다.
- *
- * - JmSearchFragment
- * - 게시판 검색 화면(추가 예정)
+ * 시험을 제공하는 종목 검색을 제공하는 Fragment.
  *
  * @author BH-Ku
  * @since 2023-11-13
@@ -43,35 +38,14 @@ public class JmSearchFragment extends Fragment {
     private JmSearchListAdapter jmSearchResultListAdapter;
     private SearchLogListAdapter searchLogListAdapter;
 
-    private JmSearchType jmSearchType;
-
     private final int LAYOUT_LOG = 0;
     private final int LAYOUT_SEARCH_RESULT = 1;
     public static final String RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT = "jmSearchFragment";
     public static final String ARG_SELECTED_JM_INFO = "selectedJmInfo";
-    private static final String KEY_JM_SEARCH_TYPE = "jmSearchType";
     private final String TAG = "TAG_JmSearchFragment";
 
-    /**
-     * 로딩할 로그 파일과 호출할 API를 결정할 열거형 타입을 파라미터로 받는다.
-     *
-     * @param jmSearchType 검색 타입
-     * @return
-     */
-    public static JmSearchFragment newInstance(JmSearchType jmSearchType) {
-        JmSearchFragment jmSearchFragment = new JmSearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(KEY_JM_SEARCH_TYPE, jmSearchType);
-        jmSearchFragment.setArguments(bundle);
-        return jmSearchFragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        assert bundle != null;
-        jmSearchType = (JmSearchType) bundle.getSerializable(KEY_JM_SEARCH_TYPE);
+    public static JmSearchFragment newInstance() {
+        return new JmSearchFragment();
     }
 
     @Override
@@ -81,7 +55,6 @@ public class JmSearchFragment extends Fragment {
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(JmSearchViewModel.class);
         binding.setViewModel(viewModel);
-        viewModel.initJmSearchType(jmSearchType);
         return binding.getRoot();
     }
 

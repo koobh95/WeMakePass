@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.wemakepass.R;
-import com.example.wemakepass.data.enums.JmSearchType;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentExamSelectBinding;
@@ -91,7 +90,7 @@ public class ExamSelectFragment extends Fragment {
     private void initEventListener() {
         binding.fragmentExamSelectJmSearchLayout.setOnClickListener(v ->
                 ((ExamActivity) requireActivity()).addFragment(
-                        JmSearchFragment.newInstance(JmSearchType.SEARCH_EXAM),
+                        JmSearchFragment.newInstance(),
                         R.anim.slide_from_end,
                         R.anim.slide_in_end));
 

@@ -3,11 +3,7 @@ package com.example.wemakepass.view.main.community.boardSearch;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import com.example.wemakepass.R;
-import com.example.wemakepass.data.enums.JmSearchType;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.ActivityBoardSearchBinding;
 import com.example.wemakepass.view.jmSearch.JmSearchFragment;
 
@@ -36,7 +32,7 @@ public class BoardSearchActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(binding.activityBoardSearchContainerView.getId(),
-                        JmSearchFragment.newInstance(JmSearchType.SEARCH_BOARD))
+                        JmSearchFragment.newInstance())
                 .commit();
     }
 }
