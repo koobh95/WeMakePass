@@ -3,7 +3,7 @@ package com.example.wemakepass.data.model.data;
 import android.view.View;
 
 /**
- * - MyInfoFragment 화면에서 표시될 설정 아이템에 대한 정보를 저장하는 모델 클래스다.
+ * - MyInfoFragment 화면에서 표시될 설정 아이템에 대한 정보를 저장하는 Model 클래스다.
  * - onClickListener가 Adapter를 생성하면서 구현하는 것이 아닌 모델 클래스 내부에 존재하는 이유는 각 아이템이
  *  동일한 이벤트를 발생시키지 않기 때문이다. 밖에서 이벤트를 각각 구현한다고 하면 content 값으로 옵션을 구분해야
  *  하는데 코드가 상당히 더러워질 것이라고 생각되어 리스너를 여기에 구현하였다.

@@ -7,15 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.databinding.FragmentCommunityBinding;
-import com.example.wemakepass.view.jmSearch.JmSearchFragment;
-import com.example.wemakepass.view.main.community.boardSearch.BoardSearchActivity;
+import com.example.wemakepass.view.board.search.BoardSearchActivity;
 
 /**
  *

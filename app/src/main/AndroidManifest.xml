@@ -20,7 +20,7 @@
             android:name=".view.board.BoardActivity"
             android:exported="false" />
         <activity
-            android:name=".view.main.community.boardSearch.BoardSearchActivity"
+            android:name=".view.board.search.BoardSearchActivity"
             android:exported="false" />
         <activity
             android:name=".view.exam.ExamActivity"

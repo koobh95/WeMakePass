@@ -2,7 +2,7 @@ package com.example.wemakepass.data.model.vo;
 
 import com.example.wemakepass.data.enums.ErrorCode;
 /**
- * - API 호출 과정에서 에러가 발생하는 경우 에러를 파싱하여 Code, Message를 저장하는 모델 클래스다.
+ * - API 호출 과정에서 에러가 발생하는 경우 에러를 파싱하여 Code, Message를 저장하는 VO 클래스다.
  * - 변수에 저장되는 값들은 크게 두 종류로, 하나는 내 서버에서 내가 임의로 생성한 ErrorCode, 한국산업인력공단에서 제공하는
  *  API ErrorCode가 있다.
  *

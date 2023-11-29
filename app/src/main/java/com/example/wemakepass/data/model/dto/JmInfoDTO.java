@@ -3,7 +3,7 @@ package com.example.wemakepass.data.model.dto;
 import java.io.Serializable;
 
 /**
- * 시험 종목의 식별 정보를 가지는 모델 클래스.
+ * 시험 종목의 식별 정보를 가지는 Model 클래스.
  *
  * @author BH-Ku
  * @since 2023-11-08

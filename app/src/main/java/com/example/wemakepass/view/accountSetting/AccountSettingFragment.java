@@ -61,6 +61,12 @@ public class AccountSettingFragment extends Fragment {
         initSettingRecyclerView();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * NicknameChangeFragment에서 닉네임이 변경될 경우 결과를 수신하여 RecyclerView의 닉네임을 업데이트한다.
      */

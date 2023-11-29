@@ -76,6 +76,12 @@ public class AccountCertFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * - 뒤로 가기 처리를 담당하는 메서드다.
      * - 타이머 Observable이 동작 중인지 판단하여 동작 중이라면 정말로 종료할 것인지 여부를 묻는다.

@@ -2,6 +2,7 @@ package com.example.wemakepass.repository;
 
 import android.util.Log;
 
+import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
@@ -39,6 +40,7 @@ public class JmRepository extends BaseRepository {
      * @param keyword 검색어
      * @return
      */
+    @LoginRequired
     public Disposable requestSearch(String keyword){
         return jmAPI.search(keyword)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -61,6 +63,7 @@ public class JmRepository extends BaseRepository {
      * 시험 데이터가 있는 종목에 한해서 검색을 수행한다.
      * @return
      */
+    @LoginRequired
     public Disposable requestSearchForJmWithExamInfo(String keyword){
         return jmAPI.searchForJmWithExamInfo(keyword)
                 .observeOn(AndroidSchedulers.mainThread())

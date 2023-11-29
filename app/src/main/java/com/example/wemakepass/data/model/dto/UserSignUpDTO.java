@@ -1,7 +1,7 @@
 package com.example.wemakepass.data.model.dto;
 
 /**
- *  회원가입 시 서버에 전달해야하는 데이터들을 모아놓은 모델 클래스다.
+ *  회원가입 시 서버에 전달해야하는 데이터들을 모아놓은 DTO 클래스다.
  *
  * @author BH-Ku
  * @since 2023-05-14

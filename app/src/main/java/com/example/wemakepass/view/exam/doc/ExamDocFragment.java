@@ -33,7 +33,7 @@ import com.example.wemakepass.task.exam.ExamDocScoringTask;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.exam.ExamActivity;
-import com.example.wemakepass.view.jmSearch.JmSearchFragment;
+import com.example.wemakepass.view.exam.select.jmSearch.JmSearchFragment;
 import com.example.wemakepass.view.exam.result.ExamResultViewerDialog;
 
 /**

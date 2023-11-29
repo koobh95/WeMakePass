@@ -51,6 +51,12 @@ public class NicknameChangeFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * - EditText를 제어하기 위해 닉네임 변경 버튼의 이벤트를 Fragment에서 정의했다. 요청을 보낸 후 결과가
      *  true일 경우 요청을 성공적으로 보냈다는 것이므로 그 동안 EditText를 변경하기 못하도록 disable 한다.

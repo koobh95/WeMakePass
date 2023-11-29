@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.jmSearch;
+package com.example.wemakepass.view.exam.select.jmSearch;
 
 import android.text.TextUtils;
 import android.view.View;
@@ -48,8 +48,8 @@ public class JmSearchViewModel extends BaseViewModel {
     }
 
     /**
-     * - EditText에 존재하는 문자열(keyword)를 토대로 검색을 수행한다.
-     * - 이미 검색을 진행 중인 경우 기존 작업은 dispose 시킨 뒤 뒤에 발생항 검색을 수행한다.
+     * - EditText에 바인딩된 keywordLiveData가 가진 값으로 검색을 수행한다.
+     * - 이미 검색을 진행 중인 경우 기존 작업은 dispose 시킨 뒤 뒤에 새로 발생한 검색을 수행한다.
      * - 데이터베이스에서 종목 이름 데이터는 애초에 공백이 없기 때문에 keyword는 공백을 허용하지 않는다. 따라서
      *  검색어를 검증할 때 공백을 모두 삭제한 후 검증을 진행한다.
      * - 데이터베이스에서 종목 이름 데이터에 일부 영어를 포함한 데이터는 모두 대문자로 되어 있기 때문에 소문자가
@@ -60,7 +60,7 @@ public class JmSearchViewModel extends BaseViewModel {
         if(searchDisposable != null && !searchDisposable.isDisposed())
             searchDisposable.isDisposed();
 
-        String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
+        final String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
         if(!isValidKeyword(keyword))
             return;
 
@@ -68,22 +68,6 @@ public class JmSearchViewModel extends BaseViewModel {
         searchDisposable = jmRepository.
                 requestSearchForJmWithExamInfo(keyword.toUpperCase(Locale.KOREA));
         addDisposable(searchDisposable);
-    }
-
-    /**
-     * 검색 기록 목록에서 특정 기록을 삭제한다.
-     *
-     * @param removeIndex 삭제할 아이템의 index
-     */
-    public void deleteLog(int removeIndex){
-        searchLogRepository.deleteLog(removeIndex);
-    }
-
-    /**
-     * 검색 기록 목록을 모두 삭제한다.
-     */
-    public void deleteLogAll() {
-        searchLogRepository.clear();
     }
 
     /**
@@ -108,8 +92,20 @@ public class JmSearchViewModel extends BaseViewModel {
         return true;
     }
 
-    public SingleLiveEvent<List<String>> getSearchLogListLiveData() {
-        return searchLogRepository.getSearchLogListLiveData();
+    /**
+     * 검색 기록 목록에서 특정 기록을 삭제한다.
+     *
+     * @param removeIndex 삭제할 아이템의 index
+     */
+    public void deleteLog(int removeIndex){
+        searchLogRepository.deleteLog(removeIndex);
+    }
+
+    /**
+     * 검색 기록 목록을 모두 삭제한다.
+     */
+    public void deleteLogAll() {
+        searchLogRepository.clear();
     }
 
     public SingleLiveEvent<String> getKeywordLiveData() {
@@ -120,5 +116,9 @@ public class JmSearchViewModel extends BaseViewModel {
 
     public SingleLiveEvent<List<JmInfoDTO>> getJmInfoListLiveData() {
         return jmRepository.getJmInfoListLiveData();
+    }
+
+    public SingleLiveEvent<List<String>> getSearchLogListLiveData() {
+        return searchLogRepository.getSearchLogListLiveData();
     }
 }

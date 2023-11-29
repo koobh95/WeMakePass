@@ -65,6 +65,12 @@ public class LoginFragment extends Fragment {
         initViews();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * - Fragment 뒤로가기 처리를 담당하는 메서드.
      * - 이 화면에서 뒤로가기를 누른다는 것은 로그인을 완료하지 않은 채 어플을 종료한다는 것을 의미한다.

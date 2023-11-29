@@ -1,7 +1,7 @@
 package com.example.wemakepass.data.model.dto;
 
 /**
- * - 패스워드를 변경할 때 서버로 전송할 데이터를 담는 모델 클래스다.
+ * - 패스워드를 변경할 때 서버로 전송할 데이터를 담는 DTO 클래스다.
  *
  * @author BH-Ku
  * @since 2023-05-27

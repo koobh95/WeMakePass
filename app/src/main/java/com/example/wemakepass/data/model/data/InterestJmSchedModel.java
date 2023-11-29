@@ -6,7 +6,7 @@ import com.example.wemakepass.data.enums.SchedLoadStateCode;
 import com.example.wemakepass.data.model.dto.JmSchedDTO;
 
 /**
- * - 종목 정보, 시험 일정 정보를 갖는 모델 클래스.
+ * - 종목 정보, 시험 일정 정보를 갖는 Model 클래스.
  * - 시험 일정 정보는 종목 정보에 대한 정보를 가지지 않으므로 시험 일정을 출력하면서 시험 정보를 같이 출력하려면
  *  두 데이터가 모두 필요하다. 두 데이터를 별도의 리스트로 관리하면서 인덱스를 통해 접근하는 방법도 있지만 두
  *  데이터를 모두 가지는 새로운 모델 클래스가 있는 편이 더 효율적이라 판단했다. 왜냐하면 일정을 모두 불러온 후

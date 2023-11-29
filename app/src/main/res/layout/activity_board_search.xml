@@ -1,14 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.main.community.boardSearch.BoardSearchActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/activity_board_search_container_view"
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.wemakepass.view.board.search.BoardSearchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:context=".view.board.search.BoardSearchActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/activity_board_search_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/baltic_sea"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="게시판 검색"
+            app:titleCentered="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_board_search_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:background="@drawable/bg_search_bar_layout"
+            app:layout_constraintTop_toBottomOf="@+id/activity_board_search_toolbar">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/activity_board_search_bar_text_input_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:theme="@style/Theme.TextInputLayout.SearchBar"
+                app:layout_constraintEnd_toStartOf="@+id/activity_board_search_icon_image_button"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/activity_board_search_bar_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:text="@={viewModel.keywordLiveData}"
+                    android:theme="@style/Theme.TextInputEditText.SearchBar" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/activity_board_search_icon_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/transparent"
+                android:onClick="@{viewModel::onSearchButtonClick}"
+                android:src="@drawable/baseline_search_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/activity_board_search_bar_text_input_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_board_search_log_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_board_search_bar_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/activity_board_search_log_label_text_view"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@color/shark_approx"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="최근 검색어"
+                app:layout_constraintBottom_toTopOf="@+id/activity_board_search_log_recycler_view"
+                app:layout_constraintEnd_toStartOf="@+id/activity_board_search_log_delete_all_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/activity_board_search_log_delete_all_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/shark_approx"
+                android:src="@drawable/baseline_delete_forever_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_board_search_log_label_text_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_board_search_log_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_board_search_log_label_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_board_search_result_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_board_search_bar_layout">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/activity_board_search_result_text_view"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:background="@color/shark_approx"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="검색 결과"
+                app:layout_constraintEnd_toStartOf="@+id/activity_board_search_result_clear_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/activity_board_search_result_clear_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@color/shark_approx"
+                android:src="@drawable/baseline_close_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/activity_board_search_result_text_view"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_board_search_result_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:overScrollMode="never"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/activity_board_search_result_text_view" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

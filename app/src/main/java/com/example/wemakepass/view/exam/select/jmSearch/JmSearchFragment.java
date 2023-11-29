@@ -1,4 +1,4 @@
-package com.example.wemakepass.view.jmSearch;
+package com.example.wemakepass.view.exam.select.jmSearch;
 
 import android.os.Bundle;
 
@@ -63,9 +63,52 @@ public class JmSearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initSearchLogRecyclerView();
         initSearchResultRecyclerView();
-        initEventListener();
-        initObserver();
         initToolbar();
+        initObserver();
+        initEventListener();
+    }
+
+    /**
+     * LiveData에 대한 옵저빙을 설정한다.
+     */
+    private void initObserver() {
+        viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
+                MessageUtils.showToast(requireContext(), systemMessage));
+
+        viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
+                MessageUtils.showToast(requireContext(), errorResponse.getMessage()));
+
+        /**
+         *  검색어를 입력하는 EditText에 검색어가 모두 지워질 경우 검색 기록 레이아웃이 보여지도록 Visibility를
+         * 변경한다.
+         */
+        viewModel.getKeywordLiveData().observe(this, keyword ->{
+            if(TextUtils.isEmpty(keyword))
+                changeLayoutVisibility(LAYOUT_LOG);
+        });
+
+        /**
+         * 검색 기록 리스트를 읽어왔을 때 리스트를 업데이트한다. 업데이트하는 시점은 다음과 같다.
+         * 1. Fragment 실행 시 저장된 로그를 읽어왔을 때
+         * 2. 검색이 정상적으로 수행되어 검색어가 로그에 정상적으로 추가되었을 때
+         * 3. 검색 기록이 삭제되었을 때
+         */
+        viewModel.getSearchLogListLiveData().observe(requireActivity(), list ->{
+                searchLogListAdapter.submitList(list);
+        });
+
+        /**
+         * - 검색을 실행한 후 검색 결과를 관찰한다.
+         * - 검색 결과가 없을 경우 Toast로 메시지를 출력한다. 또한 검색 결과가 없더라도 이전 검색 결과를
+         *  갱신하기 위해서 리스트는 업데이트한다.
+         * - 검색 결과가 1개 이상 있다면 검색 기록 레이아웃과 검색 결과 레이아웃의 Visibility를 조정한다.
+         */
+        viewModel.getJmInfoListLiveData().observe(this, list -> {
+            jmSearchResultListAdapter.submitList(list);
+            if (list.size() == 0)
+                MessageUtils.showToast(requireContext(), "검색 결과가 없습니다.");
+            changeLayoutVisibility(LAYOUT_SEARCH_RESULT);
+        });
     }
 
     /**
@@ -94,48 +137,6 @@ public class JmSearchFragment extends Fragment {
     }
 
     /**
-     * LiveData에 대한 옵저빙을 설정한다.
-     */
-    private void initObserver() {
-        viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
-                MessageUtils.showToast(requireContext(), systemMessage));
-
-        viewModel.getNetworkErrorLiveData().observe(this, errorResponse ->
-                MessageUtils.showToast(requireContext(), errorResponse.getMessage()));
-
-        /**
-         * 검색 기록 리스트를 읽어왔을 때 리스트를 업데이트한다. 업데이트하는 시점은 다음과 같다.
-         * 1. Fragment 실행 시 저장된 로그를 읽어왔을 때
-         * 2. 검색이 정상적으로 수행되어 검색어가 로그에 정상적으로 추가되었을 때
-         * 3. 검색 기록이 삭제되었을 때
-         */
-        viewModel.getSearchLogListLiveData().observe(requireActivity(), list ->
-            searchLogListAdapter.submitList(list));
-
-        /**
-         * - 검색을 실행한 후 검색 결과를 관찰한다.
-         * - 검색 결과가 없을 경우 Toast로 메시지를 출력한다. 또한 검색 결과가 없더라도 이전 검색 결과를
-         *  갱신하기 위해서 리스트는 업데이트한다.
-         * - 검색 결과가 1개 이상 있다면 검색 기록 레이아웃과 검색 결과 레이아웃의 Visibility를 조정한다.
-         */
-        viewModel.getJmInfoListLiveData().observe(this, list -> {
-            jmSearchResultListAdapter.submitList(list);
-            if (list.size() == 0)
-                MessageUtils.showToast(requireContext(), "검색 결과가 없습니다.");
-            changeLayoutVisibility(LAYOUT_SEARCH_RESULT);
-        });
-
-        /**
-         *  검색어를 입력하는 EditText에 검색어가 모두 지워질 경우 검색 기록 레이아웃이 보여지도록 Visibility를
-         * 변경한다.
-         */
-        viewModel.getKeywordLiveData().observe(this, keyword ->{
-            if(TextUtils.isEmpty(keyword))
-                changeLayoutVisibility(LAYOUT_LOG);
-        });
-    }
-
-    /**
      * Toolbar를 초기화한다.
      */
     private void initToolbar() {
@@ -157,7 +158,8 @@ public class JmSearchFragment extends Fragment {
                     searchLogListAdapter.getCurrentList().get(position));
             viewModel.search();
         });
-        searchLogListAdapter.setOnRemoveButtonClickListener(position -> viewModel.deleteLog(position));
+        searchLogListAdapter.setOnRemoveButtonClickListener(position ->
+                viewModel.deleteLog(position));
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(),
                 LinearLayoutManager.VERTICAL, false);
         layoutManager.setReverseLayout(true);

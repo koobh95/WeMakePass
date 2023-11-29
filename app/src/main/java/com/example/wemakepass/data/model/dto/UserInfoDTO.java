@@ -1,7 +1,7 @@
 package com.example.wemakepass.data.model.dto;
 
 /**
- *  로그인이 완료된 후 SharedPreferences에 저장할 유저의 데이터를 불러오는데 이 때 사용되는 모델 클래스로서
+ *  로그인이 완료된 후 SharedPreferences에 저장할 유저의 데이터를 불러오는데 이 때 사용되는 DTO 클래스로서
  * 민감한 데이터들을 제외한 최소한의 데이터들로만 이루어져 있다.
  *
  * @author BH-Ku

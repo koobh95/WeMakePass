@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.wemakepass.view.jmSearch.JmSearchViewModel" />
+            type="com.example.wemakepass.view.exam.select.jmSearch.JmSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/black"
         android:clickable="true"
-        tools:context=".view.jmSearch.JmSearchFragment">
+        tools:context=".view.exam.select.jmSearch.JmSearchFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/fragment_jm_search_toolbar"
@@ -24,7 +24,7 @@
             android:background="@color/baltic_sea"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
-            app:title="검색"
+            app:title="시험 종목 검색"
             app:titleCentered="true" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -48,6 +48,12 @@ public class FindUserIdFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * LiveData에 대한 옵저빙을 설정한다.
      */

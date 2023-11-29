@@ -53,6 +53,12 @@ public class FindPasswordFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * 실행 결과를 전달하지 않기 때문에 finish()로 Activity를 종료한다.
      */

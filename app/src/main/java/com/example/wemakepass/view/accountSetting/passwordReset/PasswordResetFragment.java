@@ -69,6 +69,12 @@ public class PasswordResetFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * 뒤로 가기 버튼 선택 시 인증이 다시 이루어지지 않으면 이 화면에 들어올 수 없음을 경고한다.
      */

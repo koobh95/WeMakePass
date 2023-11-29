@@ -1,7 +1,7 @@
 package com.example.wemakepass.data.model.dto;
 
 /**
- * 서버에 로그인 요청 시 암호화된 아이디와 비밀번호를 저장할 모델 클래스다.
+ * 서버에 로그인 요청 시 암호화된 아이디와 비밀번호를 저장할 DTO 클래스다.
  *
  * @author BH-Ku
  * @since 2023-05-16

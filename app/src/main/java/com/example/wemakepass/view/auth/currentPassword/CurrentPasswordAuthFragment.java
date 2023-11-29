@@ -50,6 +50,12 @@ public class CurrentPasswordAuthFragment extends Fragment {
         initObserver();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      * Toolbar를 초기화하는 메서드.
      */
