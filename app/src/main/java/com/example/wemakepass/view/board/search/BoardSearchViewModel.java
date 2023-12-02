@@ -10,6 +10,7 @@ import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.example.wemakepass.data.util.StringUtils;
 import com.example.wemakepass.repository.BoardRepository;
 import com.example.wemakepass.repository.pref.SearchLogRepository;
+import com.example.wemakepass.repository.pref.VisitedBoardRepository;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,8 +27,9 @@ public class BoardSearchViewModel extends BaseViewModel {
     private SingleLiveEvent<String> keywordLiveData;
     private Disposable searchDisposable;
 
-    private SearchLogRepository searchLogRepository;
     private BoardRepository boardRepository;
+    private VisitedBoardRepository visitedBoardRepository;
+    private SearchLogRepository searchLogRepository;
 
     private final int KEYWORD_LEN_MIM = 2; // 검색어 최소 길이(공백 미포함)
     private final int KEYWORD_LEN_MAX = 20; // 검색어 최대 길이(공백 미포함)
@@ -36,6 +38,7 @@ public class BoardSearchViewModel extends BaseViewModel {
     public BoardSearchViewModel() {
         boardRepository = new BoardRepository(getNetworkErrorLiveData());
         searchLogRepository = new SearchLogRepository(AppDataPreferences.KEY_BOARD_SEARCH_LOG);
+        visitedBoardRepository = new VisitedBoardRepository(AppDataPreferences.KEY_VISITED_BOARD);
     }
 
     /**
@@ -87,13 +90,17 @@ public class BoardSearchViewModel extends BaseViewModel {
         return true;
     }
 
+    public void addVisitedBoardLog(BoardDTO boardDTO){
+        visitedBoardRepository.addItem(boardDTO);
+    }
+
     /**
      * 검색 기록 목록에서 특정 기록을 삭제한다.
      *
      * @param removeIndex 삭제할 아이템의 index
      */
-    public void deleteLog(int index) {
-        searchLogRepository.deleteLog(index);
+    public void deleteLog(int removeIndex) {
+        searchLogRepository.deleteLog(removeIndex);
     }
 
     /**

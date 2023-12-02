@@ -38,7 +38,6 @@ public class BoardSearchActivity extends AppCompatActivity {
 
     private final int LAYOUT_LOG = 0;
     private final int LAYOUT_SEARCH_RESULT = 1;
-    public static final String ARG_SELECTED_BOARD = "selectedBoardDTO";
     private final String TAG = "TAG_BoardSearchActivity";
 
     @Override
@@ -56,6 +55,9 @@ public class BoardSearchActivity extends AppCompatActivity {
         initEventListener();
     }
 
+    /**
+     * LiveData에 대한 옵저빙을 설정한다.
+     */
     private void initObserver() {
         viewModel.getSystemMessageLiveData().observe(this, systemMessage ->
                 MessageUtils.showToast(this, systemMessage));
@@ -69,7 +71,7 @@ public class BoardSearchActivity extends AppCompatActivity {
         });
 
         viewModel.getSearchLogListLiveData().observe(this, list -> {
-            if(list != null) //dddddddddddddddddddddddddddddddd
+            if(list != null)
                 searchLogListAdapter.submitList(list);
         });
 
@@ -81,6 +83,9 @@ public class BoardSearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드.
+     */
     private void initEventListener(){
         binding.activityBoardSearchBarEditText.setOnEditorActionListener((v, actionId, event) -> {
             if(actionId == EditorInfo.IME_ACTION_SEARCH)
@@ -88,6 +93,7 @@ public class BoardSearchActivity extends AppCompatActivity {
             return true;
         });
 
+        // 검색 기록 모두 삭제 버튼
         binding.activityBoardSearchLogDeleteAllButton.setOnClickListener(v -> {
             DialogUtils.showConfirmDialog(this,
                     "모든 로그를 삭제하시겠습니까?",
@@ -97,15 +103,22 @@ public class BoardSearchActivity extends AppCompatActivity {
                     });
         });
 
+        // 검색 결과를 보여주고 있는 상태에서 검색 기록 목록으로 화면 전환
         binding.activityBoardSearchResultClearButton.setOnClickListener(v ->
                 changeLayoutVisibility(LAYOUT_LOG));
     }
 
+    /**
+     * TabLayout에 대한 초기화를 수행한다.
+     */
     private void initToolbar() {
         binding.activityBoardSearchToolbar.setNavigationOnClickListener(v ->
                 finish());
     }
 
+    /**
+     * 검색 결과 RecyclerView를 초기화한다.
+     */
     private void initSearchResultRecyclerView() {
         RecyclerView recyclerView = binding.activityBoardSearchLogRecyclerView;
         searchLogListAdapter = new SearchLogListAdapter();
@@ -124,14 +137,18 @@ public class BoardSearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(searchLogListAdapter);
     }
 
+    /**
+     * 검색 기록 RecyclerView를 초기화한다.
+     */
     private void initSearchLogRecyclerView() {
         RecyclerView recyclerView = binding.activityBoardSearchResultRecyclerView;
         boardSearchListAdapter = new BoardSearchListAdapter();
         boardSearchListAdapter.setOnItemClickListener(position ->{
             final BoardDTO selectedBoardDTO = boardSearchListAdapter.getCurrentList().get(position);
             Intent intent = new Intent(this, BoardActivity.class);
-            intent.putExtra(ARG_SELECTED_BOARD, selectedBoardDTO);
+            intent.putExtra(BoardActivity.ARG_SELECTED_BOARD, selectedBoardDTO);
             startActivity(intent);
+            viewModel.addVisitedBoardLog(selectedBoardDTO);
             finish();
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,

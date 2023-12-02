@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
@@ -80,11 +81,10 @@ public class InterestJmSearchActivity extends AppCompatActivity {
      */
     private void initEventListener() {
         /**
-         *  검색창(TextInputEditText)의 입력 값을 감시하는 리스너를 구현한다. 입력되는 값 중 "완료"가 선택되면
-         * 검색을 실행한다.
+         *  검색창(TextInputEditText)의 입력 값 중 "검색" 버튼을 감시하는 리스너를 구현한다.
          */
-        binding.activityInterestJmSearchSearchEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if(actionId == EditorInfo.IME_ACTION_DONE)
+        binding.activityBoardSearchBarEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH)
                 viewModel.search();
             return true;
         });
@@ -113,7 +113,10 @@ public class InterestJmSearchActivity extends AppCompatActivity {
             AppCompatTextView statusTextView = binding.activityInterestJmSearchStatusTextView;
             interestJmListAdapter.submitList(list);
             recyclerView.smoothScrollToPosition(list.size());
-            statusTextView.setText("관심 종목(" + list.size() + "/5)");
+            if(list.size() == 0)
+                statusTextView.setText("관심 종목을 추가해보세요.");
+            else
+                statusTextView.setText("관심 종목(" + list.size() + "/5)");
 
             if(list.size() == 0) {
                 if(recyclerView.getVisibility() == View.VISIBLE)

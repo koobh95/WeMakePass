@@ -19,9 +19,15 @@ import retrofit2.http.Query;
 public interface BoardAPI {
     String BASE_URI = "api/board/";
 
-    // 게시판 검색에 이용된다.
+    // 특정 키워드가 포함된 게시판 이름을 조회한다.
     @LoginRequired
     @GET(BASE_URI + "search")
     Observable<Response<List<BoardDTO>>> search(
             @Query("keyword") String keyword);
+
+    // 특정 게시판의 카테고리 리스트를 조회한다.
+    @LoginRequired
+    @GET(BASE_URI + "category")
+    Observable<Response<List<String>>> categoryList(
+            @Query("boardNo") long boardNo);
 }

@@ -31,7 +31,7 @@ public class BoardSearchListAdapter extends ListAdapter<BoardDTO, SearchTextType
 
         @Override
         public boolean areContentsTheSame(@NonNull BoardDTO oldItem, @NonNull BoardDTO newItem) {
-            return oldItem.getBoardId() == newItem.getBoardId();
+            return oldItem.getBoardNo() == newItem.getBoardNo();
         }
     };
 

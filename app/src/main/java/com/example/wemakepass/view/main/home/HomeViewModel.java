@@ -7,6 +7,7 @@ import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.enums.SchedLoadStateCode;
 import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.model.data.InterestJmSchedModel;
+import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.example.wemakepass.repository.JmSchedRepository;
 import com.example.wemakepass.repository.pref.InterestJmRepository;
 
@@ -29,9 +30,9 @@ public class HomeViewModel extends BaseViewModel {
     private final String TAG = "TAG_HomeViewModel";
 
     public HomeViewModel() {
-        interestJmRepository = new InterestJmRepository();
+        interestJmRepository = new InterestJmRepository(AppDataPreferences.KEY_INTEREST_JM);
         jmSchedRepository = new JmSchedRepository(getNetworkErrorLiveData());
-        interestJmListLiveData = interestJmRepository.getInterestJmListLiveData();
+        interestJmListLiveData = interestJmRepository.getElementListLiveData();
     }
 
     /**
@@ -106,7 +107,7 @@ public class HomeViewModel extends BaseViewModel {
      */
     public void interestJmListUpdate() {
         final List<InterestJmModel> oldList = interestJmListLiveData.getValue();
-        final List<InterestJmModel> newList = interestJmRepository.getInterestJmList();
+        final List<InterestJmModel> newList = interestJmRepository.getInterestJmData();
 
         // 기존 리스트와 새로운 리스트의 요소 수가 다름.
         if(oldList.size() != newList.size()) {
@@ -133,7 +134,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent<List<InterestJmModel>> getInterestJmListLiveData() {
-        return interestJmRepository.getInterestJmListLiveData();
+        return interestJmRepository.getElementListLiveData();
     }
 
     public SingleLiveEvent<List<InterestJmSchedModel>> getInterestJmSchedListLiveData() {

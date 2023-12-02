@@ -1,4 +1,4 @@
-package com.example.wemakepass.data.model.dto;
+package com.example.wemakepass.data.model.dto.request;
 
 import androidx.annotation.NonNull;
 

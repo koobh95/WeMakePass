@@ -3,8 +3,8 @@ package com.example.wemakepass.network.api;
 
 import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.dto.LoginRequest;
-import com.example.wemakepass.data.model.dto.PasswordResetRequest;
+import com.example.wemakepass.data.model.dto.request.LoginRequest;
+import com.example.wemakepass.data.model.dto.request.PasswordResetRequest;
 import com.example.wemakepass.data.model.dto.UserInfoDTO;
 import com.example.wemakepass.data.model.dto.UserSignUpDTO;
 

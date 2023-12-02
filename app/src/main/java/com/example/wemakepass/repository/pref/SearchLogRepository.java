@@ -89,7 +89,7 @@ public class SearchLogRepository {
                 searchLogBuilder.append("|");
         }
 
-        AppDataPreferences.setLogData(PREF_KEY, searchLogBuilder.toString());
+        AppDataPreferences.setData(PREF_KEY, searchLogBuilder.toString());
         searchLogListLiveData.setValue(newList);
     }
 
@@ -100,7 +100,7 @@ public class SearchLogRepository {
      *  파이프 라인 문자를 기준으로 파싱한 뒤 리스트를 생성한다. 그 후 라이브 데이터에 리스트를 세팅한다.
      */
     public void load() {
-        String data = AppDataPreferences.getLogData(PREF_KEY);
+        String data = AppDataPreferences.getData(PREF_KEY);
         if(data.equals("")){
             searchLogListLiveData.setValue(new ArrayList<>());
             return;
@@ -116,7 +116,7 @@ public class SearchLogRepository {
      * - 로그 삭제가 발생한 뒤 update 메서드에 진입했을 때 데이터가 존재하지 않을 경우에도 이 메서드가 호출된다.
      */
     public void clear() {
-        AppDataPreferences.setLogData(PREF_KEY, "");
+        AppDataPreferences.setData(PREF_KEY, "");
         searchLogListLiveData.setValue(new ArrayList<>());
     }
 

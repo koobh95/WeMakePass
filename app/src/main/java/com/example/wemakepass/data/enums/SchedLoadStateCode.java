@@ -13,8 +13,7 @@ package com.example.wemakepass.data.enums;
 public enum SchedLoadStateCode {
     OK(0,  "일정을 불러왔습니다."),
     NO_SCHEDULE(1, "현재 예정된 시험이 없습니다."), // 현재 년도, 당일 기준으로 아직 치뤄지지 않은 일정이 없음.
-    NOT_FOUND_SCHEDULE(2,
-            "종목에 대한 데이터를 찾을 수 없습니다. 종목이 폐지되었거나 통합되었을 수 있습니다."), // 일정이 아예 존재하지 않음.
+    NOT_FOUND_SCHEDULE(2, "일정이 존재하지 않습니다. 종목이 폐지되었거나 통합되었을 수 있습니다."), // 일정이 아예 존재하지 않음.
     NETWORK_ERROR(3, "서버가 응답하지 않습니다."), // 네트워크 오류
     API_ERROR(4, "API를 호출하는 중 에러가 발생했습니다."); // API 호출 실패
 

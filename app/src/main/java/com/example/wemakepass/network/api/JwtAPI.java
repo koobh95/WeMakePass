@@ -1,7 +1,7 @@
 package com.example.wemakepass.network.api;
 
 import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.dto.JwtReissueTokenRequest;
+import com.example.wemakepass.data.model.dto.request.JwtReissueTokenRequest;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;

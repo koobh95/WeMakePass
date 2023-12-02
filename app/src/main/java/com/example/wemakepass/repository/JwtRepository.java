@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread;
 
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.dto.JwtReissueTokenRequest;
+import com.example.wemakepass.data.model.dto.request.JwtReissueTokenRequest;
 import com.example.wemakepass.network.api.JwtAPI;
 import com.example.wemakepass.network.client.WmpClient;
 import com.example.wemakepass.network.util.AES256Util;

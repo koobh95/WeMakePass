@@ -8,7 +8,7 @@ import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.dto.JwtReissueTokenRequest;
+import com.example.wemakepass.data.model.dto.request.JwtReissueTokenRequest;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.JwtAPI;
 import com.example.wemakepass.network.client.WmpClient;

@@ -1,5 +1,7 @@
 package com.example.wemakepass.data.model.dto;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 
 /**
@@ -9,14 +11,33 @@ import java.io.Serializable;
  * @since 2023-11-29
  */
 public class BoardDTO implements Serializable {
-    private int boardId;
+    private long boardNo;
     private String boardName;
 
-    public int getBoardId() {
-        return boardId;
+    public BoardDTO(long boardNo, String boardName) {
+        this.boardNo = boardNo;
+        this.boardName = boardName;
+    }
+
+    public long getBoardNo() {
+        return boardNo;
     }
 
     public String getBoardName() {
         return boardName;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        BoardDTO target = (BoardDTO)obj;
+        return target.getBoardNo() == boardNo;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardDTO{" +
+                "boardNo=" + boardNo +
+                ", boardName='" + boardName + '\'' +
+                '}';
     }
 }

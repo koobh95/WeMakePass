@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class DateUtils {
     private static final DateTimeFormatter localDateFormat = DateTimeFormatter.ofPattern("yyyyMMdd");
-    private static final DateTimeFormatter localDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter localDateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static final String TAG = "TAG_DateUtil";
 

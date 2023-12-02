@@ -1,11 +1,14 @@
 package com.example.wemakepass.view.main.home.interestJm;
 
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.example.wemakepass.data.util.StringUtils;
 import com.example.wemakepass.repository.JmRepository;
 import com.example.wemakepass.repository.pref.InterestJmRepository;
@@ -33,8 +36,12 @@ public class InterestJmSearchViewModel extends BaseViewModel {
     private final String TAG = "TAG_InterestJmSearchViewModel";
 
     public InterestJmSearchViewModel() {
-        interestJmRepository = new InterestJmRepository();
+        interestJmRepository = new InterestJmRepository(AppDataPreferences.KEY_INTEREST_JM);
         jmRepository = new JmRepository(getNetworkErrorLiveData());
+    }
+
+    public void onSearchButtonClick(View view) {
+        search();
     }
 
     /**
@@ -54,8 +61,8 @@ public class InterestJmSearchViewModel extends BaseViewModel {
         if(!isValidKeyword(keyword))
             return;
 
-        addDisposable(searchDisposable =
-                jmRepository.requestSearch(keyword.toUpperCase(Locale.KOREA)));
+        searchDisposable = jmRepository.requestSearch(keyword.toUpperCase(Locale.KOREA));
+        addDisposable(searchDisposable);
     }
 
     /**
@@ -88,7 +95,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
      * @param interestJmModel 삽입하려는 데이터
      */
     public void addInterestJmItem(InterestJmModel interestJmModel) {
-        final List<InterestJmModel> list = interestJmRepository.getInterestJmListLiveData().getValue();
+        final List<InterestJmModel> list = interestJmRepository.getElementListLiveData().getValue();
         if(list.size() == InterestJmRepository.MAX_ELEMENT){
             systemMessageLiveData.setValue("최대 5개까지 추가할 수 있습니다.");
             return;
@@ -122,7 +129,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent<List<InterestJmModel>> getInterestJmListLiveData() {
-        return interestJmRepository.getInterestJmListLiveData();
+        return interestJmRepository.getElementListLiveData();
     }
 
     public SingleLiveEvent<List<JmInfoDTO>> getJmInfoListLiveData() {

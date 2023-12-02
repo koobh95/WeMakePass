@@ -6,7 +6,7 @@ import android.view.View;
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.dto.LoginRequest;
+import com.example.wemakepass.data.model.dto.request.LoginRequest;
 import com.example.wemakepass.data.model.dto.UserInfoDTO;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;

@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.dto.PasswordResetRequest;
+import com.example.wemakepass.data.model.dto.request.PasswordResetRequest;
 import com.example.wemakepass.network.util.AES256Util;
 import com.example.wemakepass.repository.UserRepository;
 import com.example.wemakepass.data.util.UserInfoUtils;

@@ -61,6 +61,11 @@
         <item name="android:textSize">@dimen/font_size_large</item>
     </style>
 
+    <!-- TabLayout - Tab Name Text Style. 텍스트 스타일 변경을 위해선 필수 사용. -->
+    <style name="Theme.TabLayout.Tab.TextAppearance.Small" parent="">
+        <item name="android:textSize">@dimen/font_size_small</item>
+    </style>
+
     <!-- MaterialToolbar의 Title Text Style. 타이틀 텍스트 스타일을 변경하기 위해선 필수 사용. -->
     <style name="Theme.Toolbar.Title.Main" parent="">
         <item name="android:textColor">@color/ship_cove</item>
@@ -72,11 +77,27 @@
     <style name="Theme.TabLayout" parent="">
         <item name="tabSelectedTextColor">@color/ship_cove</item>
         <item name="tabIndicatorColor">@color/ship_cove</item>
-        <item name="tabTextAppearance">@style/Theme.TabLayout.Tab.TextAppearance.Large</item>
+    </style>
 
+    <!-- TabLayout의 Indicator 스타일, Tab item의 텍스트 스타일을 지정 -->
+    <style name="Theme.TabLayout.LargeFont" parent="Theme.TabLayout">
+        <item name="tabTextAppearance">@style/Theme.TabLayout.Tab.TextAppearance.Large</item>
+    </style>
+
+    <!-- TabLayout의 Indicator 스타일, Tab item의 텍스트 스타일을 지정 -->
+    <style name="Theme.TabLayout.SmallFont" parent="Theme.TabLayout">
+        <item name="tabTextAppearance">@style/Theme.TabLayout.Tab.TextAppearance.Small</item>
     </style>
 
     <style name="Theme.CheckBox" parent="Theme.AppCompat">
         <item name="android:colorControlActivated">@color/ship_cove</item>
+    </style>
+
+    <style name="Theme.FloatingButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">25dp</item>
+        <item name="cornerSizeBottomRight">5dp</item>
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeTopRight">25dp</item>
     </style>
 </resources>

@@ -1,7 +1,5 @@
 package com.example.wemakepass.repository;
 
-import android.util.Log;
-
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.enums.QualificationCode;
@@ -9,7 +7,7 @@ import com.example.wemakepass.data.enums.SchedLoadStateCode;
 import com.example.wemakepass.data.model.data.InterestJmModel;
 import com.example.wemakepass.data.model.data.InterestJmSchedModel;
 import com.example.wemakepass.data.model.dto.JmSchedDTO;
-import com.example.wemakepass.data.model.dto.NqeResponse;
+import com.example.wemakepass.data.model.dto.request.NqeResponse;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.JmSchedAPI;
 import com.example.wemakepass.network.client.DataPortalClient;

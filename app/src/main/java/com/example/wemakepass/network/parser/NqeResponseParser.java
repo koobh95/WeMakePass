@@ -1,7 +1,7 @@
 package com.example.wemakepass.network.parser;
 
 import com.example.wemakepass.data.enums.NqeApiErrorCode;
-import com.example.wemakepass.data.model.dto.NqeResponse;
+import com.example.wemakepass.data.model.dto.request.NqeResponse;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

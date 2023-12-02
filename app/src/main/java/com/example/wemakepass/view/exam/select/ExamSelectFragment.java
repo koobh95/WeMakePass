@@ -92,7 +92,7 @@ public class ExamSelectFragment extends Fragment {
                 ((ExamActivity) requireActivity()).addFragment(
                         JmSearchFragment.newInstance(),
                         R.anim.slide_from_end,
-                        R.anim.slide_in_end));
+                        R.anim.slide_to_end));
 
         /**
          * - "시험 시작" 버튼에 대한 이벤트를 설정한다.
@@ -126,7 +126,7 @@ public class ExamSelectFragment extends Fragment {
 
             ((ExamActivity) requireActivity())
                     .addFragment(ExamGuideFragment.newInstance(selectedJmInfo, selectedExamInfo),
-                            R.anim.slide_from_end, R.anim.slide_in_end);
+                            R.anim.slide_from_end, R.anim.slide_to_end);
         });
     }
 

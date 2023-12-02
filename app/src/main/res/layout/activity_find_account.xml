@@ -17,7 +17,7 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/activity_find_account_tab_layout"
-        style="@style/Theme.TabLayout"
+        style="@style/Theme.TabLayout.LargeFont"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tab_layout_large_height"
         android:background="@drawable/border_top_bottom_bg_black"

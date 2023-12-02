@@ -26,6 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class BoardRepository extends BaseRepository {
     private BoardAPI boardAPI;
     private SingleLiveEvent<List<BoardDTO>> boardListLiveData;
+    private SingleLiveEvent<List<String>> categoryListLiveData;
 
     private final String TAG = "TAG_BoardRepository";
 
@@ -35,7 +36,7 @@ public class BoardRepository extends BaseRepository {
     }
 
     /**
-     * 특정 Keyword와 일치하는 데이터들을 조회한다.
+     * 키워드와 게시판 이름이 부분 일치하는 데이터를 조회한다.
      *
      * @param keyword 검색어
      * @return
@@ -56,6 +57,33 @@ public class BoardRepository extends BaseRepository {
                 }, t -> {
                     networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
                     Log.d(TAG, networkErrorLiveData.getValue().toString());
+                    t.printStackTrace();
+                });
+    }
+
+    /**
+     * 특정 게시판의 카테고리 목록을 조회한다.
+     *
+     * @param boardId 게시판의 식별 번호
+     * @return
+     */
+    @LoginRequired
+    public Disposable requestCategoryList(long boardId) {
+        return boardAPI.categoryList(boardId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()) {
+                        categoryListLiveData.setValue(response.body());
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.d(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                    t.printStackTrace();
                 });
     }
 
@@ -63,5 +91,11 @@ public class BoardRepository extends BaseRepository {
         if(boardListLiveData == null)
             boardListLiveData = new SingleLiveEvent<>();
         return boardListLiveData;
+    }
+
+    public SingleLiveEvent<List<String>> getCategoryListLiveData() {
+        if(categoryListLiveData == null)
+            categoryListLiveData = new SingleLiveEvent<>();
+        return categoryListLiveData;
     }
 }

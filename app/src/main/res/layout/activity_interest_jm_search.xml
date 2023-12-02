@@ -20,37 +20,58 @@
             android:id="@+id/activity_interest_jm_search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:layout_margin="10dp"
-            android:background="@drawable/bg_r15_baltic_sea_bd_dove_gray"
             android:minHeight="@dimen/toolbar_height"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/baseline_arrow_back_24">
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:title="관심 종목 검색"
+            app:titleCentered="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_interest_jm_search_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_bar_height"
+            android:background="@drawable/bg_search_bar_layout"
+            app:layout_constraintTop_toBottomOf="@+id/activity_interest_jm_search_toolbar">
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Theme.TextInputLayout.SearchBar"
-                android:layout_width="match_parent"
+                android:id="@+id/activity_interest_jm_search_bar_text_input_layout"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:background="@color/transparent">
+                android:theme="@style/Theme.TextInputLayout.SearchBar"
+                app:layout_constraintEnd_toStartOf="@+id/activity_interest_jm_search_icon_image_button"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_interest_jm_search_search_edit_text"
-                    style="@style/Theme.TextInputEditText.SearchBar"
+                    android:id="@+id/activity_board_search_bar_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="0dp"
+                    android:background="@color/transparent"
                     android:text="@={viewModel.keywordLiveData}"
-                    android:textSize="@dimen/font_size_large" />
+                    android:theme="@style/Theme.TextInputEditText.SearchBar" />
 
             </com.google.android.material.textfield.TextInputLayout>
-        </com.google.android.material.appbar.MaterialToolbar>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/activity_interest_jm_search_icon_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="15dp"
+                android:background="@color/transparent"
+                android:onClick="@{viewModel::onSearchButtonClick}"
+                android:src="@drawable/baseline_search_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/activity_interest_jm_search_bar_text_input_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/activity_interest_jm_search_status_text_view"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:gravity="center_vertical"
             android:text="관심 종목"
@@ -58,12 +79,13 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/activity_interest_jm_search_interest_jm_recycler_view"
-            app:layout_constraintTop_toBottomOf="@id/activity_interest_jm_search_toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/activity_interest_jm_search_bar_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activity_interest_jm_search_interest_jm_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
             android:overScrollMode="never"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -74,8 +96,9 @@
             android:id="@+id/activity_interest_jm_search_divide_line_view"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/all_divide_line"
+            app:layout_constraintBottom_toTopOf="@id/activity_interest_jm_search_recycler_view"
             app:layout_constraintTop_toBottomOf="@id/activity_interest_jm_search_interest_jm_recycler_view" />
 
         <androidx.recyclerview.widget.RecyclerView
