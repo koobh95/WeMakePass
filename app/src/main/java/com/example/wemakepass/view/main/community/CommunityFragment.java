@@ -138,10 +138,9 @@ public class CommunityFragment extends Fragment {
         /**
          *  방문 게시판 목록이 조회되는 것을 관찰한다. 읽어 온 데이터가 없을 경우 관련 TextView를, 데이터가 있을
          * 경우 RecyclerView를 보여준다.
-         *
          */
-        viewModel.getVisitedBoardListLiveData().observe(this, list ->{
-            if(list.size() == 0) {
+        viewModel.getVisitedBoardListLiveData().observe(this, list -> {
+            if(list == null || list.size() == 0) {
                 binding.fragmentCommunityVisitedBoardRecyclerView.setVisibility(View.GONE);
                 binding.fragmentCommunityVisitedBoardAlertMsgTextView.setVisibility(View.VISIBLE);
             }else {
@@ -153,9 +152,12 @@ public class CommunityFragment extends Fragment {
     }
 
     /**
-     *  방문한 게시판 목록을 갱신한다. 아이템은 10개 단위로 끊어서 한 페이지 씩 보여준다. 페이지 하나는
-     * RecylcerView 하나로 구성되어 있기 때문에 한 페이지(RecyclerView)에 절적한 데이터 수를 전달하기 위해서
-     * 10개 단위로 데이터를 끊어 낸다. 그리고 분류가 끝난 리스트를 통해 목록을 갱신한다.
+     * - 검색 기록이 1개 이상 존재할 경우 이 메서드가 호출되며 방문한 게시판 리스트를 초기화 혹은 갱신한다.
+     * - 기록을 보여줄 때 아이템을 10개 단위로 끊어서 페이지로 나눠 보여준다. 페이지 하나는 RecylcerView 하나로
+     *  구성되어 있기 때문에 한 페이지(RecyclerView)에 10개 이하의 데이터 수를 전달하기 위해서 데이터를 끊어
+     *  낸다. 그리고 분류가 끝난 리스트를 사용하여 목록을 갱신한다.
+     * - 각 페이지의 아이템 수가 홀수 개 일 경우 우측에는 아이템이 비어 다소 어색한 느낌을 준다. 따라서 한 페이지에
+     *  들어갈 데이터를 담은 리스트가 홀수 개 일 경우 마지막에 null을 삽입하여 Item View만 생성하도록 한다.
      *
      * @param list
      */
@@ -171,7 +173,10 @@ public class CommunityFragment extends Fragment {
             if(k == 10)
                 k = 0;
         }
-        
+
+        if(pageList.get(pageList.size()-1).size() % 2 == 1)
+            pageList.get(pageList.size()-1).add(null);
+
         visitedBoardLogPageAdapter.setPageList(pageList);
         visitedBoardLogPageAdapter.notifyDataSetChanged();
     }

@@ -25,7 +25,7 @@ public class VisitedBoardRepository extends BaseAppDataRepository<BoardDTO> {
     }
 
     @Override
-    protected BoardDTO parseJsonObject(JsonObject jsonObject) throws Exception {
+    protected BoardDTO parseJsonObject(JsonObject jsonObject) {
         return new BoardDTO(
                 jsonObject.get(ARG_BOARD_NO).getAsInt(),
                 jsonObject.get(ARG_BOARD_NAME).getAsString());

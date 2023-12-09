@@ -1,8 +1,6 @@
 package com.example.wemakepass.network.api;
 
-import com.example.wemakepass.data.model.dto.PostDTO;
-
-import java.util.List;
+import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Response;
@@ -18,16 +16,16 @@ import retrofit2.http.Query;
 public interface PostAPI {
     String BASE_URI = "/api/post";
 
-    // 특정 게시판의 게시글을 페이지 단위로  조회한다.
+    // 특정 게시판의 게시글을 페이지 단위로 조회한다.
     @GET(BASE_URI)
-    Observable<Response<List<PostDTO>>> postList(
+    Observable<Response<PostPageResponse>> postList(
             @Query("boardNo") long boardNo,
-            @Query("page") int page);
+            @Query("pageNo") int pageNo);
 
     // 특정 게시판, 특정 카테고리의 게시글을 페이지 단위로 조회한다.
     @GET("/api/post/category")
-    Observable<Response<List<PostDTO>>> postListByCategory(
+    Observable<Response<PostPageResponse>> postListByCategory(
             @Query("boardNo") long boardNo,
-            @Query("page") int page,
+            @Query("pageNo") int pageNo,
             @Query("category") String category);
 }

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +19,17 @@ import android.view.ViewGroup;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.PostListAdapter;
 import com.example.wemakepass.data.model.dto.BoardDTO;
+import com.example.wemakepass.data.model.dto.PostDTO;
+import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 import com.example.wemakepass.databinding.FragmentBoardMainBinding;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
 import com.example.wemakepass.view.board.post.search.PostSearchFragment;
 import com.example.wemakepass.view.board.post.viewer.PostViewerFragment;
 import com.example.wemakepass.view.board.post.write.PostWriteFragment;
-import com.example.wemakepass.view.board.search.BoardSearchActivity;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public class BoardMainFragment extends Fragment {
     private PostListAdapter postListAdapter;
 
     private BoardDTO boardDTO; // 표시할 게시판 정보
-    private int page = 0; // 페이징을 수행하기 위한 변수로 현재 출력하고 있는 페이지를 나타낸다.
+    private int pageNo = 0; // 페이징을 수행하기 위한 변수로 현재 출력하고 있는 페이지를 나타낸다.
+    private boolean lastPage; // 마지막에 조회한 페이지가 마지막 페이지인지 여부
 
     private final String TAG = "TAG_BoardMainFragment";
 
@@ -86,7 +88,7 @@ public class BoardMainFragment extends Fragment {
         initEventListener();
 
         viewModel.loadCategory(boardDTO.getBoardNo());
-        viewModel.loadPosts(boardDTO.getBoardNo(), page++, 0);
+        viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++, 0);
     }
 
     /**
@@ -122,17 +124,18 @@ public class BoardMainFragment extends Fragment {
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             /**
-             *  새로운 탭이 선택되었다는 것은 새로운 목록을 조회해야 함을 뜻하기 때문에 page를 0으로 초기화하고
-             * 게시글 목록을 null로 초기화한다. null로 초기화하는 이유는 PostRepository에서 데이터를 읽어왔을
-             * 때 라이브 데이터가 null일 경우 첫 번째 데이터로 간주하고 있기 때문이다.
+             *  새로운 탭이 선택되었다는 것은 특정 카테고리가 선택되었기 때문에 새로운 목록을 조회해야 함을 뜻한다.
+             * 따라서 pageNo를 0으로 초기화하고 게시글 RecyclerView을 초기화한다.
              *
              * @param tab The tab that was selected
              */
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                page = 0;
-                viewModel.getPostListLiveData().setValue(null);
-                viewModel.loadPosts(boardDTO.getBoardNo(), page++, tabLayout.getSelectedTabPosition());
+                lastPage = false; // 마지막 페이지 여부 초기화
+                pageNo = 0; // 페이지 초기화
+                postListAdapter.submitList(null); // 리스트 초기화
+                binding.fragmentBoardMainPostLoadingProgressBar.setVisibility(View.VISIBLE);
+                viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++, tabLayout.getSelectedTabPosition());
             }
 
             @Override
@@ -170,12 +173,16 @@ public class BoardMainFragment extends Fragment {
     private void initPostRecyclerViewScrollListener(){
         binding.fragmentBoardMainNestedScrollView.setOnScrollChangeListener(
                 (NestedScrollView.OnScrollChangeListener)
-                        (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-            // 스크롤이 끝까지 내려왔음.
+                        (v, scrollX, scrollY, oldScrollX, oldScrollY) -> { // 스크롤이 끝까지 내려왔음.
             if(scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()){
-                // 데이터 로딩을 암시하는 로딩 바의 Visibility 조정
+                // 마지막에 조회한 데이터가 마지막 페이지였을 경우 추가 조회를 수행하지 않음.
+                if(lastPage) {
+                    MessageUtils.showSnackbar(binding.getRoot(), "마지막 페이지입니다.");
+                    return;
+                }
+
                 binding.fragmentBoardMainPostLoadingProgressBar.setVisibility(View.VISIBLE);
-                viewModel.loadPosts(boardDTO.getBoardNo(), page++,
+                viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++,
                         binding.fragmentBoardMainTabLayout.getSelectedTabPosition());
             }
         });
@@ -186,9 +193,10 @@ public class BoardMainFragment extends Fragment {
      */
     private void initEventListener() {
         binding.fragmentBoardMainPostWriteFab.setOnClickListener(v -> {
-            ((BoardActivity)requireActivity()).addFragment(PostWriteFragment.newInstance(),
-                    R.anim.slide_from_end,
-                    R.anim.slide_to_end);
+            ((BoardActivity) requireActivity()).
+                    addFragment(PostWriteFragment.newInstance(),
+                            R.anim.slide_from_end,
+                            R.anim.slide_to_end);
         });
     }
 
@@ -199,13 +207,40 @@ public class BoardMainFragment extends Fragment {
         // 게시판의 카테고리를 읽어 오는 것을 관찰하고 데이터가 감지되면 TabLayout을 초기화한다.
         viewModel.getCategoryListLiveData().observe(this, this::initTabLayout);
 
-        viewModel.getPostListLiveData().observe(this, list -> {
-            if(list == null) // 카테고리 변경으로 인한 null 초기화
-                return;
-            binding.fragmentBoardMainPostLoadingProgressBar.setVisibility(View.GONE);
-            if(list.size() == 0)
-                MessageUtils.showToast(requireActivity(), "아직 게시글이 없습니다.");
-            postListAdapter.submitList(list);
-        });
+        // 게시글 조회에 성공했을 경우 처리를 위한 메서드를 호출한다.
+        viewModel.getPostListLiveData().observe(this, this::setPostList);
+    }
+
+    /**
+     * - 게시글 조회에 성공했을 경우 이 메서드가 호출되며 조회한 데이터를 기반으로 RecyclerView를 갱신한다.
+     * - 조회한 데이터의 페이지 번호가 0이고 읽어온 데이터가 없을 경우 해당 게시판, 카테고리에 등록된 게시글이
+     * 없다고 판단하고 메시지를 출력한다.
+     * - 조회한 페이지가 마지막일 경우 상태(lastPage)를 저장하여 카테고리가 변경되기 전까지는 추가 조회가 발생하지
+     *  않도록 한다.
+     * - 조회한 페이지 번호가 0일 경우 조회한 데이터 목록을 그대로 submit하여 갱신하고 0이 아닐 경우 추가 조회된
+     *  데이터라고 판단, 기존 리스트와 새로 조회된 리스트를 병합하여 submit한다.
+     *
+     * @param postPageResponse
+     */
+    private void setPostList(PostPageResponse postPageResponse) {
+        binding.fragmentBoardMainPostLoadingProgressBar.setVisibility(View.GONE);
+
+        if(postPageResponse.getPageNo() == 0 && postPageResponse.getPostList().size() == 0){
+            MessageUtils.showToast(requireContext(), "등록된 게시물이 없습니다.");
+            return;
+        } // 특정 Board, Category에 대한 게시물이 전혀 없음.
+
+        if(postPageResponse.isLast()) // 현재 읽은 페이지가 마지막 페이지
+            lastPage = true;
+
+        if(postPageResponse.getPageNo() == 0){
+            postListAdapter.submitList(postPageResponse.getPostList());
+            return;
+        } // 첫 페이지
+
+        List<PostDTO> list = new ArrayList<>(postListAdapter.getCurrentList().size() + postPageResponse.getPostList().size());
+        list.addAll(postListAdapter.getCurrentList());
+        list.addAll(postPageResponse.getPostList());
+        postListAdapter.submitList(list);
     }
 }

@@ -1,15 +1,10 @@
 package com.example.wemakepass.view.board.main;
 
-import android.util.Log;
-
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.dto.BoardDTO;
-import com.example.wemakepass.data.model.dto.PostDTO;
-import com.example.wemakepass.data.pref.AppDataPreferences;
+import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 import com.example.wemakepass.repository.BoardRepository;
 import com.example.wemakepass.repository.PostRepository;
-import com.example.wemakepass.repository.pref.VisitedBoardRepository;
 
 import java.util.List;
 
@@ -48,19 +43,20 @@ public class BoardMainViewModel extends BaseViewModel {
      *  발생하지 않도록 로딩이 수행 중일 경우 작업을 수행하지 않는다.
      *
      * @param boardNo 게시판의 식별 번호
-     * @param page 조회할 페이지 번호
+     * @param pageNo 조회할 페이지 번호
      * @param categoryIdx TabLayout에서 선택된 조회하려는 카테고리
      */
-    public void loadPosts(long boardNo, int page, int categoryIdx) {
+    public void loadPosts(long boardNo, int pageNo, int categoryIdx) {
         if(postLoadingDisposable != null && !postLoadingDisposable.isDisposed())
             return;
 
         if(categoryIdx == 0){ // 전체
-            postLoadingDisposable = postRepository.requestPostList(boardNo, page);
+            postLoadingDisposable = postRepository.requestPostList(boardNo, pageNo);
         } else { // 카테고리
             String category = boardRepository.getCategoryListLiveData().getValue().get(categoryIdx-1);
-            postLoadingDisposable = postRepository.requestPostListByCategory(boardNo, page, category);
+            postLoadingDisposable = postRepository.requestPostListByCategory(boardNo, pageNo, category);
         }
+
         addDisposable(postLoadingDisposable);
     }
 
@@ -68,7 +64,7 @@ public class BoardMainViewModel extends BaseViewModel {
         return boardRepository.getCategoryListLiveData();
     }
 
-    public SingleLiveEvent<List<PostDTO>> getPostListLiveData() {
-        return postRepository.getPostListLiveData();
+    public SingleLiveEvent<PostPageResponse> getPostListLiveData() {
+        return postRepository.getPostResponseLiveData();
     }
 }

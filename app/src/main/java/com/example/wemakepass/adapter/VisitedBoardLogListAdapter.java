@@ -49,8 +49,14 @@ public class VisitedBoardLogListAdapter extends ListAdapter<BoardDTO, VisitedBoa
                 LayoutInflater.from(parent.getContext()), parent, false));
     }
 
+    /**
+     *  GridLayout을 짝수로 맞추기 위해서 실제 아이템의 개수가 홀수인 경우 리스트의 마지막을 null으로 채우고
+     * 있다. 따라서 null인 경우 binding할 값이 없으므로 여기서는 아무것도 하지 않는다.
+     */
     @Override
     public void onBindViewHolder(@NonNull VisitedBoardLogViewHolder holder, int position) {
+        if(getItem(position) == null)
+            return;
         holder.bind(getItem(position), onVisitedBoardItemClickListener);
     }
 

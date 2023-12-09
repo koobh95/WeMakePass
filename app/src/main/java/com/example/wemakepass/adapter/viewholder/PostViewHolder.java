@@ -1,5 +1,6 @@
 package com.example.wemakepass.adapter.viewholder;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- *  게시판(BoardMainFragment)을 실행했을 때 불러오는 게시글 리스트를 구성하는 아이템의 ViewHolder 클래스.
+ * 게시판(BoardMainFragment)을 실행했을 때 불러오는 게시글 리스트를 구성하는 아이템의 ViewHolder 클래스.
  *
  * @author BH-Ku
  * @since 2023-12-01
@@ -22,9 +23,9 @@ import java.time.format.DateTimeFormatter;
 public class PostViewHolder extends RecyclerView.ViewHolder {
     private ItemPostBinding binding;
 
-    private final static String POST_TIME_FORMAT_TODAY = "hh:mm";
-    private final static String POST_TIME_FORMAT_THIS_YEAR = "MM-dd";
-    private final static String POST_TIME_FORMAT_OLD_DATE = "yyyy-MM-dd";
+    private final String POST_TIME_FORMAT_TODAY = "hh:mm";
+    private final String POST_TIME_FORMAT_THIS_YEAR = "MM-dd";
+    private final String POST_TIME_FORMAT_OLD_DATE = "yyyy-MM-dd";
     private final String TAG = "TAG_PostViewHolder";
 
     public PostViewHolder(@NonNull ItemPostBinding binding) {
@@ -32,13 +33,14 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         this.binding = binding;
     }
 
-
     public void bind(PostDTO item, OnItemClickListener onItemClickListener) {
         binding.itemPostTitleTextView.setText(item.getTitle());
         binding.itemPostCommentCntTextView.setText("[" + item.getCommentCount() + "]");
         binding.itemPostWriterTextView.setText(item.getNickname());
-        binding.itemPostHitTextView.setText("\t조회수 " + item.getHit());
+        binding.itemPostHitTextView.setText(item.getHit() + "");
         binding.itemPostWriteDateTextView.setText(localDateToString(item.getRegDate()));
+        if(!item.getCategory().equals("일반"))
+            binding.itemPostCategoryTextView.setText(item.getCategory());
         binding.getRoot().setOnClickListener(position ->
                 onItemClickListener.onItemClick(getAdapterPosition()));
     }

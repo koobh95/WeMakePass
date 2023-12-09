@@ -116,18 +116,10 @@ public abstract class BaseAppDataRepository<E> {
     }
 
     /**
-     * - 클래스가 객체화될 때 생성자에 의해서 단 한 번 호출된다.
-     * - SharedPreferences에서 데이터를 읽어 오는 loadAppData 메서드를 호출하여 결과가 null이 아니라면
-     *  LiveData에 결과를 세팅한다. 읽어온 데이터가 없을 경우(== null) 비어 있는 ArrayList를 할당한다. 라이브
-     *  데이터를 옵저빙하는 측에서 별도의 null 검사를 하지 않기 위함이다.
-     *
+     * 클래스가 객체화될 때 생성자에 의해서 단 한 번 호출되어 리스트를 초기화한다.
      */
     private void initElementListLiveData() {
-        List<E> list = loadPrefData();
-        if(list == null)
-            elementListLiveData.setValue(new ArrayList<>());
-        else
-            elementListLiveData.setValue(list);
+        elementListLiveData.setValue(loadPrefData());
     }
 
     /**
@@ -139,11 +131,8 @@ public abstract class BaseAppDataRepository<E> {
      */
     public List<E> loadPrefData() {
         final String jsonString = AppDataPreferences.getData(PREF_NAME);
-        if(TextUtils.isEmpty(jsonString))
-            return null;
         List<E> list = new ArrayList<>();
         try{
-
             JsonParser jsonParser = new JsonParser();
             JsonElement json = jsonParser.parse(jsonString);
             JsonArray jsonArray = json.getAsJsonArray();
@@ -152,7 +141,6 @@ public abstract class BaseAppDataRepository<E> {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 list.add(parseJsonObject(jsonObject));
             }
-
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -170,7 +158,7 @@ public abstract class BaseAppDataRepository<E> {
      * @param jsonObject SharedPreferences에 저장되어 있던 데이터로 파싱 대상이다.
      * @return JsonObejct를 제네릭 타입에 맞게 파싱한 객체
      */
-    protected abstract E parseJsonObject(JsonObject jsonObject) throws Exception;
+    protected abstract E parseJsonObject(JsonObject jsonObject);
 
     /**
      * 제네릭 타입을 JsonObject로 변환한다.

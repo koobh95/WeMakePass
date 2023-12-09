@@ -33,7 +33,7 @@ public class InterestJmRepository extends BaseAppDataRepository<InterestJmModel>
     }
 
     @Override
-    protected InterestJmModel parseJsonObject(JsonObject jsonObject) throws Exception {
+    protected InterestJmModel parseJsonObject(JsonObject jsonObject) {
         return new InterestJmModel(
                 jsonObject.get(ARG_JM_CODE).getAsString(),
                 jsonObject.get(ARG_JM_NAME).getAsString());
