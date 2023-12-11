@@ -26,7 +26,7 @@ import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
 import com.example.wemakepass.view.board.post.search.PostSearchFragment;
 import com.example.wemakepass.view.board.post.viewer.PostViewerFragment;
-import com.example.wemakepass.view.board.post.write.PostWriteFragment;
+import com.example.wemakepass.view.board.post.editor.PostEditorFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -86,6 +86,7 @@ public class BoardMainFragment extends Fragment {
         initPostRecyclerViewScrollListener();
         initObserver();
         initEventListener();
+        initFragmentResultListener();
 
         viewModel.loadCategory(boardDTO.getBoardNo());
         viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++, 0);
@@ -189,12 +190,44 @@ public class BoardMainFragment extends Fragment {
     }
 
     /**
+     * - PostEditorFragment에서 게시글 작성에 성공할 경우 게시글 목록을 다시 로딩하기 위해
+     *  FragmentResultListener를 설정한다.
+     * - 목록을 갱신은 반드시 전체 카테고리를 기준으로 하기 때문에 현재 TabLayout에 선택된 Tab이 "전체"라면
+     *  page를 초기화하여 목록 갱신을, "전체"가 아니라면 Tab을 강제로 변경한다.
+     */
+    private void initFragmentResultListener() {
+        getParentFragmentManager()
+                .setFragmentResultListener(PostEditorFragment.RESULT_REQUEST_CODE_POST_EDITOR_FRAGMENT,
+                        requireActivity(),
+                        (requestKey, result) -> {
+                            if(result.getBoolean(PostEditorFragment.ARG_WRITE_STATUS)){
+                                TabLayout tabLayout = binding.fragmentBoardMainTabLayout;
+                                if(tabLayout.getSelectedTabPosition() == 0){
+                                    lastPage = false;
+                                    viewModel.loadPosts(boardDTO.getBoardNo(), pageNo = 0, 0);
+                                } else {
+                                    tabLayout.selectTab(tabLayout.getTabAt(0));
+                                }
+                            }
+                        });
+    }
+
+    /**
      * LiveData와 직접적인 연관이 없는 View에 대한 이벤트를 설정하는 메서드.
      */
     private void initEventListener() {
+        // 게시글 작성
         binding.fragmentBoardMainPostWriteFab.setOnClickListener(v -> {
+            if(viewModel.getCategoryListLiveData().getValue() == null)
+                return;
+
+            List<String> categoryList = viewModel.getCategoryListLiveData().getValue();
+            String[] category = new String[categoryList.size()];
+            for(int i = 0; i < categoryList.size(); i ++)
+                category[i] = categoryList.get(i);
+
             ((BoardActivity) requireActivity()).
-                    addFragment(PostWriteFragment.newInstance(),
+                    addFragment(PostEditorFragment.newInstance(boardDTO.getBoardNo(), category),
                             R.anim.slide_from_end,
                             R.anim.slide_to_end);
         });

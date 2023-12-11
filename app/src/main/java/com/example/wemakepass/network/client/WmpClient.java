@@ -45,7 +45,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class WmpClient {
     private static Retrofit retrofit;
 
-    private static final int TIME_OUT = 4;
+    private static final int TIME_OUT = 3;
     public static final String BASE_URL = BuildConfig.WMP_BASE_URL; // local.properties 에 저장된 주소
 
     public static Retrofit getRetrofit() {

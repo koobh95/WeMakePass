@@ -2,22 +2,19 @@ package com.example.wemakepass.repository;
 
 import android.util.Log;
 
+import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.dto.PostDTO;
+import com.example.wemakepass.data.model.dto.request.PostWriteRequest;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.PostAPI;
 import com.example.wemakepass.network.client.WmpClient;
 import com.example.wemakepass.network.util.ErrorResponseConverter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -29,6 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class PostRepository extends BaseRepository {
     private SingleLiveEvent<PostPageResponse> postResponseLiveData;
+    private SingleLiveEvent<Boolean> isSuccessfullyLiveData;
 
     private PostAPI postAPI;
 
@@ -103,9 +101,35 @@ public class PostRepository extends BaseRepository {
                 });
     }
 
+    /**
+     * 새로운 게시글을 등록하기 위해 관련 데이터를 서버로 전송한다.
+     *
+     * @param request 게시글 작성에 필요한 데이터를 가진 객체
+     * @return
+     */
+    @LoginRequired
+    public Disposable requestWrite(PostWriteRequest request) {
+        return postAPI.write(request)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    isSuccessfullyLiveData.setValue(response.isSuccessful());
+                }, t -> {
+                    isSuccessfullyLiveData.setValue(false);
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                    t.printStackTrace();
+                });
+    }
+
     public SingleLiveEvent<PostPageResponse> getPostResponseLiveData() {
         if(postResponseLiveData == null)
             postResponseLiveData = new SingleLiveEvent<>();
         return postResponseLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getIsSuccessfullyLiveData() {
+        if(isSuccessfullyLiveData == null)
+            isSuccessfullyLiveData = new SingleLiveEvent<>();
+        return isSuccessfullyLiveData;
     }
 }
