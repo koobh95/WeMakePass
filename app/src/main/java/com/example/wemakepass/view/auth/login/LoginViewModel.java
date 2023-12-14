@@ -46,8 +46,10 @@ public class LoginViewModel extends BaseViewModel {
      * @param view
      */
     public void onLoginButtonClick(View view){
-        if(loginDisposable != null && !loginDisposable.isDisposed())
+        if(loginDisposable != null && !loginDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
 
         if(isValidId() && isValidPassword()){
             LoginRequest loginRequestDTO = new LoginRequest(

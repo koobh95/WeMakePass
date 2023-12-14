@@ -57,7 +57,7 @@ public class BoardSearchViewModel extends BaseViewModel {
      */
     public void search() {
         if(searchDisposable != null && !searchDisposable.isDisposed())
-            searchDisposable.isDisposed();
+            searchDisposable.dispose();
 
         final String keyword = StringUtils.removeAllSpace(keywordLiveData.getValue());
         if(!isValidKeyword(keyword))

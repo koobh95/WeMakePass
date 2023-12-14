@@ -17,11 +17,9 @@ import com.example.wemakepass.data.util.UserInfoUtils;
 public class FindUserIdViewModel extends BaseViewModel {
     private SingleLiveEvent<String> emailLiveData;
     private MailRepository mailRepository;
-    private UserInfoUtils userUtil;
 
     public FindUserIdViewModel() {
         mailRepository = new MailRepository(getNetworkErrorLiveData());
-        userUtil = new UserInfoUtils();
     }
 
     public void onSendMailButtonClick(View view){

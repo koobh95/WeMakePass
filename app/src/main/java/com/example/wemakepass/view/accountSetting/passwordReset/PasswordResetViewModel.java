@@ -40,8 +40,10 @@ public class PasswordResetViewModel extends BaseViewModel {
      * @param userId
      */
     public void passwordReset(String userId){
-        if(passwordResetDisposable != null && !passwordResetDisposable.isDisposed())
+        if(passwordResetDisposable != null && !passwordResetDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
 
         if(isValidPassword(passwordLiveData.getValue(), passwordErrMsgLiveData)
                 && isValidPassword(passwordReLiveData.getValue(), getPasswordReErrMsgLiveData())

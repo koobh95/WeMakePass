@@ -39,8 +39,10 @@ public class CurrentPasswordAuthViewModel extends BaseViewModel {
      * @param view
      */
     public void onAuthButtonClick(View view) {
-        if(authDisposable != null && !authDisposable.isDisposed())
+        if(authDisposable != null && !authDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
 
         if(!isValidPassword())
             return;

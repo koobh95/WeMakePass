@@ -36,8 +36,10 @@ public class NicknameChangeViewModel extends BaseViewModel {
      * @return true : 요청을 보냄, false : 요청을 보내는데 실패함.
      */
     public boolean changeNickname(){
-        if(nicknameChangeDisposable != null && !nicknameChangeDisposable.isDisposed())
+        if(nicknameChangeDisposable != null && !nicknameChangeDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return false;
+        }
 
         if(!isValidNickname())
             return false;

@@ -8,6 +8,8 @@ import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.dto.request.PostWriteRequest;
 import com.example.wemakepass.repository.PostRepository;
 
+import org.w3c.dom.Text;
+
 import io.reactivex.rxjava3.disposables.Disposable;
 
 /**
@@ -23,6 +25,9 @@ public class PostEditorViewModel extends BaseViewModel {
 
     private final PostRepository postRepository;
 
+    private final int MAXIMUM_LENGTH_POST_TITLE = 40;
+    private final int MAXIMUM_LENGTH_POST_CONTENT = 1200;
+
     public PostEditorViewModel() {
         postRepository = new PostRepository(getNetworkErrorLiveData());
     }
@@ -35,8 +40,10 @@ public class PostEditorViewModel extends BaseViewModel {
      * @param category
      */
     public void writePost(long boardNo, String category) {
-        if(writeDisposable != null && !writeDisposable.isDisposed())
+        if(writeDisposable != null && !writeDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
 
         final String title = titleLiveData.getValue();
         final String content = contentLiveData.getValue();
@@ -57,11 +64,47 @@ public class PostEditorViewModel extends BaseViewModel {
      * @return true = 게시글 작성 가능, false = 필수 항목이 누락되었음.
      */
     private boolean isWritable(String title, String content) {
-        if(TextUtils.isEmpty(title)){
+        return isValidPostTitle() && isValidPostContent();
+    }
+
+    /**
+     * 게시글 제목의 유효성을 확인한다.
+     *
+     * @return
+     */
+    private boolean isValidPostTitle() {
+        final String title = titleLiveData.getValue();
+
+        if(TextUtils.isEmpty(title)) {
             systemMessageLiveData.setValue("글 제목을 입력해주세요.");
             return false;
-        } else if(TextUtils.isEmpty(content)) {
+        }
+
+        if(title.length() > MAXIMUM_LENGTH_POST_TITLE) {
+            systemMessageLiveData.setValue("글 제목은 " + MAXIMUM_LENGTH_POST_TITLE +
+                    "자를 초과할 수 없습니다.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 게시글 내용의 유효성을 확인한다.
+     *
+     * @return
+     */
+    private boolean isValidPostContent() {
+        final String content = contentLiveData.getValue();
+
+        if(TextUtils.isEmpty(content)) {
             systemMessageLiveData.setValue("글 내용을 입력해주세요.");
+            return false;
+        }
+
+        if(content.length() > MAXIMUM_LENGTH_POST_CONTENT) {
+            systemMessageLiveData.setValue("글 내용은 " + MAXIMUM_LENGTH_POST_CONTENT +
+                    "자를 초과할 수 없습니다.");
             return false;
         }
 

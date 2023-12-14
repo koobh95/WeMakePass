@@ -55,8 +55,10 @@ public class PostViewerViewModel extends BaseViewModel {
      * @param postNo 요청할 게시글의 식별 번호
      */
     public void requestReplyList(long postNo) {
-        if(replyLoadingDisposable != null && !replyLoadingDisposable.isDisposed())
+        if(replyLoadingDisposable != null && !replyLoadingDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
         replyLoadingDisposable = replyRepository.requestReplyList(postNo);
         addDisposable(replyLoadingDisposable);
     }
@@ -80,8 +82,10 @@ public class PostViewerViewModel extends BaseViewModel {
      * @param replyNo
      */
     public void replyDelete(long replyNo) {
-        if(replyDeleteDisposable != null && !replyDeleteDisposable.isDisposed())
+        if(replyDeleteDisposable != null && !replyDeleteDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
             return;
+        }
         replyDeleteDisposable = replyRepository.requestDelete(replyNo);
         addDisposable(replyDeleteDisposable);
     }
@@ -100,9 +104,9 @@ public class PostViewerViewModel extends BaseViewModel {
             return false;
         }
 
-        int length = content.length();
-        if(length > MAXIMUM_LENGTH_REPLY_CONTENT) {
-            systemMessageLiveData.setValue("댓글은 500자를 초과할 수 없습니다.(현재 " + length + "자)");
+        if(content.length() > MAXIMUM_LENGTH_REPLY_CONTENT) {
+            systemMessageLiveData.setValue("댓글은 " + MAXIMUM_LENGTH_REPLY_CONTENT +
+                    "자를 초과할 수 없습니다.");
             return false;
         }
 
@@ -131,8 +135,10 @@ public class PostViewerViewModel extends BaseViewModel {
      * @return 댓글 쓰기 요청의 진행 여부
      */
     public boolean isRunningReplyWriting() {
-        if(replyWriteDisposable != null && !replyWriteDisposable.isDisposed())
-            return true;
+        if(replyWriteDisposable != null && !replyWriteDisposable.isDisposed()) {
+            systemMessageLiveData.setValue("처리 중입니다.");
+            return false;
+        }
         return false;
     }
 
