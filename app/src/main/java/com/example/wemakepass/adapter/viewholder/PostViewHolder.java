@@ -1,8 +1,5 @@
 package com.example.wemakepass.adapter.viewholder;
 
-import android.util.Log;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,9 +20,9 @@ import java.time.format.DateTimeFormatter;
 public class PostViewHolder extends RecyclerView.ViewHolder {
     private ItemPostBinding binding;
 
-    private final String POST_TIME_FORMAT_TODAY = "hh:mm";
-    private final String POST_TIME_FORMAT_THIS_YEAR = "MM-dd";
-    private final String POST_TIME_FORMAT_OLD_DATE = "yyyy-MM-dd";
+    private final String DATE_TIME_FORMAT_TODAY = "hh:mm";
+    private final String DATE_TIME_FORMAT_THIS_YEAR = "MM-dd";
+    private final String DATE_TIME_FORMAT_OLD_DATE = "yyyy-MM-dd";
     private final String TAG = "TAG_PostViewHolder";
 
     public PostViewHolder(@NonNull ItemPostBinding binding) {
@@ -35,7 +32,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(PostDTO item, OnItemClickListener onItemClickListener) {
         binding.itemPostTitleTextView.setText(item.getTitle());
-        binding.itemPostCommentCntTextView.setText("[" + item.getCommentCount() + "]");
+        if(item.getCommentCount() != 0)
+            binding.itemPostCommentCntTextView.setText("[" + item.getCommentCount() + "]");
         binding.itemPostWriterTextView.setText(item.getNickname());
         binding.itemPostHitTextView.setText(item.getHit() + "");
         binding.itemPostWriteDateTextView.setText(localDateToString(item.getRegDate()));
@@ -58,9 +56,9 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     public String localDateToString(LocalDateTime regDate) {
         LocalDate now = LocalDate.now();
         if(now.getYear() != regDate.getYear())
-            return regDate.format(DateTimeFormatter.ofPattern(POST_TIME_FORMAT_OLD_DATE));
+            return regDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_OLD_DATE));
         else if(now.getMonth() != regDate.getMonth() || now.getDayOfMonth() != regDate.getDayOfMonth())
-            return regDate.format(DateTimeFormatter.ofPattern(POST_TIME_FORMAT_THIS_YEAR));
-        return regDate.format(DateTimeFormatter.ofPattern(POST_TIME_FORMAT_TODAY));
+            return regDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_THIS_YEAR));
+        return regDate.format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_TODAY));
     }
 }

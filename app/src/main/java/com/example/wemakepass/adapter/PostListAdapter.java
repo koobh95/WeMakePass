@@ -14,6 +14,9 @@ import com.example.wemakepass.listener.OnItemClickListener;
 
 /**
  * BoardActivity > BoardMainFragment에서 읽어온 게시글 목록을 출력하는 RecyclerView의 Adpater 클래스.
+ *
+ * @author BH-Ku
+ * @since 2023-12-01
  */
 public class PostListAdapter extends ListAdapter<PostDTO, PostViewHolder> {
     private OnItemClickListener onItemClickListener;

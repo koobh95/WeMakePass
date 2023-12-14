@@ -1,7 +1,7 @@
 package com.example.wemakepass.data.model.dto.request;
 
 /**
- * 게시글 작성에 때 필요한 데이터를 담는 DTO 클래스다.
+ * 게시글 작성 요청에 필요한 데이터를 담는 DTO 클래스다.
  *
  * @author BH-Ku
  * @since 2023-12-10

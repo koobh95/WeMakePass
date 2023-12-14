@@ -1,8 +1,11 @@
 package com.example.wemakepass.data.model.dto;
 
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,14 +14,14 @@ import java.time.LocalDateTime;
  * @author BH-Ku
  * @since 2023-12-01
  */
-public class PostDTO {
-    private long postNo;
-    private String category;
-    private String nickname;
-    private String title;
-    private LocalDateTime regDate;
-    private long hit;
-    private int commentCount;
+public class PostDTO implements Serializable {
+    private long postNo; // 게시글의 식별 번호
+    private String category; // 게시글의 카테고리
+    private String nickname; // 게시글 작성자의 닉네임
+    private String title; // 게시글 제목
+    private LocalDateTime regDate; // 게시글 작성 시간
+    private long hit; // 게시글 조회수
+    private int commentCount; // 게시글에 등록된 댓글 수
 
     public PostDTO(long postNo, String nickname, String title, LocalDateTime regDate, long hit, int commentCount) {
         this.postNo = postNo;

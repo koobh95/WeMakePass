@@ -26,7 +26,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/item_post_comment_cnt_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         android:layout_marginStart="5dp"
         android:gravity="center_vertical"
         android:textColor="@color/ship_cove"

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,8 +94,7 @@ public class BoardMainFragment extends Fragment {
     }
 
     /**
-     * - Toolbar를 초기화한다.
-     * - NavigationButton(←), 메뉴 버튼에 대한 이벤트를 설정한다.
+     * Toolbar를 초기화한다.
      */
     private void initToolbar() {
         binding.fragmentBoardMainToolbar.setTitle(boardDTO.getBoardName());
@@ -155,7 +155,9 @@ public class BoardMainFragment extends Fragment {
         RecyclerView recyclerView = binding.fragmentBoardMainPostRecyclerView;
         postListAdapter = new PostListAdapter();
         postListAdapter.setOnItemClickListener(position -> {
-            ((BoardActivity)requireActivity()).addFragment(PostViewerFragment.newInstance(),
+            ((BoardActivity)requireActivity()).addFragment(PostViewerFragment.newInstance(
+                    boardDTO.getBoardName(),
+                            postListAdapter.getCurrentList().get(position).getPostNo()),
                     R.anim.slide_from_end,
                     R.anim.slide_to_end);
         });

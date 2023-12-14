@@ -99,6 +99,6 @@ public class PostEditorViewModel extends BaseViewModel {
     }
 
     public SingleLiveEvent<Boolean> getIsSuccessfullyWritingLiveData() {
-        return postRepository.getIsSuccessfullyLiveData();
+        return postRepository.getWriteSuccessfullyLiveData();
     }
 }

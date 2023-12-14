@@ -77,6 +77,12 @@ public class PostEditorFragment extends Fragment {
         initOnBackPressedListener();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     /**
      *  작성하는 게시글의 카테고리 선택지를 제공하는 역할을 하는 TabLayout을 초기화한다. 이 TabLayout은 단순히
      * 작성할 게시글의 Category를 결정하는 것이므로 별다른 이벤트 처리는 하지 않는다.

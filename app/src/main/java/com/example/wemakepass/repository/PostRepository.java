@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
+import com.example.wemakepass.data.model.dto.PostDetailDTO;
 import com.example.wemakepass.data.model.dto.request.PostWriteRequest;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
@@ -19,14 +20,15 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
- * 게시글 관련 데이터를 조회, 추가, 삭제하는 역할을 수행하는 Repository다.
+ * 게시글 관련 데이터를 조회, 추가하는 역할을 수행하는 Repository다.
  *
  * @author BH-Ku
  * @since 2023-11-30
  */
 public class PostRepository extends BaseRepository {
-    private SingleLiveEvent<PostPageResponse> postResponseLiveData;
-    private SingleLiveEvent<Boolean> isSuccessfullyLiveData;
+    private SingleLiveEvent<PostPageResponse> postResponseLiveData; // 게시글 목록
+    private SingleLiveEvent<PostDetailDTO> postDetailLiveData; // 게시글 상세 정보
+    private SingleLiveEvent<Boolean> writeSuccessfullyLiveData; // 게시글 작성 성공 여부
 
     private PostAPI postAPI;
 
@@ -113,9 +115,35 @@ public class PostRepository extends BaseRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {
-                    isSuccessfullyLiveData.setValue(response.isSuccessful());
+                    writeSuccessfullyLiveData.setValue(response.isSuccessful());
                 }, t -> {
-                    isSuccessfullyLiveData.setValue(false);
+                    writeSuccessfullyLiveData.setValue(false);
+                    Log.d(TAG, networkErrorLiveData.getValue().toString());
+                    t.printStackTrace();
+                });
+    }
+
+    /**
+     * 게시판 > 게시글 목록에서 특정 게시글이 선택되었을 때 그 게시글을 화면에 표시하기 위해 관련 정보를 요창한다.
+     *
+     * @param postNo 데이터를 요청할 게시글의 식별 번호
+     * @return
+     */
+    public Disposable requestPostDetail(long postNo) {
+        return postAPI.postDetail(postNo)
+                .delay(300, TimeUnit.MILLISECONDS) // Fragment Animation 실행 시간을 위한 딜레이
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful()) {
+                        postDetailLiveData.setValue(response.body());
+                    } else {
+                        ErrorResponse errorResponse = ErrorResponseConverter.parseError(response);
+                        networkErrorLiveData.setValue(errorResponse);
+                        Log.d(TAG, errorResponse.toString());
+                    }
+                }, t -> {
+                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
                     Log.d(TAG, networkErrorLiveData.getValue().toString());
                     t.printStackTrace();
                 });
@@ -127,9 +155,15 @@ public class PostRepository extends BaseRepository {
         return postResponseLiveData;
     }
 
-    public SingleLiveEvent<Boolean> getIsSuccessfullyLiveData() {
-        if(isSuccessfullyLiveData == null)
-            isSuccessfullyLiveData = new SingleLiveEvent<>();
-        return isSuccessfullyLiveData;
+    public SingleLiveEvent<PostDetailDTO> getPostDetailLiveData() {
+        if(postDetailLiveData == null)
+            postDetailLiveData = new SingleLiveEvent<>();
+        return postDetailLiveData;
+    }
+
+    public SingleLiveEvent<Boolean> getWriteSuccessfullyLiveData() {
+        if(writeSuccessfullyLiveData == null)
+            writeSuccessfullyLiveData = new SingleLiveEvent<>();
+        return writeSuccessfullyLiveData;
     }
 }

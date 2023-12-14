@@ -1,5 +1,6 @@
 package com.example.wemakepass.network.api;
 
+import com.example.wemakepass.data.model.dto.PostDetailDTO;
 import com.example.wemakepass.data.model.dto.request.PostWriteRequest;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 
@@ -35,5 +36,11 @@ public interface PostAPI {
 
     // 새로운 게시글을 등록하기 위해 관련 데이터를 서버로 전송한다.
     @PUT(BASE_URI + "write")
-    Observable<Response<String>> write(@Body PostWriteRequest postWriteRequest);
+    Observable<Response<String>> write(
+            @Body PostWriteRequest postWriteRequest);
+
+    // 특정 게시글의 상세 정보
+    @GET(BASE_URI + "detail")
+    Observable<Response<PostDetailDTO>> postDetail(
+            @Query("postNo") long postNo);
 }
