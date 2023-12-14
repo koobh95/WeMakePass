@@ -25,8 +25,8 @@ public class JmSearchListAdapter extends ListAdapter<JmInfoDTO, SearchTextTypeVi
     private static final DiffUtil.ItemCallback<JmInfoDTO> diffCallback = new DiffUtil.ItemCallback<>() {
         @Override
         public boolean areItemsTheSame(@NonNull JmInfoDTO oldItem, @NonNull JmInfoDTO newItem) {
-            return oldItem == newItem;
-        }
+            return true;
+        } // 기존 리스트를 재활용하지 않기 때문에 비교가 의미가 없음.
 
         @Override
         public boolean areContentsTheSame(@NonNull JmInfoDTO oldItem, @NonNull JmInfoDTO newItem) {

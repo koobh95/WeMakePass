@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
+import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.BoardAPI;
@@ -81,7 +82,10 @@ public class BoardRepository extends BaseRepository {
                         Log.d(TAG, errorResponse.toString());
                     }
                 }, t -> {
-                    networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
+                    ErrorResponse errorResponse = new ErrorResponse(
+                            ErrorCode.BOARD_CATEGORY_LOADING_FAILED.name(),
+                            "게시글 목록을 읽어오는데 실패했습니다.");
+                    networkErrorLiveData.setValue(errorResponse);
                     Log.d(TAG, networkErrorLiveData.getValue().toString());
                     t.printStackTrace();
                 });

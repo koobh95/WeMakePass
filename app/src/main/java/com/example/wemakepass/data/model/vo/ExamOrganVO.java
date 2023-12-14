@@ -11,9 +11,9 @@ import android.graphics.drawable.Drawable;
  * @since 2023-11-13
  */
 public class ExamOrganVO {
-    private final Drawable icon;
-    private final String name;
-    private final String url;
+    private final Drawable icon; // 공식 사이트의 아이콘 혹은 기관의 공식 아이콘
+    private final String name; // 기관명 혹은 사이트 이름
+    private final String url; // 홈페이지 주소
 
     public ExamOrganVO(Drawable icon, String name, String url) {
         this.icon = icon;

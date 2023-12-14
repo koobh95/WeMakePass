@@ -10,8 +10,8 @@ import com.example.wemakepass.data.enums.ErrorCode;
  * @since 2023-05-14
  */
 public class ErrorResponse {
-    private String code;
-    private String message;
+    private String code; // 에러 코드
+    private String message; // 에러 메세지
 
     private static final String CONNECTION_FAILED_MESSAGE = "서버로부터 응답이 없습니다. 다시 시도해주세요.";
     private static final String UNKNOWN_ERROR_MESSAGE = "네트워크 통신 중 알 수 없는 오류가 발생했습니다.";

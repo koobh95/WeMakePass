@@ -16,13 +16,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.PostListAdapter;
+import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.model.dto.PostDTO;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
+import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.databinding.FragmentBoardMainBinding;
+import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
 import com.example.wemakepass.view.board.post.search.PostSearchFragment;
@@ -76,6 +80,8 @@ public class BoardMainFragment extends Fragment {
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(BoardMainViewModel.class);
         binding.setViewModel(viewModel);
+        // 로딩이 끝날 때까지 터치 방지
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         return binding.getRoot();
     }
 
@@ -240,10 +246,28 @@ public class BoardMainFragment extends Fragment {
      */
     private void initObserver() {
         // 게시판의 카테고리를 읽어 오는 것을 관찰하고 데이터가 감지되면 TabLayout을 초기화한다.
-        viewModel.getCategoryListLiveData().observe(this, this::initTabLayout);
+        viewModel.getCategoryListLiveData().observe(this, categoryList -> {
+            initTabLayout(categoryList);
+            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        });
 
         // 게시글 조회에 성공했을 경우 처리를 위한 메서드를 호출한다.
         viewModel.getPostListLiveData().observe(this, this::setPostList);
+
+        viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
+            String errorCode = errorResponse.getCode();
+            if(errorCode.equals(ErrorCode.POST_LIST_LOADING_FAILED.name()) ||
+                    errorCode.equals(ErrorCode.BOARD_CATEGORY_LOADING_FAILED.name()) ) {
+                // 네트워크 오류로 인한 카테고리 로딩 실패, 네트워크 오류로 인한 게시글 로딩 실패
+                DialogUtils.showAlertDialog(requireContext(),
+                        errorResponse.getMessage(),
+                        dialog -> requireActivity().finish());
+                return;
+            }
+
+            MessageUtils.showToast(requireContext(), errorResponse.getMessage());
+        });
+
     }
 
     /**

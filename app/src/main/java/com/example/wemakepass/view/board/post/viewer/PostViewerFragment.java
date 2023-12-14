@@ -28,6 +28,7 @@ import android.view.WindowManager;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.ReplyListAdapter;
+import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.model.dto.PostDetailDTO;
 import com.example.wemakepass.data.model.dto.ReplyDTO;
@@ -58,8 +59,9 @@ public class PostViewerFragment extends Fragment {
     private long postNo; // 데이터를 요청할 게시글의 식별 번호
     private long reReplyNo = -1; // 특정 댓글에 대한 답글을 작성 중인 경우 댓글의 식별 번호를 초기화
 
-    private final int REPLY_STATUS_TEXT_VIEW = 0;
-    private final int REPLY_RECYCLER_VIEW = 1;
+    private final int REPLY_CONTENT_PROGRESS_BAR_VIEW = 0;
+    private final int REPLY_STATUS_TEXT_VIEW = 1;
+    private final int REPLY_RECYCLER_VIEW = 2;
 
     private final String DATE_TIME_FORMAT_OLD_DATE = "yyyy-MM-dd HH:mm";
     private final String DATE_TIME_FORMAT_THIS_YEAR = "MM-dd HH:mm";
@@ -93,6 +95,8 @@ public class PostViewerFragment extends Fragment {
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(PostViewerViewModel.class);
         binding.setViewModel(viewModel);
+        // 로딩이 끝날 때까지 터치 방지
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         return binding.getRoot();
     }
 
@@ -236,6 +240,34 @@ public class PostViewerFragment extends Fragment {
      * LiveData에 대한 옵저빙을 설정한다.
      */
     private void initObserver() {
+        viewModel.getSystemMessageLiveData().observe(this,systemMessage ->
+                MessageUtils.showToast(requireContext(), systemMessage));
+
+        viewModel.getNetworkErrorLiveData().observe(this, errorResponse -> {
+            String errorCode = errorResponse.getCode();
+            if(errorCode.equals(ErrorCode.POST_LOADING_FAILED_POST_DELETED.name()) ||
+                    errorCode.equals(ErrorCode.POST_LOADING_FAILED_NETWORK_ERROR.name())) {
+                // 게시글 삭제로 인한 게시글 조회 실패, 네트워크 에러로 인한 게시글 조회 실패
+                DialogUtils.showAlertDialog(requireContext(),
+                        errorResponse.getMessage(),
+                        dialog -> {
+                            requireActivity().getSupportFragmentManager().popBackStack();
+                            dialog.dismiss();
+                        });
+                return;
+            } else if(errorCode.equals(ErrorCode.REPLY_WRITE_FAILED_POST_DELETED.name()) ||
+                    errorCode.equals(ErrorCode.REPLY_WRITE_FAILED_PARENT_REPLY_DELETED.name()) ||
+                    errorCode.equals(ErrorCode.REPLY_DELETE_FAILED_POST_DELETED.name()) ||
+                    errorCode.equals(ErrorCode.REPLY_LOADING_FAILED_POST_DELETED.name())){
+                // 게시글 삭제로 인한 댓글 작성 실패, 상위 댓글 삭제로 인한 답글 작성 실패
+                // 게시글 삭제로 인한 댓글 삭제 실패, 게시글 삭제로 인한 댓글 목록 재로딩 실패
+                DialogUtils.showAlertDialog(requireContext(), errorResponse.getMessage());
+                return;
+            }
+
+            MessageUtils.showToast(requireContext(), errorResponse.getMessage());
+        });
+
         /**
          *  Fragment에 표시할 게시글 정보가 옵저빙되면 툴바, 전체적인 레이아웃 등을 초기화하는 메서드를 호출하고
          * 댓글 목록을 요청한다.
@@ -243,6 +275,8 @@ public class PostViewerFragment extends Fragment {
         viewModel.getPostDetailLiveData().observe(this, postDetailDTO -> {
             initToolbar(postDetailDTO.getCategory());
             initPostViews(postDetailDTO);
+            changeReplyViewVisibility(REPLY_CONTENT_PROGRESS_BAR_VIEW);
+            requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             viewModel.requestReplyList(postNo);
         });
 
@@ -305,14 +339,19 @@ public class PostViewerFragment extends Fragment {
         AppCompatTextView statusTextView = binding.fragmentPostViewerReplyStatusTextView;
 
         switch (visibleView) {
+            case REPLY_RECYCLER_VIEW:
+                loadingProgressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                statusTextView.setVisibility(View.GONE);
+                break;
             case REPLY_STATUS_TEXT_VIEW:
                 loadingProgressBar.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 statusTextView.setVisibility(View.VISIBLE);
                 break;
-            case REPLY_RECYCLER_VIEW:
-                loadingProgressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+            case REPLY_CONTENT_PROGRESS_BAR_VIEW:
+                loadingProgressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
                 statusTextView.setVisibility(View.GONE);
         }
     }

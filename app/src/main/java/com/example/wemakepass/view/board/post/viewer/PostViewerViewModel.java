@@ -33,7 +33,7 @@ public class PostViewerViewModel extends BaseViewModel {
     private Disposable replyDeleteDisposable; // 댓글 삭제 작업
 
     private final int MAXIMUM_LENGTH_REPLY_CONTENT = 500; // 댓글 최대 길이
-    private final String TAG= "TAG_PostViewerViewModel";
+    private final String TAG = "TAG_PostViewerViewModel";
 
     public PostViewerViewModel() {
         postRepository = new PostRepository(getNetworkErrorLiveData());
