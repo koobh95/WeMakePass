@@ -170,9 +170,7 @@ public class ExamGuideFragment extends Fragment {
                 "시험 선택 화면으로 돌아가시겠습니까?",
                 dialog -> {
                     dialog.dismiss();
-                    requireActivity()
-                            .getSupportFragmentManager()
-                            .popBackStack();
+                    requireActivity().getSupportFragmentManager().popBackStack();
                 });
     }
 

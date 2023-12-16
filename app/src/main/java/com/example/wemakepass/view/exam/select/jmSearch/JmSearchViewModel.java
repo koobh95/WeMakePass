@@ -29,8 +29,8 @@ public class JmSearchViewModel extends BaseViewModel {
     private SearchLogRepository searchLogRepository;
     private JmRepository jmRepository;
 
-    private final int KEYWORD_LEN_MIM = 2; // 검색어 최소 길이(공백 미포함)
-    private final int KEYWORD_LEN_MAX = 20; // 검색어 최대 길이(공백 미포함)
+    private final int MINIMUM_KEYWORD_LEN = 2; // 검색어 최소 길이(공백 미포함)
+    private final int MAXIMUM_KEYWORD_LEN = 20; // 검색어 최대 길이(공백 미포함)
     private final String TAG = "TAG_JmSearchViewModel";
 
     public JmSearchViewModel() {
@@ -83,9 +83,9 @@ public class JmSearchViewModel extends BaseViewModel {
             return false;
         }
 
-        if(keyword.length() > KEYWORD_LEN_MAX || keyword.length() < KEYWORD_LEN_MIM){
-            systemMessageLiveData.setValue("검색어는 " + KEYWORD_LEN_MIM + "자 이상 "
-                    + KEYWORD_LEN_MAX + "자 이하로 입력해주세요.");
+        if(keyword.length() > MAXIMUM_KEYWORD_LEN || keyword.length() < MINIMUM_KEYWORD_LEN){
+            systemMessageLiveData.setValue("검색어는 " + MINIMUM_KEYWORD_LEN + "자 이상 "
+                    + MAXIMUM_KEYWORD_LEN + "자 이하로 입력해주세요.");
             return false;
         }
 

@@ -41,17 +41,10 @@ public class PostRepository extends BaseRepository {
     public PostRepository(SingleLiveEvent<ErrorResponse> networkErrorLiveData) {
         super(networkErrorLiveData);
         postAPI = WmpClient.getRetrofit().create(PostAPI.class);
-
     }
 
     /**
      * - 특정 게시판에서 페이지 단위로 게시글을 조회한다.
-     * - 다른 카테고리를 선택하면 그와 동시에 카테고리에 해당하는 게시글이 조회되는데 이 때 TabLayout의 Tab
-     *  변경 Animation이 버벅이는 현상을 확인했다. Animation이 완료되기 까지 약 400ms~500ms가 소요되는데
-     *  데이터 조회에서 RecyclerView가 업데이트되기 까지 평균 100ms가 걸리지 않는다. 사실상 TabLayout의 탭
-     *  변경 Animation이 발생하는 와중에 RecyclerView 갱신이 동시에 이루어지는 것이다. 이를 해결하기 위해서
-     *  카테고리 변경 후 첫 조회일 경우 즉, pageNo가 0일 경우 400ms의 딜레이를 강제로 발생시켜서 TabLayout의
-     *  Animation이 수행될 시간을 벌어준다.
      *
      * @param boardNo 게시판 식별 번호
      * @param pageNo 페이지 번호
@@ -60,7 +53,7 @@ public class PostRepository extends BaseRepository {
     public Disposable requestPostList(long boardNo, int pageNo) {
         long delay = pageNo == 0 ? 400 : 0;
         return postAPI.postList(boardNo, pageNo)
-                .delay(delay, TimeUnit.MILLISECONDS)
+                .delay(delay, TimeUnit.MILLISECONDS) // TabLayout Animation 딜레이
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> {

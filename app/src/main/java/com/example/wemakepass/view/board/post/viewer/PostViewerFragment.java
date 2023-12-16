@@ -128,9 +128,7 @@ public class PostViewerFragment extends Fragment {
         toolbar.setTitle(boardName);
         toolbar.setSubtitle(category);
         toolbar.setNavigationOnClickListener(v ->
-                requireActivity().
-                        getSupportFragmentManager().
-                        popBackStack());
+                requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     /**
@@ -181,27 +179,27 @@ public class PostViewerFragment extends Fragment {
      * - 댓글 EditText에 입력된 데이터가 있을 경우 정말로 종료할 것인지 확인한다.
      */
     private void initOnBackPressedListener() {
-        requireActivity()
-                .getOnBackPressedDispatcher()
-                .addCallback(getViewLifecycleOwner(),
-                        new OnBackPressedCallback(true) {
-                            @Override
-                            public void handleOnBackPressed() {
-                                if(TextUtils.isEmpty(viewModel.getReplyContentLiveData().getValue()))
-                                    requireActivity()
-                                            .getSupportFragmentManager()
-                                            .popBackStack();
-                                else
-                                    DialogUtils.showConfirmDialog(requireContext(),
-                                            "작성 중인 댓글이 있습니다. 종료하시겠습니까?",
-                                            dialog -> {
-                                                requireActivity()
-                                                        .getSupportFragmentManager()
-                                                        .popBackStack();
-                                                dialog.dismiss();
-                                            });
-                            }
-                        });
+        OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(TextUtils.isEmpty(viewModel.getReplyContentLiveData().getValue()))
+                    requireActivity()
+                            .getSupportFragmentManager()
+                            .popBackStack();
+                else
+                    DialogUtils.showConfirmDialog(requireContext(),
+                            "작성 중인 댓글이 있습니다. 종료하시겠습니까?",
+                            dialog -> {
+                                requireActivity()
+                                        .getSupportFragmentManager()
+                                        .popBackStack();
+                                dialog.dismiss();
+                            });
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(),onBackPressedCallback);
     }
 
     /**

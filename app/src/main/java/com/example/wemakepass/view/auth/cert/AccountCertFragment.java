@@ -103,14 +103,11 @@ public class AccountCertFragment extends Fragment {
                     return;
                 }
 
-                requireActivity()
-                        .getSupportFragmentManager()
-                        .popBackStack();
+                requireActivity().getSupportFragmentManager().popBackStack();
             }
         };
 
-        requireActivity()
-                .getOnBackPressedDispatcher()
+        requireActivity().getOnBackPressedDispatcher()
                 .addCallback(getViewLifecycleOwner(), onBackPressedCallback);
     }
 

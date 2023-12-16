@@ -105,9 +105,7 @@ public class PasswordResetFragment extends Fragment {
                     "이 화면을 나가면 인증정보가 초기화됩니다. 나가시겠습니까?",
                     dialog -> {
                         dialog.dismiss();
-                        requireActivity()
-                                .getSupportFragmentManager()
-                                .popBackStack();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                     });
         });
     }
@@ -145,9 +143,7 @@ public class PasswordResetFragment extends Fragment {
             DialogUtils.showAlertDialog(requireContext(), "비밀번호가 변경되었습니다.",
                     dialog -> {
                         dialog.dismiss();
-                        requireActivity()
-                                .getSupportFragmentManager()
-                                .popBackStack();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                     });
         });
     }

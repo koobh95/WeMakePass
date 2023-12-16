@@ -173,8 +173,7 @@ public class ExamSelectFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
+                    public void onNothingSelected(AdapterView<?> parent) { }
                 });
 
         binding.fragmentExamSelectImplSeqSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -185,8 +184,7 @@ public class ExamSelectFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 

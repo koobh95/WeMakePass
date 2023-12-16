@@ -75,9 +75,7 @@ public class NicknameChangeFragment extends Fragment {
      */
     private void initToolbar() {
         binding.fragmentNicknameChangeToolbar.setNavigationOnClickListener(t ->
-                requireActivity()
-                        .getSupportFragmentManager()
-                        .popBackStack());
+                requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     /**

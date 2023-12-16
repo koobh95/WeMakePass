@@ -37,7 +37,6 @@ public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
     private LoginViewModel viewModel;
 
-    public final String ARG_IS_LOGIN = "isLogin";
     private final String TAG = "TAG_LoginFragment";
 
     public static LoginFragment newInstance() {

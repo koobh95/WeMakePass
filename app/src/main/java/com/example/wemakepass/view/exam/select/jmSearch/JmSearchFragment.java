@@ -140,9 +140,7 @@ public class JmSearchFragment extends Fragment {
      */
     private void initToolbar() {
         binding.fragmentJmSearchToolbar.setNavigationOnClickListener(v ->
-                requireActivity()
-                        .getSupportFragmentManager()
-                        .popBackStack());
+                requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     /**

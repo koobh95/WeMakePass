@@ -330,6 +330,5 @@ public class PostSearchFragment extends Fragment {
 
         int optionIdx = binding.fragmentPostSearchOptionSpinner.getSelectedItemPosition();
         viewModel.search(optionIdx, pageNo++, boardDTO.getBoardNo(), getSelectedCategory());
-
     }
 }

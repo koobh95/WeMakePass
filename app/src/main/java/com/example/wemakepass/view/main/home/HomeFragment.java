@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
          *
          */
         viewModel.getInterestJmSchedListLiveData().observe(this, interestJmSchedList -> {
-            if (viewModel.getInterestJmListLiveData().getValue().size() != interestJmSchedList.size())
+            if(viewModel.getInterestJmListLiveData().getValue().size() != interestJmSchedList.size())
                 return; // 아직 모든 일정이 로드되지 않음.
             viewModel.sortInterestJmSchedList(interestJmSchedList);
             changeVisibilityJmSchedView(VIEW_TYPE_RECYCLER_VIEW);

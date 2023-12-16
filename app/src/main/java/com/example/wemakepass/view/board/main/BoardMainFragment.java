@@ -25,7 +25,6 @@ import com.example.wemakepass.data.model.dto.PostDTO;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
 import com.example.wemakepass.databinding.FragmentBoardMainBinding;
 import com.example.wemakepass.util.DialogUtils;
-import com.example.wemakepass.util.KeyboardUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
 import com.example.wemakepass.view.board.post.search.PostSearchFragment;

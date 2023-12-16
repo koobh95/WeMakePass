@@ -166,7 +166,8 @@ public class InterestJmSearchActivity extends AppCompatActivity {
         jmSearchListAdapter = new JmSearchListAdapter();
         jmSearchListAdapter.setOnItemClickListener(position -> {
             final JmInfoDTO jmInfoDTO = jmSearchListAdapter.getCurrentList().get(position);
-            InterestJmModel interestJmModel = new InterestJmModel(jmInfoDTO.getJmCode(), jmInfoDTO.getJmName());
+            InterestJmModel interestJmModel = new InterestJmModel(jmInfoDTO.getJmCode(),
+                    jmInfoDTO.getJmName());
             viewModel.addInterestJmItem(interestJmModel);
             interestJmEdited = true; // 관심 종목 리스트 갱신 여부
         });

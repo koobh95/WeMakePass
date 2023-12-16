@@ -160,16 +160,12 @@ public class PostEditorFragment extends Fragment {
             DialogUtils.showConfirmDialog(requireContext(),
                     "작성 중인 내용이 있습니다. 종료하시겠습니까?",
                     dialog ->{
-                        requireActivity()
-                                .getSupportFragmentManager()
-                                .popBackStack();
+                        requireActivity().getSupportFragmentManager().popBackStack();
                         dialog.dismiss();
                     });
             return;
         }
 
-        requireActivity()
-                .getSupportFragmentManager()
-                .popBackStack();
+        requireActivity().getSupportFragmentManager().popBackStack();
     }
 }

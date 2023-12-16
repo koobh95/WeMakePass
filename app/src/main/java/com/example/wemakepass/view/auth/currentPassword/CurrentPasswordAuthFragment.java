@@ -61,9 +61,7 @@ public class CurrentPasswordAuthFragment extends Fragment {
      */
     private void initToolbar() {
         binding.fragmentCurrentPasswordAuthToolbar.setNavigationOnClickListener(v ->
-                requireActivity()
-                        .getSupportFragmentManager()
-                        .popBackStack());
+                requireActivity().getSupportFragmentManager().popBackStack());
     }
 
     /**
@@ -91,7 +89,8 @@ public class CurrentPasswordAuthFragment extends Fragment {
                                 .getSupportFragmentManager()
                                 .popBackStack();
                         ((AccountSettingActivity)requireActivity())
-                                .addFragment(PasswordResetFragment.newInstance(AppConfig.UserPreference.getUserId()),
+                                .addFragment(PasswordResetFragment.newInstance(
+                                        AppConfig.UserPreference.getUserId()),
                                         R.anim.slide_from_bottom, R.anim.slide_to_bottom);
                     });
         });
