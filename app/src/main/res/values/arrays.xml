@@ -29,7 +29,12 @@
         <item>@drawable/ic_web_qnet</item>
         <item>@drawable/ic_web_kca</item>
         <item>@drawable/ic_web_kca</item>
+    </string-array>
 
+    <string-array name="post_search_option">
+        <item>제목</item>
+        <item>내용</item>
+        <item>제목+내용</item>
     </string-array>
 
 </resources>

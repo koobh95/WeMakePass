@@ -21,7 +21,6 @@ import com.example.wemakepass.databinding.ActivityBoardSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
-import com.example.wemakepass.view.board.main.BoardMainFragment;
 
 /**
  * 게시판을 검색하는 환경을 제공되는 Activity.
@@ -36,8 +35,8 @@ public class BoardSearchActivity extends AppCompatActivity {
     private SearchLogListAdapter searchLogListAdapter;
     private BoardSearchListAdapter boardSearchListAdapter;
 
-    private final int LAYOUT_LOG = 0;
-    private final int LAYOUT_SEARCH_RESULT = 1;
+    private final int LOG_LAYOUT_VIEW = 0;
+    private final int SEARCH_RESULT_LAYOUT_VIEW = 1;
     private final String TAG = "TAG_BoardSearchActivity";
 
     @Override
@@ -67,7 +66,7 @@ public class BoardSearchActivity extends AppCompatActivity {
 
         viewModel.getKeywordLiveData().observe(this, keyword -> {
             if(TextUtils.isEmpty(keyword))
-                changeLayoutVisibility(LAYOUT_LOG);
+                changeLayoutVisibility(LOG_LAYOUT_VIEW);
         });
 
         viewModel.getSearchLogListLiveData().observe(this, list -> {
@@ -79,7 +78,7 @@ public class BoardSearchActivity extends AppCompatActivity {
             boardSearchListAdapter.submitList(list);
             if(list.size() == 0)
                 MessageUtils.showToast(this, "검색 결과가 없습니다.");
-            changeLayoutVisibility(LAYOUT_SEARCH_RESULT);
+            changeLayoutVisibility(SEARCH_RESULT_LAYOUT_VIEW);
         });
     }
 
@@ -105,7 +104,7 @@ public class BoardSearchActivity extends AppCompatActivity {
 
         // 검색 결과를 보여주고 있는 상태에서 검색 기록 목록으로 화면 전환
         binding.activityBoardSearchResultClearButton.setOnClickListener(v ->
-                changeLayoutVisibility(LAYOUT_LOG));
+                changeLayoutVisibility(LOG_LAYOUT_VIEW));
     }
 
     /**
@@ -167,10 +166,10 @@ public class BoardSearchActivity extends AppCompatActivity {
         ConstraintLayout logLayout = binding.activityBoardSearchLogLayout;
         ConstraintLayout searchLayout = binding.activityBoardSearchResultLayout;
 
-        if(visibleLayout == LAYOUT_LOG) {
+        if(visibleLayout == LOG_LAYOUT_VIEW) {
             logLayout.setVisibility(View.VISIBLE);
             searchLayout.setVisibility(View.GONE);
-        } else if (visibleLayout == LAYOUT_SEARCH_RESULT){
+        } else if (visibleLayout == SEARCH_RESULT_LAYOUT_VIEW){
             logLayout.setVisibility(View.GONE);
             searchLayout.setVisibility(View.VISIBLE);
         }

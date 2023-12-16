@@ -1,16 +1,13 @@
 package com.example.wemakepass.view.board.post.viewer;
 
 import android.annotation.SuppressLint;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,9 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -29,14 +24,12 @@ import android.view.WindowManager;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.ReplyListAdapter;
 import com.example.wemakepass.data.enums.ErrorCode;
-import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.model.dto.PostDetailDTO;
 import com.example.wemakepass.data.model.dto.ReplyDTO;
 import com.example.wemakepass.databinding.FragmentPostViewerBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.KeyboardUtils;
 import com.example.wemakepass.util.MessageUtils;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.time.LocalDate;
@@ -95,6 +88,7 @@ public class PostViewerFragment extends Fragment {
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(PostViewerViewModel.class);
         binding.setViewModel(viewModel);
+        KeyboardUtils.hideKeyboard(requireActivity(), binding.getRoot()); // 키보드가 열려 있다면 숨김
         // 로딩이 끝날 때까지 터치 방지
         requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         return binding.getRoot();
@@ -108,6 +102,12 @@ public class PostViewerFragment extends Fragment {
         initObserver();
         initOnBackPressedListener();
         viewModel.requestPostDetail(postNo);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        KeyboardUtils.hideKeyboard(requireActivity(), binding.getRoot()); // 키보드가 열려 있다면 숨김
     }
 
     @Override
@@ -231,7 +231,7 @@ public class PostViewerFragment extends Fragment {
                 return;
             if(!viewModel.isValidReplyContent())
                 return;
-            KeyboardUtils.hideKeyboard(requireActivity());
+            KeyboardUtils.hideKeyboard(requireActivity(), binding.getRoot());
             viewModel.replyWrite(postNo, reReplyNo);
         });
     }

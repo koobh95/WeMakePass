@@ -93,9 +93,8 @@ public class JmSearchFragment extends Fragment {
          * 2. 검색이 정상적으로 수행되어 검색어가 로그에 정상적으로 추가되었을 때
          * 3. 검색 기록이 삭제되었을 때
          */
-        viewModel.getSearchLogListLiveData().observe(requireActivity(), list ->{
-                searchLogListAdapter.submitList(list);
-        });
+        viewModel.getSearchLogListLiveData().observe(requireActivity(), list ->
+                searchLogListAdapter.submitList(list));
 
         /**
          * - 검색을 실행한 후 검색 결과를 관찰한다.

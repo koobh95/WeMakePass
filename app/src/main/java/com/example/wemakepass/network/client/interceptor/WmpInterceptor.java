@@ -1,7 +1,6 @@
 package com.example.wemakepass.network.client.interceptor;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.enums.ErrorCode;

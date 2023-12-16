@@ -60,6 +60,18 @@ public class BoardMainViewModel extends BaseViewModel {
         addDisposable(postLoadingDisposable);
     }
 
+    /**
+     * 카테고리 List를 String Array로 반환한다.
+     */
+    public String[] getCategoryArray() {
+        List<String> categoryList = getCategoryListLiveData().getValue();
+        categoryList.remove("공지사항"); // 공지사항 카테고리가 있을 경우 제거
+        String[] category = new String[categoryList.size()];
+        for(int i = 0; i < categoryList.size(); i ++)
+            category[i] = categoryList.get(i);
+        return category;
+    }
+
     public SingleLiveEvent<List<String>> getCategoryListLiveData() {
         return boardRepository.getCategoryListLiveData();
     }

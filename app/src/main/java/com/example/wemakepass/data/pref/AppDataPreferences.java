@@ -22,10 +22,11 @@ public class AppDataPreferences {
 
     private static final String PREF_NAME = "wmpPreferences";
 
-    public static final String KEY_INTEREST_JM = "interestJm_";
-    public static final String KEY_VISITED_BOARD = "visitedBoard_";
-    public static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_"; // 시험 종목 검색
-    public static final String KEY_BOARD_SEARCH_LOG = "boardSearchLog_"; // 게시판 검색
+    public static final String KEY_INTEREST_JM = "interestJm_"; // 관심 종목 데이터
+    public static final String KEY_VISITED_BOARD = "visitedBoard_"; // 방문 게시판 기록
+    public static final String KEY_EXAM_JM_SEARCH_LOG = "examJmSearchLog_"; // 시험 종목 검색 기록
+    public static final String KEY_BOARD_SEARCH_LOG = "boardSearchLog_"; // 게시판 검색 기록
+    public static final String KEY_POST_SEARCH_LOG = "postSearchLog_"; // 게시글 검색 기록
 
     public AppDataPreferences(Context context) {
         pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);

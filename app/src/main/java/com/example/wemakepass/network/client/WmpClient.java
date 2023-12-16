@@ -1,32 +1,17 @@
 package com.example.wemakepass.network.client;
 
-import android.text.TextUtils;
-
 import com.example.wemakepass.BuildConfig;
-import com.example.wemakepass.config.AppConfig;
-import com.example.wemakepass.data.enums.ErrorCode;
-import com.example.wemakepass.data.model.dto.JwtDTO;
-import com.example.wemakepass.data.model.vo.ErrorResponse;
-import com.example.wemakepass.network.api.JwtAPI;
 import com.example.wemakepass.network.client.interceptor.WmpInterceptor;
 import com.example.wemakepass.network.deserializer.LocalDateDeserializer;
 import com.example.wemakepass.network.deserializer.LocalDateTimeDeserializer;
-import com.example.wemakepass.network.util.AES256Util;
-import com.example.wemakepass.network.util.ErrorResponseConverter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

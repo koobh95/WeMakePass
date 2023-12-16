@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +23,9 @@ import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.model.dto.PostDTO;
 import com.example.wemakepass.data.model.dto.response.PostPageResponse;
-import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.databinding.FragmentBoardMainBinding;
 import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.KeyboardUtils;
 import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.board.BoardActivity;
 import com.example.wemakepass.view.board.post.search.PostSearchFragment;
@@ -52,7 +51,7 @@ public class BoardMainFragment extends Fragment {
     private PostListAdapter postListAdapter;
 
     private BoardDTO boardDTO; // 표시할 게시판 정보
-    private int pageNo = 0; // 페이징을 수행하기 위한 변수로 현재 출력하고 있는 페이지를 나타낸다.
+    private int pageNo; // 페이징을 수행하기 위한 변수로 현재 출력하고 있는 페이지를 나타낸다.
     private boolean lastPage; // 마지막에 조회한 페이지가 마지막 페이지인지 여부
 
     private final String TAG = "TAG_BoardMainFragment";
@@ -90,7 +89,7 @@ public class BoardMainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initToolbar();
         initPostRecyclerView();
-        initPostRecyclerViewScrollListener();
+        initNestedScrollViewScrollListener();
         initObserver();
         initEventListener();
         initFragmentResultListener();
@@ -107,11 +106,13 @@ public class BoardMainFragment extends Fragment {
         binding.fragmentBoardMainToolbar.setNavigationOnClickListener(v ->
                 requireActivity().finish());
         binding.fragmentBoardMainToolbar.setOnMenuItemClickListener(item -> {
-            ((BoardActivity)requireActivity()).addFragment(PostSearchFragment.newInstance(),
+            ((BoardActivity)requireActivity()).addFragment(
+                    PostSearchFragment.newInstance(boardDTO,
+                    viewModel.getCategoryArray()),
                     R.anim.slide_from_bottom,
                     R.anim.slide_to_bottom);
             return true;
-        });
+        }); // 검색 버튼 추가
     }
 
     /**
@@ -179,7 +180,7 @@ public class BoardMainFragment extends Fragment {
      *  무한 로딩을 수행하기 위해서 스크롤 리스너를 구현하였다. 스크롤이 될 때 스크롤의 위치를 확인하여 끝까지
      * 내려왔다면 ContentLoadingProgressBar를 표시하고 다음 데이터를 요청한다.
      */
-    private void initPostRecyclerViewScrollListener(){
+    private void initNestedScrollViewScrollListener(){
         binding.fragmentBoardMainNestedScrollView.setOnScrollChangeListener(
                 (NestedScrollView.OnScrollChangeListener)
                         (v, scrollX, scrollY, oldScrollX, oldScrollY) -> { // 스크롤이 끝까지 내려왔음.
@@ -229,13 +230,9 @@ public class BoardMainFragment extends Fragment {
             if(viewModel.getCategoryListLiveData().getValue() == null)
                 return;
 
-            List<String> categoryList = viewModel.getCategoryListLiveData().getValue();
-            String[] category = new String[categoryList.size()];
-            for(int i = 0; i < categoryList.size(); i ++)
-                category[i] = categoryList.get(i);
-
             ((BoardActivity) requireActivity()).
-                    addFragment(PostEditorFragment.newInstance(boardDTO.getBoardNo(), category),
+                    addFragment(PostEditorFragment.newInstance(boardDTO.getBoardNo(),
+                                    viewModel.getCategoryArray()),
                             R.anim.slide_from_end,
                             R.anim.slide_to_end);
         });
@@ -289,15 +286,15 @@ public class BoardMainFragment extends Fragment {
             return;
         } // 특정 Board, Category에 대한 게시물이 전혀 없음.
 
-        if(postPageResponse.isLast()) // 현재 읽은 페이지가 마지막 페이지
-            lastPage = true;
+        lastPage = postPageResponse.isLast(); // 현재 읽은 페이지가 마지막 페이지
 
         if(postPageResponse.getPageNo() == 0){
             postListAdapter.submitList(postPageResponse.getPostList());
             return;
         } // 첫 페이지
 
-        List<PostDTO> list = new ArrayList<>(postListAdapter.getCurrentList().size() + postPageResponse.getPostList().size());
+        List<PostDTO> list = new ArrayList<>(postListAdapter.getCurrentList().size() +
+                postPageResponse.getPostList().size());
         list.addAll(postListAdapter.getCurrentList());
         list.addAll(postPageResponse.getPostList());
         postListAdapter.submitList(list);

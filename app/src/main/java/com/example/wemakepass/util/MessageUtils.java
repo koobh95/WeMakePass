@@ -14,11 +14,12 @@ import com.google.android.material.snackbar.Snackbar;
  */
 public class MessageUtils {
     public static void showSnackbar(View view, String msg) {
-        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+                .setDuration(1000)
+                .show();
     }
 
     public static void showToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
-
 }

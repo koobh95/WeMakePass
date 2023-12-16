@@ -1,7 +1,5 @@
 package com.example.wemakepass.view.main.home;
 
-import android.util.Log;
-
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.enums.SchedLoadStateCode;

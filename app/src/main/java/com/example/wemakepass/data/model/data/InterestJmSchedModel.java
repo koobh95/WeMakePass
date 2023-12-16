@@ -1,7 +1,5 @@
 package com.example.wemakepass.data.model.data;
 
-import androidx.annotation.Nullable;
-
 import com.example.wemakepass.data.enums.SchedLoadStateCode;
 import com.example.wemakepass.data.model.dto.JmSchedDTO;
 
