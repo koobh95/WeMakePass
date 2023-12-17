@@ -37,8 +37,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@drawable/bg_r15_baltic_sea"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -46,6 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
+                        android:gravity="center_vertical"
                         android:text="관심 종목 일정"
                         android:textColor="@color/ship_cove"
                         android:textSize="@dimen/font_size_large"
@@ -57,9 +63,9 @@
                         android:id="@+id/fragment_home_interest_jm_search_button"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginEnd="10dp"
                         android:background="@color/transparent"
                         android:src="@drawable/baseline_edit_note_24"
+                        android:layout_marginEnd="5dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +73,7 @@
                         android:id="@+id/fragment_home_schedule_recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:overScrollMode="never"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,21 +101,12 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <View
-                    android:id="@+id/fragment_home_divide_view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="5dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/all_divide_line"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_home_exam_organ_title_text_view"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_home_schedule_layout" />
-
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/fragment_home_exam_organ_title_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:text="시험 주관 기관"
                     android:textColor="@color/ship_cove"
@@ -117,14 +114,14 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/fragment_home_exam_organ_recycler_view"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_home_divide_view1" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_home_schedule_layout" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fragment_home_exam_organ_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:overScrollMode="never"
                     app:layout_constraintTop_toBottomOf="@id/fragment_home_exam_organ_title_text_view" />
