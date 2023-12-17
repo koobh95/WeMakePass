@@ -92,7 +92,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@color/shark_approx"
-                android:src="@drawable/baseline_delete_forever_24"
+                android:src="@drawable/baseline_delete_outline_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/activity_board_search_log_label_text_view"
                 app:layout_constraintTop_toTopOf="parent" />

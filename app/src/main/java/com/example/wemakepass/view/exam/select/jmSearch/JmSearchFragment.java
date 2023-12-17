@@ -123,7 +123,7 @@ public class JmSearchFragment extends Fragment {
         // 검색 기록 레이아웃에서 로그 삭제 버튼
         binding.fragmentJmSearchLogDeleteAllButton.setOnClickListener(v -> {
             DialogUtils.showConfirmDialog(requireContext(),
-                    "모든 로그를 삭제하시겠습니까?",
+                    "검색 기록을 모두 삭제하시겠습니까?",
                     dialog -> {
                         viewModel.deleteLogAll();
                         dialog.dismiss();

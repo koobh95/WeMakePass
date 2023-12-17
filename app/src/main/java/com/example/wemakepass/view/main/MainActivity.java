@@ -14,7 +14,6 @@ import com.example.wemakepass.databinding.ActivityMainBinding;
 import com.example.wemakepass.view.main.community.CommunityFragment;
 import com.example.wemakepass.view.main.home.HomeFragment;
 import com.example.wemakepass.view.accountSetting.AccountSettingActivity;
-import com.example.wemakepass.view.main.nqeInfo.NqeInfoFragment;
 import com.example.wemakepass.view.main.workbook.WorkbookFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
     private HomeFragment homeFragment;
-    private NqeInfoFragment nqeInfoFragment;
     private CommunityFragment communityFragment;
     private WorkbookFragment workbookFragment;
 
@@ -84,10 +82,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             int selectedItemId = item.getItemId();
 
-            if (selectedItemId == R.id.menu_main_bottom_exam_info) {
-                if (nqeInfoFragment == null)
-                    addFragment(nqeInfoFragment = NqeInfoFragment.newInstance());
-            } else if (selectedItemId == R.id.menu_main_bottom_community) {
+            if (selectedItemId == R.id.menu_main_bottom_community) {
                 if (communityFragment == null)
                     addFragment(communityFragment = CommunityFragment.newInstance());
             } else if (selectedItemId == R.id.menu_main_bottom_workbook) {
@@ -136,11 +131,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(homeFragment);
         else
             fragmentTransaction.hide(homeFragment);
-
-        if (selectedMenuId == R.id.menu_main_bottom_exam_info)
-            fragmentTransaction.show(nqeInfoFragment);
-        else if (nqeInfoFragment != null)
-            fragmentTransaction.hide(nqeInfoFragment);
 
         if (selectedMenuId == R.id.menu_main_bottom_community)
             fragmentTransaction.show(communityFragment);

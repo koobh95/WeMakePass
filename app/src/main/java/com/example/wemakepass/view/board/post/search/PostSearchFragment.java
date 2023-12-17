@@ -213,7 +213,7 @@ public class PostSearchFragment extends Fragment {
 
         // 검색 기록 모두 삭제
         binding.fragmentPostSearchLogDeleteAllImageButton.setOnClickListener(v -> {
-            DialogUtils.showAlertDialog(requireContext(), "기록을 모두 삭제하시겠습니까?",
+            DialogUtils.showConfirmDialog(requireContext(), "기록을 모두 삭제하시겠습니까?",
                     dialog -> viewModel.deleteLogAll());
         });
 
