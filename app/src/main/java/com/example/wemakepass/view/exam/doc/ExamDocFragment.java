@@ -339,6 +339,7 @@ public class ExamDocFragment extends Fragment {
         } else {
             Glide.with(this)
                     .load(FileRequestURLBuilder.getExamRefImageURL(item.getRefImage()))
+                    .error(R.drawable.image_loading_failed)
                     .into(binding.fragmentExamDocReferenceImageView);
             binding.fragmentExamDocReferenceImageView.setVisibility(View.VISIBLE);
         }

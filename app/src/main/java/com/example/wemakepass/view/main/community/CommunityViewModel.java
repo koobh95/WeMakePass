@@ -33,8 +33,15 @@ public class CommunityViewModel extends BaseViewModel {
      *
      * @param boardDTO 제거하려는 대상 객체
      */
-    public void removeVisitedBoardLog(BoardDTO boardDTO) {
-        visitedBoardRepository.removeItem(boardDTO);
+    public void deleteVisitedBoardLog(BoardDTO boardDTO) {
+        visitedBoardRepository.deleteItem(boardDTO);
+    }
+
+    /**
+     * 방문한 게시판 목록을 초기화한다.
+     */
+    public void deleteAllVisitedBoardLog() {
+        visitedBoardRepository.clear();
     }
 
     public SingleLiveEvent<List<BoardDTO>> getVisitedBoardListLiveData() {

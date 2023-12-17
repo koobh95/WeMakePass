@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,7 @@ public class CommunityFragment extends Fragment {
                 DialogUtils.showConfirmDialog(requireContext(),
                         "최근 방문 목록에서 삭제하시겠습니까?",
                         dialog -> {
-                            viewModel.removeVisitedBoardLog(boardDTO);
+                            viewModel.deleteVisitedBoardLog(boardDTO);
                             dialog.dismiss();
                         });
             }
@@ -129,6 +128,13 @@ public class CommunityFragment extends Fragment {
         // 게시판 검색
         binding.fragmentCommunitySearchBarLayout.setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), BoardSearchActivity.class)));
+
+        // 게시판 방문 기록 일괄 삭제
+        binding.fragmentCommunityVisitedBoardLogDeleteAllButton.setOnClickListener(v -> {
+            DialogUtils.showConfirmDialog(requireContext(),
+                    "게시판 방문 기록을 모두 삭제하시겠습니까?",
+                    dialog -> viewModel.deleteAllVisitedBoardLog());
+        });
     }
 
     /**

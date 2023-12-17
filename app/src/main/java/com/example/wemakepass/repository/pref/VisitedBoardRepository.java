@@ -1,13 +1,11 @@
 package com.example.wemakepass.repository.pref;
 
 import com.example.wemakepass.base.BaseAppDataRepository;
-import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,14 +41,14 @@ public class VisitedBoardRepository extends BaseAppDataRepository<BoardDTO> {
      *  방문한 게시판 목록의 경우 페이지 단위로 데이터가 나뉘어져 있어 정확한 위치를 알기 어렵다. 따라서 삭제하려는
      * 객체를 파라미터로 받아서 객체가 가지고 있는 고유한 값으로 아이템의 위치를 찾아 제거한다.
      *
-     * @param removeItem 삭제할 아이템
+     * @param deleteItem 삭제할 아이템
      */
-    public void removeItem(BoardDTO removeItem) {
+    public void deleteItem(BoardDTO deleteItem) {
         List<BoardDTO> list = getElementListLiveData().getValue();
 
         for(int i = 0; i < list.size(); i++)
-            if(removeItem.getBoardNo() == list.get(i).getBoardNo())
-                super.removeItem(i);
+            if(deleteItem.getBoardNo() == list.get(i).getBoardNo())
+                super.deleteItem(i);
     }
 
     /**

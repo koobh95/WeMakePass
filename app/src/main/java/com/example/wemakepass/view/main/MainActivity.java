@@ -47,9 +47,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        //initActivityResultLauncher();
-        //initBottomNavigationView();
-        addFragment(communityFragment.newInstance()); // test
+        initActivityResultLauncher();
+        initBottomNavigationView();
     }
 
     /**

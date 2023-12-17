@@ -118,7 +118,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
      * @param position 삭제하고자 하는 아이템의 index
      */
     public void removeInterestJmItem(int position) {
-        interestJmRepository.removeItem(position);
+        interestJmRepository.deleteItem(position);
     }
 
     public SingleLiveEvent<String> getKeywordLiveData() {

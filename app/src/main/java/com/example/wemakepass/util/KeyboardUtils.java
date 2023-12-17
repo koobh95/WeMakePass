@@ -5,6 +5,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -19,8 +20,6 @@ public class KeyboardUtils {
     private static final int HIDDEN_YES = Configuration.KEYBOARDHIDDEN_YES;
 
     public static void showKeyboard(Activity activity, View view) {
-        if(activity.getResources().getConfiguration().hardKeyboardHidden == HIDDEN_YES)
-            return;
         view.requestFocus();
         InputMethodManager manager = (InputMethodManager)activity.getSystemService(INPUT_METHOD_SERVICE);
         manager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);

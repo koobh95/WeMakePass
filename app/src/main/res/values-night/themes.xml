@@ -51,8 +51,9 @@
     <style name="Theme.TextInputEditText.SearchBar" parent="">
         <item name="android:hint">검색</item>
         <item name="android:inputType">text</item>
-        <item name="maxLines">1</item>
-        <item name="android:textColorHint">@color/dove_gray_approx</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
         <item name="android:imeOptions">actionSearch</item>
     </style>
 

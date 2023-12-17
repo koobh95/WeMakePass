@@ -1,9 +1,6 @@
 package com.example.wemakepass.base;
 
-import android.text.TextUtils;
-
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.dto.BoardDTO;
 import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -71,13 +68,13 @@ public abstract class BaseAppDataRepository<E> {
      *  이러한 현상이 더욱 빈번하게 발생한다. 이와 관련해 발생할 수 있는 Exception을 방지하기 위해서 파라미터의
      *  값이 -1인 경우 메서드를 수행하지 않는다.
      *
-     * @param removePosition 삭제할 아이템의 index
+     * @param deleteIdx 삭제할 아이템의 index
      */
-    public void removeItem(int removePosition){
-        if(removePosition == -1)
+    public void deleteItem(int deleteIdx){
+        if(deleteIdx == -1)
             return;
         List<E> newList = new ArrayList<>(elementListLiveData.getValue());
-        newList.remove(removePosition);
+        newList.remove(deleteIdx);
         updateList(newList);
     }
 
@@ -113,6 +110,14 @@ public abstract class BaseAppDataRepository<E> {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 모든 데이터를 삭제한다.
+     */
+    public void clear() {
+        AppDataPreferences.setData(PREF_NAME, "");
+        elementListLiveData.setValue(new ArrayList<>());
     }
 
     /**

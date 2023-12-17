@@ -74,8 +74,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:text="@={viewModel.keywordLiveData}"
                 android:theme="@style/Theme.TextInputEditText.SearchBar"
                 app:layout_constraintEnd_toStartOf="@id/fragment_post_search_button"

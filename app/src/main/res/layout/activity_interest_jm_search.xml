@@ -33,23 +33,16 @@
             android:background="@drawable/bg_search_bar_layout"
             app:layout_constraintTop_toBottomOf="@+id/activity_interest_jm_search_toolbar">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/activity_interest_jm_search_bar_text_input_layout"
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/activity_board_search_bar_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:theme="@style/Theme.TextInputLayout.SearchBar"
+                android:background="@color/transparent"
+                android:text="@={viewModel.keywordLiveData}"
+                android:textColorHint="@color/white"
+                android:theme="@style/Theme.TextInputEditText.SearchBar"
                 app:layout_constraintEnd_toStartOf="@+id/activity_interest_jm_search_icon_image_button"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/activity_board_search_bar_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/transparent"
-                    android:text="@={viewModel.keywordLiveData}"
-                    android:theme="@style/Theme.TextInputEditText.SearchBar" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/activity_interest_jm_search_icon_image_button"
@@ -61,7 +54,7 @@
                 android:onClick="@{viewModel::onSearchButtonClick}"
                 android:src="@drawable/baseline_search_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/activity_interest_jm_search_bar_text_input_layout" />
+                app:layout_constraintStart_toEndOf="@+id/activity_board_search_bar_edit_text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,14 +62,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/activity_interest_jm_search_status_text_view"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="20dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:gravity="center_vertical"
-            android:text="관심 종목"
             android:textColor="@color/ship_cove"
-            android:textSize="18sp"
+            android:textSize="@dimen/font_size_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/activity_interest_jm_search_interest_jm_recycler_view"
             app:layout_constraintTop_toBottomOf="@id/activity_interest_jm_search_bar_layout" />

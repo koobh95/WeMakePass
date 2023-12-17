@@ -66,11 +66,12 @@ public class UserInfoUtils {
      * ID 관련 검증 메서드, 에러 메시지를 가지는 클래스.
      */
     public class IdValidator {
-        private final int MIN_LEN = 6;
-        private final int MAX_LEN = 20;
+        private final int MINIMUM_LENGTH = 6;
+        private final int MAXIMUM_LEN = 20;
 
         public final String ERR_MSG_FORMAT = "숫자 혹은 영문 대소문자만 가능합니다.";
-        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR,
+                MINIMUM_LENGTH, MAXIMUM_LEN);
         public final String ERR_MSG_EMPTY = "아이디를 입력해주세요.";
 
         // Check ID Format
@@ -80,7 +81,7 @@ public class UserInfoUtils {
 
         // Check range
         public boolean inRange(int idLen) {
-            return idLen >= MIN_LEN && idLen <= MAX_LEN;
+            return idLen >= MINIMUM_LENGTH && idLen <= MAXIMUM_LEN;
         }
     }
 
@@ -88,13 +89,14 @@ public class UserInfoUtils {
      * Password 관련 검증 메서드, 에러 메시지를 가지는 클래스.
      */
     public class PasswordValidator {
-        private final int MIN_LEN = 10;
-        private final int MAX_LEN = 20;
+        private final int MINIMUM_LENGTH = 10;
+        private final int MAXIMUM_LEN = 20;
 
         public final String ERR_MSG_FORMAT = "숫자, 영문, 특수 문자(!@#$%^&*)만 사용 가능합니다.";
         public final String ERR_MSG_CONDITIONS = "숫자, 영문, 특수 문자를 모두 포함해야 합니다.";
         public final String ERR_MSG_EMPTY = "비밀번호를 입력해주세요.";
-        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR,
+                MINIMUM_LENGTH, MAXIMUM_LEN);
 
         // 외부에서 바로 호출할 수 있도록 public 으로 설정.
         public static final String ERR_MSG_MISMATCH = "비밀번호가 서로 다릅니다.";
@@ -111,7 +113,7 @@ public class UserInfoUtils {
 
         // Check range
         public boolean inRange(int passwordLen) {
-            return passwordLen >= MIN_LEN && passwordLen <= MAX_LEN;
+            return passwordLen >= MINIMUM_LENGTH && passwordLen <= MAXIMUM_LEN;
         }
     }
 
@@ -119,12 +121,13 @@ public class UserInfoUtils {
      * Nickname 관련 검증 메서드, 에러 메시지를 가지는 클래스.
      */
     public class NicknameValidator {
-        private final int MIN_LEN = 2;
-        private final int MAX_LEN = 10;
+        private final int MINIMUM_LENGTH = 2;
+        private final int MAXIMUM_LEN = 8;
 
         public final String ERR_MSG_FORMAT = "한글, 숫자, 영문 대소문자만 입력 가능합니다.";
         public final String ERR_MSG_EMPTY = "닉네임을 입력해주세요.";
-        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR, MIN_LEN, MAX_LEN);
+        public final String ERR_MSG_RANGE = String.format(Locale.KOREA, FORMAT_RANGE_ERROR,
+                MINIMUM_LENGTH, MAXIMUM_LEN);
 
         // Check Nickname Format
         public boolean isValidFormat(String nickname) {
@@ -133,7 +136,7 @@ public class UserInfoUtils {
 
         // Check range
         public boolean inRange(int nicknameLen) {
-            return nicknameLen >= MIN_LEN && nicknameLen <= MAX_LEN;
+            return nicknameLen >= MINIMUM_LENGTH && nicknameLen <= MAXIMUM_LEN;
         }
     }
 

@@ -64,23 +64,20 @@ public class SignUpFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 if(viewModel.isEmptyEditText()){
-                    ((AuthActivity)requireActivity())
-                            .getSupportFragmentManager()
-                            .popBackStack();
+                    requireActivity().getSupportFragmentManager().popBackStack();
                     return;
                 }
 
                 DialogUtils.showConfirmDialog(requireContext(), "이 화면을 나가면 입력 중인 값은 모두 사라지게 됩니다.",
                         dialog -> {
                             dialog.dismiss();
-                            ((AuthActivity)requireActivity())
-                                    .getSupportFragmentManager()
-                                    .popBackStack();
+                            requireActivity().getSupportFragmentManager().popBackStack();
                 });
             }
         };
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), backPressedCallback);
+        requireActivity().getOnBackPressedDispatcher()
+                .addCallback(getViewLifecycleOwner(), backPressedCallback);
     }
 
     /**
@@ -108,9 +105,7 @@ public class SignUpFragment extends Fragment {
 
         viewModel.getIsSignUpLiveData().observe(this, isSignUp -> {
             MessageUtils.showToast(requireContext(), "회원이 되신것을 환영합니다.");
-            ((AuthActivity)requireActivity())
-                    .getSupportFragmentManager()
-                    .popBackStack();
+            requireActivity().getSupportFragmentManager().popBackStack();
 
             ((AuthActivity)requireActivity())
                     .addFragment(
