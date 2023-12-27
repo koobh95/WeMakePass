@@ -63,6 +63,12 @@ public class AppConfig {
         public static void setRefreshToken(String refreshToken){
             pref.edit().putString(KEY_REFRESH_TOKEN, refreshToken).apply();
         }
+
+        // 저장하고 있는 토큰을 초기화
+        public static void initTokenData() {
+            pref.edit().putString(KEY_ACCESS_TOKEN, "").apply();
+            pref.edit().putString(KEY_REFRESH_TOKEN, "").apply();
+        }
     }
 
     /**

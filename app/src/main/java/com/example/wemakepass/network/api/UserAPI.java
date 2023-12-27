@@ -26,7 +26,7 @@ public interface UserAPI {
     String BASE_URI = "api/user/";
 
     // 회원가입 요청
-    @POST(BASE_URI + "sign_up")
+    @PUT(BASE_URI + "sign_up")
     Observable<Response<String>> signUp(@Body UserSignUpDTO userSignUpDTO);
 
     // 로그인 요청

@@ -36,9 +36,9 @@ public enum ErrorCode {
     WMP_UNKNOWN_ERROR, // Wmp에서 발생한 알 수 없는 에러
     CONNECTION_FAILED, // 네트워크 통신 실패
 
-    // JWT1
-    JWT_INVALID_ACCESS_TOKEN, // 요청할 때 사용한 AccessToken 인증 실패
-    AUTHENTICATION_FAILED, // RefreshToken으로 Jwt 재발급 실패
+    // JWT
+    EXPIRED_ACCESS_TOKEN, // AccessToken 발급 실패, 토큰이 만료되었음.
+    INVALID_ACCESS_TOKEN, // AccessToken 발급 실패, 서버에서 발급한 토큰이 아니거나 정상적인 접근이 아님.
 
     // BOARD
     BOARD_CATEGORY_LOADING_FAILED, // 게시판 카테고리 조회 실패

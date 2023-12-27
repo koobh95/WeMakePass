@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.data.enums.ErrorCode;
-import com.example.wemakepass.databinding.FragmentEmailCertBinding;
+import com.example.wemakepass.databinding.FragmentAccountCertBinding;
 import com.example.wemakepass.util.DialogUtils;
 
 /**
@@ -25,7 +25,7 @@ import com.example.wemakepass.util.DialogUtils;
  * @since 2023-10-24
  */
 public class AccountCertFragment extends Fragment {
-    private FragmentEmailCertBinding binding;
+    private FragmentAccountCertBinding binding;
     private AccountCertViewModel viewModel;
 
     private String userId;
@@ -61,7 +61,7 @@ public class AccountCertFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_email_cert, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_cert, container, false);
         binding.setLifecycleOwner(this);
         viewModel = new ViewModelProvider(this).get(AccountCertViewModel.class);
         binding.setViewModel(viewModel);
@@ -96,14 +96,17 @@ public class AccountCertFragment extends Fragment {
                             "인증이 진행중입니다. 정말로 종료하시겠습니까?",
                             dialog -> {
                                 dialog.dismiss();
-                                requireActivity()
-                                        .getSupportFragmentManager()
-                                        .popBackStack();
+                                requireActivity().getSupportFragmentManager().popBackStack();
                             });
-                    return;
+                } else {
+                    DialogUtils.showConfirmDialog(requireContext(),
+                            "다음에 인증을 하지 않고 종료하시겠습니까?\n" +
+                                    "(로그인 시 인증 화면으로 이동됩니다.)",
+                            dialog -> {
+                                dialog.dismiss();
+                                requireActivity().getSupportFragmentManager().popBackStack();
+                            });
                 }
-
-                requireActivity().getSupportFragmentManager().popBackStack();
             }
         };
 
@@ -117,10 +120,10 @@ public class AccountCertFragment extends Fragment {
      *  데이터를 넘겨줘도 되지만
      */
     private void initEventListener(){
-        binding.fragmentEmailCertRequestButton.setOnClickListener(v ->
+        binding.fragmentAccountCertRequestButton.setOnClickListener(v ->
                 viewModel.sendMailRequest(userId));
 
-        binding.fragmentEmailCertConfirmButton.setOnClickListener(v ->
+        binding.fragmentAccountCertConfirmButton.setOnClickListener(v ->
                 viewModel.certCodeConfirmRequest(userId));
     }
 
@@ -152,10 +155,10 @@ public class AccountCertFragment extends Fragment {
          */
         viewModel.getIsSendMailLiveData().observe(this, send -> {
             DialogUtils.showAlertDialog(requireContext(), "이메일을 전송했습니다.");
-            binding.fragmentEmailCertTimerTextView.setVisibility(View.VISIBLE);
-            binding.fragmentEmailCertRequestButton.setEnabled(false);
-            binding.fragmentEmailCertConfirmButton.setEnabled(true);
-            binding.fragmentEmailCertCodeEditText.setEnabled(true);
+            binding.fragmentAccountCertTimerTextView.setVisibility(View.VISIBLE);
+            binding.fragmentAccountCertRequestButton.setEnabled(false);
+            binding.fragmentAccountCertConfirmButton.setEnabled(true);
+            binding.fragmentAccountCertCodeEditText.setEnabled(true);
             viewModel.startTimer();
         });
 
@@ -164,9 +167,9 @@ public class AccountCertFragment extends Fragment {
          */
         viewModel.getIsTimeOver().observe(this, aBoolean -> {
             viewModel.getTimerLiveData().setValue("인증 제한 시간이 초과되었습니다. 다시 시도해주세요.");
-            binding.fragmentEmailCertRequestButton.setEnabled(true);
-            binding.fragmentEmailCertConfirmButton.setEnabled(false);
-            binding.fragmentEmailCertCodeEditText.setEnabled(false);
+            binding.fragmentAccountCertRequestButton.setEnabled(true);
+            binding.fragmentAccountCertConfirmButton.setEnabled(false);
+            binding.fragmentAccountCertCodeEditText.setEnabled(false);
         });
 
         /**
