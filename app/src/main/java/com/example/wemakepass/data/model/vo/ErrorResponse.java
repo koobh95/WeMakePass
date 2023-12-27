@@ -34,10 +34,8 @@ public class ErrorResponse {
      * @return
      */
     public static ErrorResponse ofAuthenticationFailed(){
-        return new ErrorResponse(ErrorCode.AUTHENTICATION_FAILED.name(), AUTHENTICATION_FAILED_MESSAGE);
+        return new ErrorResponse(ErrorCode.INVALID_REFRESH_TOKEN.name(), AUTHENTICATION_FAILED_MESSAGE);
     }
-
-
     /**
      *  통신에 실패했을 경우 서버와 연결되지 않기 때문에 에러 코드를 받을 수 없다. 이러한 경우 직접 통신
      * 실패에 관한 코드와 메시지를 설정하여 객체를 반환하기 위한 정적 메서드다.
