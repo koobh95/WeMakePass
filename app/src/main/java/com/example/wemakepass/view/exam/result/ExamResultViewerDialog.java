@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.example.wemakepass.data.model.data.ExamSubjectResultModel;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.DialogExamResultViewerBinding;
 import com.example.wemakepass.task.exam.ExamDocScoringTask;
 
@@ -59,14 +59,14 @@ public class ExamResultViewerDialog extends Dialog {
     /**
      * Dialog에 데이터를 초기화하기 위해 호출되는 메서드.
      *
-     * @param jmInfoDTO 종목 정보 데이터
+     * @param jmDTO 종목 정보 데이터
      * @param examInfoDTO 시험 정보 데이터
      * @param task 채점을 수행한 객체로 채점 결과 데이터를 가지고 있음.
      * @param elapsedTime 시험을 응시하는데 걸린 초 단위 시간
      */
-    public void setView(JmInfoDTO jmInfoDTO, ExamInfoDTO examInfoDTO, ExamDocScoringTask task,
+    public void setView(JmDTO jmDTO, ExamInfoDTO examInfoDTO, ExamDocScoringTask task,
                         long elapsedTime) {
-        setMainTitle(jmInfoDTO.getJmName());
+        setMainTitle(jmDTO.getJmName());
         setSubTitle(examInfoDTO.getImplYear(), examInfoDTO.getImplSeq(), examInfoDTO.getExamFormat());
         setSubjectDetail(task.getSubjectResultList());
         setDetailedScore(task.getScore(), task.getCorrectAnswerCount(),

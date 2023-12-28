@@ -26,7 +26,7 @@ import com.example.wemakepass.data.enums.ErrorCode;
 import com.example.wemakepass.data.model.dto.ExamDocAnswerDTO;
 import com.example.wemakepass.data.model.dto.ExamDocQuestionDTO;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.FragmentExamDocBinding;
 import com.example.wemakepass.network.util.FileRequestURLBuilder;
 import com.example.wemakepass.task.exam.ExamDocScoringTask;
@@ -52,17 +52,17 @@ public class ExamDocFragment extends Fragment {
     private ExamDocOptionListAdapter examDocOptionListAdapter;
     private ExamDocAnswerListAdapter examDocAnswerListAdapter;
 
-    private JmInfoDTO jmInfoDTO; // 선택된 종목 데이터
+    private JmDTO jmDTO; // 선택된 종목 데이터
     private ExamInfoDTO examInfoDTO; // 선택된 시험 데이터
     private int examCursor;
 
     private final int DRAWER_GRAVITY = GravityCompat.START; // DrawerLayout의 위치
     private final String TAG = "TAG_ExamDocFragment";
 
-    public static ExamDocFragment newInstance(JmInfoDTO jmInfoDTO, ExamInfoDTO examInfoDTO) {
+    public static ExamDocFragment newInstance(JmDTO jmDTO, ExamInfoDTO examInfoDTO) {
         ExamDocFragment fragment = new ExamDocFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO, jmInfoDTO);
+        bundle.putSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO, jmDTO);
         bundle.putSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO, examInfoDTO);
         fragment.setArguments(bundle);
         return fragment;
@@ -73,7 +73,7 @@ public class ExamDocFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         assert bundle != null;
-        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
+        jmDTO = (JmDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
         examInfoDTO = (ExamInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO);
     }
 
@@ -247,7 +247,7 @@ public class ExamDocFragment extends Fragment {
      * 이에 관련된 이벤트를 설정한다.
      */
     private void initToolbar() {
-        binding.fragmentExamDocToolbarTitleTextView.setText(jmInfoDTO.getJmName());
+        binding.fragmentExamDocToolbarTitleTextView.setText(jmDTO.getJmName());
         binding.fragmentExamDocToolbar.setNavigationOnClickListener(v -> {
             DrawerLayout drawerLayout = binding.fragmentExamDocDrawerLayout;
             if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY))
@@ -397,7 +397,7 @@ public class ExamDocFragment extends Fragment {
         viewModel.saveResultData(examInfoDTO.getExamId(), task.getReasonForRejection(),
                 task.getScore());
         examResultViewerDialog = new ExamResultViewerDialog(requireContext());
-        examResultViewerDialog.setView(jmInfoDTO, examInfoDTO, task, viewModel.getElapsedTime());
+        examResultViewerDialog.setView(jmDTO, examInfoDTO, task, viewModel.getElapsedTime());
     }
 
     /**

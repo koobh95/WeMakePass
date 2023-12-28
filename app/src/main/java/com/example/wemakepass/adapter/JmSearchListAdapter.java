@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.wemakepass.adapter.viewholder.SearchTextTypeViewHolder;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.ItemSearchTextTypeBinding;
 import com.example.wemakepass.listener.OnItemClickListener;
 
@@ -19,17 +19,17 @@ import com.example.wemakepass.listener.OnItemClickListener;
  * @author BH-Ku
  * @since 2023-11-17
  */
-public class JmSearchListAdapter extends ListAdapter<JmInfoDTO, SearchTextTypeViewHolder> {
+public class JmSearchListAdapter extends ListAdapter<JmDTO, SearchTextTypeViewHolder> {
     private OnItemClickListener onItemClickListener;
 
-    private static final DiffUtil.ItemCallback<JmInfoDTO> diffCallback = new DiffUtil.ItemCallback<>() {
+    private static final DiffUtil.ItemCallback<JmDTO> diffCallback = new DiffUtil.ItemCallback<>() {
         @Override
-        public boolean areItemsTheSame(@NonNull JmInfoDTO oldItem, @NonNull JmInfoDTO newItem) {
+        public boolean areItemsTheSame(@NonNull JmDTO oldItem, @NonNull JmDTO newItem) {
             return true;
         } // 기존 리스트를 재활용하지 않기 때문에 비교가 의미가 없음.
 
         @Override
-        public boolean areContentsTheSame(@NonNull JmInfoDTO oldItem, @NonNull JmInfoDTO newItem) {
+        public boolean areContentsTheSame(@NonNull JmDTO oldItem, @NonNull JmDTO newItem) {
             return oldItem.getJmCode().equals(newItem.getJmCode());
         }
     };

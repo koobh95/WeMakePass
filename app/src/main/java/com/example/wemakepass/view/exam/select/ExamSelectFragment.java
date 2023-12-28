@@ -16,7 +16,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.FragmentExamSelectBinding;
 import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
@@ -40,7 +40,7 @@ public class ExamSelectFragment extends Fragment {
     private ExamSelectViewModel viewModel;
 
     // JmSearchFragment 에서 선택한 종목 정보
-    private JmInfoDTO selectedJmInfo;
+    private JmDTO selectedJmInfo;
 
     private final String TAG = "TAG_ExamSelectFragment";
 
@@ -77,7 +77,7 @@ public class ExamSelectFragment extends Fragment {
                 .setFragmentResultListener(JmSearchFragment.RESULT_REQUEST_CODE_JM_SEARCH_FRAGMENT,
                         requireActivity(),
                         (requestKey, result) -> {
-                            selectedJmInfo = (JmInfoDTO) result
+                            selectedJmInfo = (JmDTO) result
                                     .getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
                             viewModel.loadExamInfoList(selectedJmInfo.getJmCode());
                             binding.fragmentExamSelectJmNameTextView.setText(selectedJmInfo.getJmName());

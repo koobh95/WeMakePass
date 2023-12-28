@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
@@ -17,7 +16,7 @@ import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.InterestJmListAdapter;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
 import com.example.wemakepass.data.model.data.InterestJmModel;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.ActivityInterestJmSearchBinding;
 import com.example.wemakepass.util.ExpandAnimationUtils;
 import com.example.wemakepass.util.MessageUtils;
@@ -165,9 +164,9 @@ public class InterestJmSearchActivity extends AppCompatActivity {
     private void initJmSearchRecyclerView() {
         jmSearchListAdapter = new JmSearchListAdapter();
         jmSearchListAdapter.setOnItemClickListener(position -> {
-            final JmInfoDTO jmInfoDTO = jmSearchListAdapter.getCurrentList().get(position);
-            InterestJmModel interestJmModel = new InterestJmModel(jmInfoDTO.getJmCode(),
-                    jmInfoDTO.getJmName());
+            final JmDTO jmDTO = jmSearchListAdapter.getCurrentList().get(position);
+            InterestJmModel interestJmModel = new InterestJmModel(jmDTO.getJmCode(),
+                    jmDTO.getJmName());
             viewModel.addInterestJmItem(interestJmModel);
             interestJmEdited = true; // 관심 종목 리스트 갱신 여부
         });

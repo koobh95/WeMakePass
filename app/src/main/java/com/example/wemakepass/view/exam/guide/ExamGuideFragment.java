@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.wemakepass.R;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.FragmentExamGuideBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.ExpandAnimationUtils;
@@ -38,10 +38,10 @@ public class ExamGuideFragment extends Fragment {
     private ExamGuideViewModel viewModel;
 
     // 시험 선택 화면에서 선택된 종목, 시험 정보
-    private JmInfoDTO jmInfoDTO;
+    private JmDTO jmDTO;
     private ExamInfoDTO examInfoDTO;
 
-    public static ExamGuideFragment newInstance(@NonNull JmInfoDTO selectedJmInfo,
+    public static ExamGuideFragment newInstance(@NonNull JmDTO selectedJmInfo,
                                                 @NonNull ExamInfoDTO selectedExamInfo) {
         ExamGuideFragment fragment = new ExamGuideFragment();
         Bundle bundle = new Bundle();
@@ -56,7 +56,7 @@ public class ExamGuideFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         assert bundle != null;
-        jmInfoDTO = (JmInfoDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
+        jmDTO = (JmDTO) bundle.getSerializable(JmSearchFragment.ARG_SELECTED_JM_INFO);
         examInfoDTO = (ExamInfoDTO) bundle.getSerializable(ExamActivity.ARG_SELECTED_EXAM_INFO);
     }
 
@@ -87,7 +87,7 @@ public class ExamGuideFragment extends Fragment {
      */
     @SuppressLint("SetTextI18n")
     private void initView() {
-        binding.fragmentExamGuideMainTitleTextView.setText(jmInfoDTO.getJmName());
+        binding.fragmentExamGuideMainTitleTextView.setText(jmDTO.getJmName());
         binding.fragmentExamGuideSubTitleTextView.setText(examInfoDTO.getImplYear() +
                 "년 제 " + examInfoDTO.getImplSeq() + "회");
         binding.fragmentExamGuideNumOfQuestionContentTextView
@@ -187,6 +187,6 @@ public class ExamGuideFragment extends Fragment {
             //examActivity.replaceFragment(ExamPracFragment.newInstance(jmInfoDTO, examInfoDTO));
             ; // 준비 중, 실기 데이터를 DB에서 지웠기 때문에 분기될 일이 없음. 추후 수정을 위해 코드는 남겨둠.
         else
-            examActivity.replaceFragment(ExamDocFragment.newInstance(jmInfoDTO, examInfoDTO));
+            examActivity.replaceFragment(ExamDocFragment.newInstance(jmDTO, examInfoDTO));
     }
 }

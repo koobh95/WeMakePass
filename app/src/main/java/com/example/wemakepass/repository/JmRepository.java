@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.JmAPI;
 import com.example.wemakepass.network.client.WmpClient;
@@ -25,7 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class JmRepository extends BaseRepository {
     private JmAPI jmAPI;
-    private SingleLiveEvent<List<JmInfoDTO>> jmInfoListLiveData;
+    private SingleLiveEvent<List<JmDTO>> jmInfoListLiveData;
 
     private final String TAG = "TAG_JmRepository";
 
@@ -82,7 +82,7 @@ public class JmRepository extends BaseRepository {
                 });
     }
 
-    public SingleLiveEvent<List<JmInfoDTO>> getJmInfoListLiveData() {
+    public SingleLiveEvent<List<JmDTO>> getJmInfoListLiveData() {
         if(jmInfoListLiveData == null)
             jmInfoListLiveData = new SingleLiveEvent<>();
         return jmInfoListLiveData;

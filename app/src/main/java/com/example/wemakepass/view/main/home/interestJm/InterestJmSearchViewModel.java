@@ -6,7 +6,7 @@ import android.view.View;
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.data.InterestJmModel;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.example.wemakepass.data.util.StringUtils;
 import com.example.wemakepass.repository.JmRepository;
@@ -131,7 +131,7 @@ public class InterestJmSearchViewModel extends BaseViewModel {
         return interestJmRepository.getElementListLiveData();
     }
 
-    public SingleLiveEvent<List<JmInfoDTO>> getJmInfoListLiveData() {
+    public SingleLiveEvent<List<JmDTO>> getJmInfoListLiveData() {
         return jmRepository.getJmInfoListLiveData();
     }
 }

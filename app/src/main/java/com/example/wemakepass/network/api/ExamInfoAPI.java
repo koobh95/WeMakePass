@@ -2,7 +2,6 @@ package com.example.wemakepass.network.api;
 
 import com.example.wemakepass.annotations.LoginRequired;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
 
 import java.util.List;
 

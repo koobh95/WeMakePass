@@ -20,7 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import com.example.wemakepass.R;
 import com.example.wemakepass.adapter.JmSearchListAdapter;
 import com.example.wemakepass.adapter.SearchLogListAdapter;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 import com.example.wemakepass.databinding.FragmentJmSearchBinding;
 import com.example.wemakepass.util.DialogUtils;
 import com.example.wemakepass.util.MessageUtils;
@@ -171,7 +171,7 @@ public class JmSearchFragment extends Fragment {
     private void initSearchResultRecyclerView() {
         jmSearchResultListAdapter = new JmSearchListAdapter();
         jmSearchResultListAdapter.setOnItemClickListener(position -> {
-            JmInfoDTO selectedJmInfo = jmSearchResultListAdapter.getCurrentList().get(position);
+            JmDTO selectedJmInfo = jmSearchResultListAdapter.getCurrentList().get(position);
             Bundle bundle = new Bundle();
             bundle.putSerializable(ARG_SELECTED_JM_INFO, selectedJmInfo);
             getParentFragmentManager().setFragmentResult

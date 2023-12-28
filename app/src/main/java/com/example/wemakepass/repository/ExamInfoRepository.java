@@ -5,17 +5,14 @@ import android.util.Log;
 import com.example.wemakepass.base.BaseRepository;
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.model.dto.ExamInfoDTO;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
 import com.example.wemakepass.data.model.vo.ErrorResponse;
 import com.example.wemakepass.network.api.ExamInfoAPI;
 import com.example.wemakepass.network.client.WmpClient;
 import com.example.wemakepass.network.util.ErrorResponseConverter;
 
-import java.util.EnumMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 

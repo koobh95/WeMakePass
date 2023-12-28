@@ -1,7 +1,7 @@
 package com.example.wemakepass.network.api;
 
 import com.example.wemakepass.annotations.LoginRequired;
-import com.example.wemakepass.data.model.dto.JmInfoDTO;
+import com.example.wemakepass.data.model.dto.JmDTO;
 
 import java.util.List;
 
@@ -25,12 +25,12 @@ public interface JmAPI {
     // 특정 검색어와 부분 일치하는 종목 이름을 가진 종목 정보를 조회한다.
     @LoginRequired
     @GET(BASE_URI + "search")
-    Observable<Response<List<JmInfoDTO>>> search(
+    Observable<Response<List<JmDTO>>> search(
             @Query("keyword") String keyword);
 
     // 시험 관련 데이터를 가지고 있는 종목을 대상으로 조회한다.
     @LoginRequired
     @GET(BASE_URI + "search/with_exam_info")
-    Observable<Response<List<JmInfoDTO>>> searchForJmWithExamInfo(
+    Observable<Response<List<JmDTO>>> searchForJmWithExamInfo(
             @Query("keyword") String keyword);
 }
