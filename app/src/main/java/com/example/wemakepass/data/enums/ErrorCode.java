@@ -39,7 +39,7 @@ public enum ErrorCode {
     // JWT
     EXPIRED_ACCESS_TOKEN, // AccessToken 발급 실패, 토큰이 만료되었음.
     INVALID_ACCESS_TOKEN, // AccessToken 발급 실패, 서버에서 발급한 토큰이 아니거나 정상적인 접근이 아님.
-    INVALID_REFRESH_TOKEN,
+    INVALID_REFRESH_TOKEN, // RefreshToken으로 토큰 재발급 실패
 
     // BOARD
     BOARD_CATEGORY_LOADING_FAILED, // 게시판 카테고리 조회 실패

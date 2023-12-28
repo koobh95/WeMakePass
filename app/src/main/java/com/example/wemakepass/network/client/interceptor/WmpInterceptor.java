@@ -55,20 +55,22 @@ public class WmpInterceptor implements Interceptor {
         Request request = addHeaderToAccessToken(chain);
         Response response = chain.proceed(request);
 
-        if(response.code() == AUTHENTICATION_FAILED_CODE){ // 401 에러일 경우, JWT 인증 에러인지 확인이 필요함.
+        if(response.code() == AUTHENTICATION_FAILED_CODE) { // 401 에러일 경우, JWT 인증 에러인지 확인이 필요함.
             Response.Builder newResponse = response.newBuilder();
             String contentType = response.header("Content-Type");
 
-            if(TextUtils.isEmpty(contentType))
+            if (TextUtils.isEmpty(contentType))
                 contentType = "application/json";
             String responseBodyStr = response.body().string(); // 기존 Response의 Header, body Backup
             String errorCode = parseErrorCode(responseBodyStr); // ErrorResponse에 담긴 ErrorCode 확인.
 
             // 401 에러의 에러 메시지가 AccessToken 인증 실패인지 확인.
-            if(errorCode.equals(ErrorCode.EXPIRED_ACCESS_TOKEN.name())) { // AccessToken 만료
-                retrofit2.Response<JwtDTO> jwtReissueResponse = requestTokenReissue(); // 동기로 재발급 요청 수행.
+            if (errorCode.equals(ErrorCode.EXPIRED_ACCESS_TOKEN.name())) {
+                // AccessToken이 만료되었음. -> 재발급
+                retrofit2.Response<JwtDTO> jwtReissueResponse = requestTokenReissue();
 
-                if(jwtReissueResponse.isSuccessful()) { // 정상적으로 발급되었음.
+                if (jwtReissueResponse.isSuccessful()) {
+                    // 정상적으로 재발급되었음.
                     final JwtDTO jwtDTO = jwtReissueResponse.body();
                     AppConfig.AuthPreference.setAccessToken(jwtDTO.getAccessToken());
                     AppConfig.AuthPreference.setRefreshToken(jwtDTO.getRefreshToken()); // 토큰 저장
@@ -83,14 +85,20 @@ public class WmpInterceptor implements Interceptor {
                      *  재발급에 실패한 순간 서버에서도 DB에서 토큰 정보를 삭제한 상태.
                      */
                     AppConfig.AuthPreference.initTokenData();
+                    return newResponse
+                            .body(ResponseBody.create(MediaType.parse(contentType),
+                                    jwtReissueResponse.errorBody().string()))
+                            .build(); // 인증 실패 코드 세팅
                 }
             } else if (errorCode.equals(ErrorCode.INVALID_ACCESS_TOKEN.name())) {
+                // AccessToken 검증 실패 사유가 만료 이외의 사유 -> 보안에 문제가 있다고 판단, 토큰 정보 삭제
                 AppConfig.AuthPreference.initTokenData();
-            } // AccessToken 발급 과정에서 토큰 인증 오류가 발생하였음.
+            }
 
             return newResponse
+                    .code(AUTHENTICATION_FAILED_CODE)
                     .body(ResponseBody.create(MediaType.parse(contentType), responseBodyStr))
-                    .build(); // 401 에러지만 AccessToken 검증 실패로 인한 오류는 아님. 기존 Response를 다시 조립.
+                    .build(); // 401 이지만 AccessToken 만료로 인한 에러는 아님. 기존 Response 다시 조립.
         }
 
         return response; // 정상적인 응답일 수도 있고 Error 응답일 수도 있지만 최소한 401 에러는 아님.
