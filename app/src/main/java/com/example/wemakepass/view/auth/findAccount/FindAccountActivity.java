@@ -75,6 +75,7 @@ public class FindAccountActivity extends AppCompatActivity {
                     DialogUtils.showConfirmDialog(binding.getRoot().getContext(),
                             "비밀번호 찾기가 진행중입니다. 종료하시겠습니까?",
                             dialog -> {
+                                dialog.dismiss();
                                 replaceFragment();
                             }, dialog -> {
                                 dialog.dismiss();

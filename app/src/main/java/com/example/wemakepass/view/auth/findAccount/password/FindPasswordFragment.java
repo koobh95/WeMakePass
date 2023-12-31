@@ -121,6 +121,7 @@ public class FindPasswordFragment extends Fragment {
             binding.fragmentFindPasswordConfirmButton.setEnabled(false);
             binding.fragmentFindPasswordCodeEditText.setEnabled(false);
             viewModel.getTimerLiveData().setValue("인증 제한 시간이 초과되었습니다. 다시 시도해주세요.");
+            viewModel.getCodeLiveData().setValue("");
         });
 
         /**
