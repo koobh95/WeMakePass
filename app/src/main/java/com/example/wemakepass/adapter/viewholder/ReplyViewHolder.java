@@ -50,6 +50,8 @@ public class ReplyViewHolder extends RecyclerView.ViewHolder {
             binding.itemReplyDeleteButton.setVisibility(View.VISIBLE);
             binding.itemReplyDeleteButton.setOnClickListener(v ->
                     onReplyDeleteButtonClickListener.onItemClick(getAdapterPosition()));
+        } else {
+            binding.itemReplyDeleteButton.setVisibility(View.GONE);
         }
     }
 }
