@@ -94,7 +94,6 @@ public class BoardMainFragment extends Fragment {
         initFragmentResultListener();
 
         viewModel.loadCategory(boardDTO.getBoardNo());
-        viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++, 0);
     }
 
     /**
@@ -245,6 +244,7 @@ public class BoardMainFragment extends Fragment {
         viewModel.getCategoryListLiveData().observe(this, categoryList -> {
             initTabLayout(categoryList);
             requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            viewModel.loadPosts(boardDTO.getBoardNo(), pageNo++, 0);
         });
 
         // 게시글 조회에 성공했을 경우 처리를 위한 메서드를 호출한다.
