@@ -170,6 +170,7 @@ public class LoginFragment extends Fragment {
 
             MessageUtils.showToast(requireContext(), "로그인되었습니다.");
             startActivity(new Intent(requireActivity(), MainActivity.class));
+            requireActivity().finish();
         });
     }
 }
