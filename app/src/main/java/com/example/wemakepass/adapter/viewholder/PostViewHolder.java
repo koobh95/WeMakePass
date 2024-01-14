@@ -32,8 +32,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(PostDTO item, OnItemClickListener onItemClickListener) {
         binding.itemPostTitleTextView.setText(item.getTitle());
-        if(item.getCommentCount() != 0)
-            binding.itemPostCommentCntTextView.setText("[" + item.getCommentCount() + "]");
+        if(item.getReplyCount() != 0)
+            binding.itemPostCommentCntTextView.setText("[" + item.getReplyCount() + "]");
         binding.itemPostWriterTextView.setText(item.getNickname());
         binding.itemPostHitTextView.setText(item.getHit() + "");
         binding.itemPostWriteDateTextView.setText(localDateToString(item.getRegDate()));

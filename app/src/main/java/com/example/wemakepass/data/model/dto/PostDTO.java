@@ -1,8 +1,6 @@
 package com.example.wemakepass.data.model.dto;
 
 
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -21,15 +19,15 @@ public class PostDTO implements Serializable {
     private String title; // 게시글 제목
     private LocalDateTime regDate; // 게시글 작성 시간
     private long hit; // 게시글 조회수
-    private int commentCount; // 게시글에 등록된 댓글 수
+    private int replyCount; // 게시글에 등록된 댓글 수
 
-    public PostDTO(long postNo, String nickname, String title, LocalDateTime regDate, long hit, int commentCount) {
+    public PostDTO(long postNo, String nickname, String title, LocalDateTime regDate, long hit, int replyCount) {
         this.postNo = postNo;
         this.nickname = nickname;
         this.title = title;
         this.regDate = regDate;
         this.hit = hit;
-        this.commentCount = commentCount;
+        this.replyCount = replyCount;
     }
 
     public long getPostNo() {
@@ -56,8 +54,8 @@ public class PostDTO implements Serializable {
         return hit;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public int getReplyCount() {
+        return replyCount;
     }
 
     @Override
@@ -67,7 +65,7 @@ public class PostDTO implements Serializable {
         return postNo == target.getPostNo() &&
                 nickname.equals(target.getNickname()) &&
                 hit == target.getHit() &&
-                commentCount == target.getCommentCount();
+                replyCount == target.getReplyCount();
     }
 
     @Override
@@ -79,7 +77,7 @@ public class PostDTO implements Serializable {
                 ", title='" + title + '\'' +
                 ", regDate=" + regDate +
                 ", hit=" + hit +
-                ", commentCount=" + commentCount +
+                ", commentCount=" + replyCount +
                 '}';
     }
 }
