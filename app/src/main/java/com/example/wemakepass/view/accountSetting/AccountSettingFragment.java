@@ -1,10 +1,13 @@
 package com.example.wemakepass.view.accountSetting;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -18,8 +21,11 @@ import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.data.SettingOptionModel;
 import com.example.wemakepass.data.model.vo.SettingCategoryVO;
 import com.example.wemakepass.databinding.FragmentAccountSettingBinding;
+import com.example.wemakepass.util.DialogUtils;
+import com.example.wemakepass.util.MessageUtils;
 import com.example.wemakepass.view.accountSetting.nicknameChange.NicknameChangeFragment;
 import com.example.wemakepass.view.accountSetting.passwordReset.PasswordResetFragment;
+import com.example.wemakepass.view.auth.AuthActivity;
 import com.example.wemakepass.view.auth.currentPassword.CurrentPasswordAuthFragment;
 
 import java.util.ArrayList;
@@ -34,6 +40,7 @@ import java.util.List;
  */
 public class AccountSettingFragment extends Fragment {
     private FragmentAccountSettingBinding binding;
+    private AccountSettingViewModel viewModel;
 
     private List<SettingCategoryVO> categoryList;
     private SettingCategoryListAdapter settingCategoryListAdapter;
@@ -49,7 +56,10 @@ public class AccountSettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAccountSettingBinding.inflate(inflater, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_setting, container, false);
+        binding.setLifecycleOwner(this);
+        viewModel = new ViewModelProvider(this).get(AccountSettingViewModel.class);
+        binding.setViewModel(viewModel);
         return binding.getRoot();
     }
 
@@ -145,7 +155,14 @@ public class AccountSettingFragment extends Fragment {
         accountManageOptionList.add(new SettingOptionModel.SettingOptionBuilder()
                 .setContent("로그아웃")
                 .setOnClickListener(v -> {
-                    //
+                    DialogUtils.showConfirmDialog(requireActivity(),
+                            "로그아웃 하시겠습니까?",
+                            dialog -> {
+                                viewModel.logout();
+                                MessageUtils.showToast(requireActivity(), "로그아웃 되었습니다.");
+                                startActivity(new Intent(requireContext(), AuthActivity.class));
+                                requireActivity().finish();
+                            });
                 })
                 .build());
         accountManageOptionList.add(new SettingOptionModel.SettingOptionBuilder()

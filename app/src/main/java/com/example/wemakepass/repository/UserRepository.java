@@ -39,7 +39,8 @@ public class UserRepository extends BaseRepository {
     }
 
     /**
-     *  암호화된 아이디, 비밀번호를 서버로 전송하여 로그인을 요청한다. 로그인이 완료될 경우 Token을 발급받는다.
+     * 암호화된 아이디, 비밀번호를 서버로 전송하여 로그인을 요청한다. 로그인이 완료될 경우 Token을 발급받는다.
+     *
      * @param loginRequest
      * @return
      */
@@ -58,6 +59,23 @@ public class UserRepository extends BaseRepository {
                 }, t -> {
                     networkErrorLiveData.setValue(ErrorResponse.ofConnectionFailed());
                     Log.d(TAG, networkErrorLiveData.getValue().toString());
+                });
+    }
+
+    /**
+     *  로그아웃을 요청한다. 이 메서드가 실행될 때(로그아웃을 요청하는 시점) 기기에 저장된 인증 정보, 사용자 정보가
+     * 모두 삭제되므로 요청 결과는 관찰하지 않는다.
+     *
+     * @return
+     */
+    @LoginRequired
+    public Disposable requestLogout() {
+        return userAPI.logout()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                    if(response.isSuccessful())
+                        Log.d(TAG, response.body());
                 });
     }
 

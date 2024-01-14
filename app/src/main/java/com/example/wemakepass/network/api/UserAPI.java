@@ -11,6 +11,7 @@ import com.example.wemakepass.data.model.dto.UserSignUpDTO;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -32,6 +33,11 @@ public interface UserAPI {
     // 로그인 요청
     @POST(BASE_URI + "login")
     Observable<Response<JwtDTO>> login(@Body LoginRequest loginRequestDTO);
+
+    // 로그아웃 요청
+    @LoginRequired
+    @DELETE(BASE_URI + "logout")
+    Observable<Response<String>> logout();
 
     // 어플리케이션 내부에 저장해도 괜찮은 최소한의 정보로만 이루어진 유저 정보 요청
     @LoginRequired

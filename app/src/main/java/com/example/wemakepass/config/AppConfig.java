@@ -101,7 +101,18 @@ public class AppConfig {
         }
 
         public static void setEmail(String email){
-             pref.edit().putString(KEY_EMAIL, email).apply();
+            pref.edit().putString(KEY_EMAIL, email).apply();
+        }
+
+        /**
+         *  기기에 저장된 사용자 정보(토큰 제외)를 초기화한다. 아이디는 로그인 시 체크하는 "아이디 저장" 여부에
+         * 따라 삭제 여부를 결정한다.
+         */
+        public static void initUserData() {
+            if(!AuthPreference.isStoredId())
+                setUserId("");
+            setNickname("");
+            setEmail("");
         }
     }
 }
