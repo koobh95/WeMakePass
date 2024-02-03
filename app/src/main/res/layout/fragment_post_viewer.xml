@@ -196,6 +196,7 @@
                         layout="@layout/view_content_loading_progress_bar_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/alpha_50"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fragment_post_viewer_reply_bar_layout" />

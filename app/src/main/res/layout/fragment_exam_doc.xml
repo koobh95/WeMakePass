@@ -244,6 +244,7 @@
         <include
             android:id="@+id/fragment_exam_doc_content_loading_progress_bar"
             layout="@layout/view_content_loading_progress_bar_large"
+            android:background="@color/alpha_50"
             android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
