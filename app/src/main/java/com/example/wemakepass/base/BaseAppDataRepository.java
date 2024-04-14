@@ -1,5 +1,7 @@
 package com.example.wemakepass.base;
 
+import android.text.TextUtils;
+
 import com.example.wemakepass.common.SingleLiveEvent;
 import com.example.wemakepass.data.pref.AppDataPreferences;
 import com.google.gson.JsonArray;
@@ -137,6 +139,9 @@ public abstract class BaseAppDataRepository<E> {
     public List<E> loadPrefData() {
         final String jsonString = AppDataPreferences.getData(PREF_NAME);
         List<E> list = new ArrayList<>();
+
+        if(TextUtils.isEmpty(jsonString))
+            return list;
         try{
             JsonParser jsonParser = new JsonParser();
             JsonElement json = jsonParser.parse(jsonString);
