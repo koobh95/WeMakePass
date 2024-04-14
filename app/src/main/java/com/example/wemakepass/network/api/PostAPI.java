@@ -12,7 +12,6 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 /**
@@ -41,7 +40,7 @@ public interface PostAPI {
 
     // 새로운 게시글을 등록하기 위해 관련 데이터를 서버로 전송한다.
     @LoginRequired
-    @PUT(BASE_URI + "write")
+    @POST(BASE_URI + "write")
     Observable<Response<String>> write(
             @Body PostWriteRequest postWriteRequest);
 

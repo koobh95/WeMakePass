@@ -11,7 +11,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.PUT;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -31,7 +31,7 @@ public interface ReplyAPI {
 
     // 특정 게시글에 대한 댓글 쓰기를 요청한다.
     @LoginRequired
-    @PUT(BASE_URI + "write")
+    @POST(BASE_URI + "write")
     Observable<Response<String>> write(
             @Body ReplyWriteRequest replyWriteRequest);
 
