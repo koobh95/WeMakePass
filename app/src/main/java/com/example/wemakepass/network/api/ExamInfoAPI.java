@@ -17,17 +17,17 @@ import retrofit2.http.Query;
  * @since 2023-11-14
  */
 public interface ExamInfoAPI {
-    String BASE_URI = "api/exam_info/";
+    String BASE_URI = "api/exam-info/";
 
     // 특정 종목 코드에 해당하는 시험들을 모두 조회한다.
     @LoginRequired
-    @GET(BASE_URI + "list")
+    @GET(BASE_URI + "jm")
     Observable<Response<List<ExamInfoDTO>>> examInfoList(
             @Query("jmCode") String jmCode);
 
     // 특정 시험의 과목 목록을 조회한다.
     @LoginRequired
-    @GET(BASE_URI + "subject_list")
+    @GET(BASE_URI + "subject")
     Observable<Response<List<String>>> subjectList(
             @Query("examId") long examId);
 }

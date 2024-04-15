@@ -25,19 +25,19 @@ public interface ReplyAPI {
 
     // 특정 게시글의 댓글 목록을 조회한다.
     @LoginRequired
-    @GET(BASE_URI + "list")
+    @GET(BASE_URI)
     Observable<Response<List<ReplyDTO>>> replyList(
             @Query("postNo") long postNo);
 
     // 특정 게시글에 대한 댓글 쓰기를 요청한다.
     @LoginRequired
-    @POST(BASE_URI + "write")
+    @POST(BASE_URI)
     Observable<Response<String>> write(
             @Body ReplyWriteRequest replyWriteRequest);
 
     // 특정 댓글에 대한 삭제를 요청한다.
     @LoginRequired
-    @DELETE(BASE_URI + "delete")
+    @DELETE(BASE_URI)
     Observable<Response<String>> delete(
             @Query("replyNo") long replyNo);
 }

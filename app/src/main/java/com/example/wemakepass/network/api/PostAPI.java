@@ -40,7 +40,7 @@ public interface PostAPI {
 
     // 새로운 게시글을 등록하기 위해 관련 데이터를 서버로 전송한다.
     @LoginRequired
-    @POST(BASE_URI + "write")
+    @POST(BASE_URI)
     Observable<Response<String>> write(
             @Body PostWriteRequest postWriteRequest);
 
@@ -52,7 +52,7 @@ public interface PostAPI {
 
     // 게시판, 카테고리(선택), 제목, 내용으로 게시글 검색
     @LoginRequired
-    @GET(BASE_URI + "search/title_and_content")
+    @GET(BASE_URI + "search/title-and-content")
     Observable<Response<PostPageResponse>> searchTitleAndContent(
             @Query("pageNo") int pageNo,
             @Query("boardNo") long boardNo,

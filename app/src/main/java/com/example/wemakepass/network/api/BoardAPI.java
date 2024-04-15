@@ -21,7 +21,7 @@ public interface BoardAPI {
 
     // 특정 키워드가 포함된 게시판 이름을 조회한다.
     @LoginRequired
-    @GET(BASE_URI + "search")
+    @GET(BASE_URI)
     Observable<Response<List<BoardDTO>>> search(
             @Query("keyword") String keyword);
 
