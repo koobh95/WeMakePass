@@ -30,7 +30,7 @@ public interface JmAPI {
 
     // 시험 관련 데이터를 가지고 있는 종목을 대상으로 조회한다.
     @LoginRequired
-    @GET(BASE_URI + "search/with-exam")
+    @GET(BASE_URI + "with-exam")
     Observable<Response<List<JmDTO>>> searchForJmWithExamInfo(
             @Query("keyword") String keyword);
 }
