@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,7 +165,7 @@ public class PostViewerFragment extends Fragment {
      */
     private void initPostViews(PostDetailDTO item){
         binding.fragmentPostViewerTitleTextView.setText(item.getTitle());
-        binding.fragmentPostViewerWriterTextView.setText(item.getWriterNickname());
+        binding.fragmentPostViewerWriterTextView.setText(item.getNickname());
         binding.fragmentPostViewerHitTextView.setText("조회수 " + item.getHit());
         String regDateString = item.getRegDate().getYear() == LocalDate.now().getYear() ?
                 item.getRegDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT_THIS_YEAR)) :
