@@ -133,7 +133,10 @@ public class CommunityFragment extends Fragment {
         binding.fragmentCommunityVisitedBoardLogDeleteAllButton.setOnClickListener(v -> {
             DialogUtils.showConfirmDialog(requireContext(),
                     "게시판 방문 기록을 모두 삭제하시겠습니까?",
-                    dialog -> viewModel.deleteAllVisitedBoardLog());
+                    dialog -> {
+                        viewModel.deleteAllVisitedBoardLog();
+                        dialog.dismiss();
+                    });
         });
     }
 
