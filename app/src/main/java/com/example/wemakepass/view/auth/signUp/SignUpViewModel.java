@@ -191,31 +191,31 @@ public class SignUpViewModel extends BaseViewModel {
 
     public SingleLiveEvent<String> getIdLiveData() {
         if(idLiveData == null)
-            idLiveData = new SingleLiveEvent<>("user1008");
+            idLiveData = new SingleLiveEvent<>();
         return idLiveData;
     }
 
     public SingleLiveEvent<String> getNicknameLiveData() {
         if(nicknameLiveData == null)
-            nicknameLiveData = new SingleLiveEvent<>("user8");
+            nicknameLiveData = new SingleLiveEvent<>();
         return nicknameLiveData;
     }
 
     public SingleLiveEvent<String> getPasswordLiveData() {
         if(passwordLiveData == null)
-            passwordLiveData = new SingleLiveEvent<>("abcdefgh1!");
+            passwordLiveData = new SingleLiveEvent<>();
         return passwordLiveData;
     }
 
     public SingleLiveEvent<String> getPasswordReLiveData() {
         if(passwordReLiveData == null)
-            passwordReLiveData = new SingleLiveEvent<>("abcdefgh1!");
+            passwordReLiveData = new SingleLiveEvent<>();
         return passwordReLiveData;
     }
 
     public SingleLiveEvent<String> getEmailLiveData() {
         if(emailLiveData == null)
-            emailLiveData = new SingleLiveEvent<>("abcdefg8@naver.com");
+            emailLiveData = new SingleLiveEvent<>();
         return emailLiveData;
     }
 

@@ -80,7 +80,7 @@ public class LoginFragment extends Fragment {
                 .addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        requireActivity().finish();
+                        requireActivity().finishAffinity();
                     }
                 });
     }

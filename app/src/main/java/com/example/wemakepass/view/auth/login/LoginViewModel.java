@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.example.wemakepass.base.BaseViewModel;
 import com.example.wemakepass.common.SingleLiveEvent;
+import com.example.wemakepass.config.AppConfig;
 import com.example.wemakepass.data.model.dto.JwtDTO;
 import com.example.wemakepass.data.model.dto.request.LoginRequest;
 import com.example.wemakepass.data.model.dto.UserInfoDTO;
@@ -114,14 +115,13 @@ public class LoginViewModel extends BaseViewModel {
 
     public SingleLiveEvent<String> getIdLiveData() {
         if(idLiveData == null)
-            //idLiveData = new SingleLiveEvent<>(AppConfig.AuthPreference.getStoredId());
-            idLiveData = new SingleLiveEvent<>("user1235");
+            idLiveData = new SingleLiveEvent<>();
         return idLiveData;
     }
 
     public SingleLiveEvent<String> getPasswordLiveData() {
         if(passwordLiveData == null)
-            passwordLiveData = new SingleLiveEvent<>("user1234!@");
+            passwordLiveData = new SingleLiveEvent<>();
         return passwordLiveData;
     }
 
