@@ -99,13 +99,13 @@ public class PasswordResetViewModel extends BaseViewModel {
 
     public SingleLiveEvent<String> getPasswordLiveData() {
         if(passwordLiveData == null)
-            passwordLiveData = new SingleLiveEvent<>("user1234!@");
+            passwordLiveData = new SingleLiveEvent<>();
         return passwordLiveData;
     }
 
     public SingleLiveEvent<String> getPasswordReLiveData() {
         if(passwordReLiveData == null)
-            passwordReLiveData = new SingleLiveEvent<>("user1234!@");
+            passwordReLiveData = new SingleLiveEvent<>();
         return passwordReLiveData;
     }
 

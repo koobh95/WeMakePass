@@ -96,7 +96,7 @@ public class FindPasswordViewModel extends BaseViewModel {
 
     public SingleLiveEvent<String> getIdLiveData() {
         if(idLiveData == null)
-            idLiveData = new SingleLiveEvent<>("user1235");
+            idLiveData = new SingleLiveEvent<>();
         return idLiveData;
     }
 

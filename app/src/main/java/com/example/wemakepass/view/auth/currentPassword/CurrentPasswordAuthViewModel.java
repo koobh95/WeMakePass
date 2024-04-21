@@ -75,7 +75,7 @@ public class CurrentPasswordAuthViewModel extends BaseViewModel {
 
     public SingleLiveEvent<String> getPasswordLiveData() {
         if(passwordLiveData == null)
-            passwordLiveData = new SingleLiveEvent<>("user1234!@!");
+            passwordLiveData = new SingleLiveEvent<>();
         return passwordLiveData;
     }
 
