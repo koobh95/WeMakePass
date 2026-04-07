@@ -33,23 +33,24 @@
             android:exported="false" />
         <activity
             android:name=".view.splash.SplashActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Splash" />
+            android:exported="true"
+            android:theme="@style/Theme.Splash" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.auth.findAccount.FindAccountActivity"
             android:exported="false" />
         <activity
             android:name=".view.auth.AuthActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"/>
     </application>
 
 </manifest>
